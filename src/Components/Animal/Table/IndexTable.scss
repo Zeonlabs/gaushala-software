@@ -1,0 +1,40 @@
+.table-header{
+    text-align: center !important;
+    font-size: 32px !important;
+    padding: 0px !important;
+    background: #d1d1d1 !important;
+    color: black;
+    font-weight: bold !important;
+    width: 60% !important;
+}
+td{
+    text-align: center !important;
+    font-size: 26px;
+    padding: 0px !important;
+    color: black;
+
+    .ant-row, .ant-form-item {
+        margin-bottom: 0 !important;
+    }
+    .ant-input-number{
+        border: none;
+    }
+    .ant-input-number-input-wrap>input{
+        text-align: center !important;
+    }  
+}
+.ant-table-thead > tr > th {
+    background: #d1d1d1 !important;
+}
+.total-box{
+    height: 40px !important;
+    background-color: #cecece;
+    font-size: 32px !important;
+    color: black !important;
+}
+.form-income .ant-form-item-control-wrapper {
+    margin-right: 0 !important;
+}
+.table-animal-popup-td{
+    font-weight: bolder;
+}

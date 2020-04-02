@@ -1,0 +1,45 @@
+.ant-calendar-picker-input.ant-input {
+  line-height: 1.3 !important;
+}
+.in-icon-arrow {
+  width: 100%;
+}
+.ant-row,
+.ant-form-item {
+  margin-bottom: 5px !important;
+}
+
+.ant-form-item-label {
+  line-height: 20.9999px !important;
+}
+
+.income-table-td-height {
+  .table td {
+    height: inherit !important;
+  }
+}
+
+.ant-layout-content {
+  min-height: unset !important;
+}
+
+.ant-table-row-cell-break-word {
+  text-align: center;
+}
+#Income_daterange {
+  width: 100%;
+}
+
+tbody,.ant-table-tbody {
+  // height:150px;
+  height: calc(100vh - 50vh);
+  overflow: scroll !important;
+  overflow-y: scroll !important;
+}
+
+// .income-expense-table {
+//   .ant-table {
+//     height: initial;
+//     overflow-y: hidden;
+//   }
+// }

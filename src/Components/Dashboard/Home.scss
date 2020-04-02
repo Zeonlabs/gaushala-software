@@ -1,0 +1,162 @@
+// .page-layout {
+//   height: inherit;
+
+//   li {
+//     height: 50px !important;
+//     line-height: 50px !important;
+//   }
+//   .Header-div {
+//     display: flex;
+//     justify-content: space-between;
+//     padding: 0 15px;
+
+//     span{
+//       font-weight: bolder;
+//       letter-spacing: 0.5px;
+//       font-size: 20px;
+//     }
+
+//     button {
+//       margin: auto 0;
+//     }
+//   }
+
+//   .trigger {
+//     font-size: 18px;
+//     line-height: 64px;
+//     // padding: 0 24px;
+//     cursor: pointer;
+//     transition: color 0.3s;
+//   }
+
+//   .trigger:hover {
+//     color: #1890ff;
+//   }
+
+//   .logo {
+//     height: 32px;
+//     overflow: hidden;
+//     margin: 16px;
+//     text-align: center;
+
+//     h1 {
+//       font-family: "gujrati_saral-1normal";
+//       font-size: 26px;
+//     }
+//   }
+
+//   .menu-list-title {
+//     font-size: 16px;
+//   }
+//   .menu-list-icon {
+//     font-size: 18px !important;
+//     margin-right: 17px !important;
+//   }
+// }
+
+
+
+.dashboard{
+  background-color: #D8D9DD;
+  margin: -24px;
+  width: auto;
+
+  .dashbrd-label{
+    font-size: 22px;
+  }
+
+  .line-grph-div{
+    height: 43vh;
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 22px;
+
+    .grph{
+      font-family: monospace;
+      height: 100%;
+    }
+  }
+
+  .btml-grph{
+    display: flex;
+
+    .piechrt-div{
+      // padding: 20px;
+      padding-top: 20px;
+      padding-left: 20px;
+      width: 50%;
+      height: 40vh;
+      background-color: white;
+      margin-right: 22px;
+
+      .pie-chrt{
+        // width: 80%;
+        height: 100%;
+      }
+    }
+
+    .balance-div{
+      width: 50%;
+      background-color: white;
+    }
+  }
+}
+.pie-chrt{
+
+  text{
+    font-family: "Saumil_guj2" !important;
+    font-size: 22px !important;
+    font-weight: 600;
+  }
+
+  svg:not(:root) {
+    overflow: inherit !important;
+}
+}
+.text-align{
+  text-align: center !important;
+}
+.padding-row-15{
+  padding: 15px !important;
+  padding-bottom: 0px !important;
+}
+.color-red{
+  background-color: #FFEBF1;
+  justify-content: center;
+  span{
+    color: #dc3545 !important;
+    font-size: 32px !important;
+    font-weight: bolder;
+    overflow: auto;
+  }
+}
+.red{color: #dc3545 !important;}
+.green{color: #24BE5C !important;}
+.yellow{color: #FBBC05 !important;}
+.margin-top{
+  margin-top: 22px;
+}
+.margin-top-15{
+  margin-top: 15px !important;
+}
+.color-green{
+  background-color: #E6F8F3;
+  justify-content: center;
+  overflow: auto;
+  overflow: auto;
+  span{
+    font-size: 32px !important;
+    color: #24BE5C !important;
+    font-weight: bolder;
+  }
+}
+.color-yellow{
+  background-color: #FFF8E8;
+  justify-content: center;
+  overflow: auto;
+  span{
+    color: #FBBC05 !important;
+    font-size: 82px !important;
+    font-weight: bolder;
+  }
+}

@@ -1,0 +1,119 @@
+.button-margin-bottum {
+  margin-bottom: 25px;
+}
+// ----------------card css----------
+.card-note {
+  .card-wrapper {
+    
+    &:nth-child(3n + 1) {
+      margin-left: 0px;
+    }
+  }
+  // display: flex;
+  .ant-card-bordered {
+    border: 1px solid #000000;
+    border-radius: 5px;
+  }
+  .ant-card-cover {
+    background-color: black;
+    h1 {
+      text-align: center;
+      color: white;
+      font-size: 32px;
+      padding: 5px;
+      margin: 0 !important;
+    }
+  }
+  .ant-card-body {
+    height: 125px;
+    overflow: hidden;
+    white-space: pre-wrap;
+    padding: 10px;
+    font-size: 26px;
+    font-weight: bolder;
+    color: black;
+    word-break: normal;
+    border-top: 0 !important;
+    border-left: 0 !important;
+    border-right: 0 !important;
+    border-bottom: 0.8px solid black;
+    border-radius: 0px !important;
+  }
+  ul {
+    height: 62px;
+    li:first-child {
+      border: 1px solid black;
+      border-right: none;
+      border-bottom-left-radius: 5px;
+      border-left: none;
+      border-top: none;
+    }
+    li:first-child:hover {
+      background-color: #3ad944;
+      span:hover {
+        i:hover {
+          color: white !important;
+        }
+      }
+    }
+    li:last-child {
+      border: 1px solid black;
+      border-right: none;
+      border-bottom-right-radius: 5px;
+      border-left: none;
+      border-top: none;
+    }
+    li:last-child:hover {
+      background-color: rgb(255, 4, 0);
+      span:hover {
+        i:hover {
+          color: white !important;
+        }
+      }
+    }
+    li {
+      margin: 0;
+      height: 62px !important;
+
+      span {
+        i {
+          font-size: 26px !important;
+          line-height: 22px;
+          padding: 16px;
+        }
+      }
+    }
+  }
+}
+
+
+/* Float four columns side by side */
+.card-wrapper {
+  float: left !important;
+  width: 25% !important;
+  // padding: 0 10px !important;
+}
+
+/* Remove extra left and right margins, due to padding */
+.card-note {margin: 0 -5px !important;}
+
+/* Clear floats after the columns */
+.card-note:after {
+  content: "" !important;
+  display: table !important;
+  clear: both !important;
+}
+
+/* Responsive columns */
+@media screen and (max-width: 600px) {
+  .card-wrapper {
+    width: 100% !important;
+    display: block !important;
+    margin-bottom: 20px !important;
+  }
+}
+
+/* Style the counter cards */
+.card-wrapper {
+  padding: 16px;
+}

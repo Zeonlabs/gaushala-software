@@ -1,0 +1,321 @@
+.editable-cell {
+  position: relative;
+}
+.ant-popover-content {
+  span {
+    font-size: 12px !important;
+  }
+}
+
+.editable-cell-value-wrap {
+  font-family: "Saumil_guj2" !important;
+}
+.gujarati-font-family{
+  font-family: "Saumil_guj2" !important;
+}
+.gujarati-font {
+  font-size: 22px !important;
+  font-weight: 700 !important;
+  
+}
+.text-center{
+  text-align: center !important;
+}
+.english-font-input,
+#Income_date {
+  font-family: Arial, Helvetica, sans-serif !important;
+}
+.editable-cell-value-wrap {
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 22px !important;
+  font-weight: 600;
+}
+.editable-row:hover .editable-cell-value-wrap {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  padding: 4px 11px;
+}
+.ant-table {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: rgba(0, 0, 0, 0.65);
+  font-size: 18px;
+  font-variant: tabular-nums;
+  line-height: 0.5;
+  list-style: none;
+  -webkit-font-feature-settings: "tnum";
+  font-feature-settings: "tnum", "tnum";
+  position: relative;
+  clear: both;
+}
+.ant-table-body {
+  max-height: 100% !important;
+  table {
+    border-bottom: 1px solid black !important;
+    border-right: 1px solid black !important;
+  }
+}
+
+.income-expense-table {
+  tr {
+    height: 42px;
+    &:hover {
+      height: 42px;
+    }
+  }
+}
+
+.table-boder {
+  table {
+    border-radius: 4px;
+    // border: 2px solid black !important;
+    width: -webkit-fill-available !important;
+    .ant-table-row-cell-break-word {
+      text-align: center;
+    }
+    .ant-table-column-title {
+      font-family: "Saumil_guj2" !important;
+      font-weight: 600;
+      text-align: center;
+    }
+    .ant-form-item {
+      outline: none !important;
+    }
+    .ant-form-explain {
+      display: none;
+    }
+    .ant-input {
+      font-weight: 600 !important;
+    }
+    .table-font{
+      .ant-table-header-column{
+        font-family: 'Saumil_guj2' !important;
+        font-weight: 600;
+        text-align: center;
+      }
+      td{
+        font-family: 'Saumil_guj2' !important;
+      }
+    }
+  }
+}
+.table-font-english {
+  font-family: 'Saumil_guj2' !important;
+  font-weight: 600 !important;
+  .ant-table-header-column {
+    font-family: "Saumil_guj2" !important;
+  }
+}
+.table-font-gujarati {
+  font-weight: 600 !important;
+  font-size: 18px !important;
+}
+.table-income {
+  width: 100% !important;
+
+  .ant-table-header-column {
+    font-weight: bolder;
+  }
+  input,
+  input:hover {
+    outline: none !important;
+  }
+
+  input:focus {
+    margin-left: 2px !important;
+    background: #ffffff;
+    width: 100%;
+  }
+  th {
+    border: 1px solid black;
+    border-right: none;
+    border-bottom: 1px solid black !important;
+  }
+  td {
+    // border: 1px solid black;
+    border-left: 1px solid black !important;
+    border-bottom: 1px solid black;
+  }
+
+  tr,
+  td {
+    padding: 20px !important;
+  }
+  th {
+    padding: 15px !important;
+    text-align: center !important;
+  }
+  .deleteicon {
+    color: red($color: #ff0000) !important;
+    text-align: center !important;
+  }
+
+  button {
+    margin-top: 5px;
+    margin-bottom: 5px !important;
+  }
+  .totalamount {
+    display: flex;
+    text-align: center;
+    margin-top: -1px;
+    border: 1px solid #000000;
+    border-left: none;
+    border-top: none;
+    .amount-in-words {
+      width: 60%;
+    }
+    h4 {
+      margin: auto;
+      padding: 5px;
+      width: 40%;
+      justify-content: center;
+      text-align: initial;
+      border-left: 1px solid #000000;
+    }
+  }
+}
+
+.table {
+  width: 100% !important;
+
+  .ant-table-header-column {
+    font-weight: bolder;
+  }
+  input,
+  input:hover {
+    outline: none !important;
+  }
+
+  input:focus {
+    margin-left: 2px !important;
+    background: #ffffff;
+    width: 100%;
+  }
+  th {
+    border: 1px solid black;
+    border-right: none;
+    border-bottom: 1px solid black !important;
+  }
+  td {
+    // border: 1px solid black;
+    border-left: 1px solid black !important;
+    border-bottom: 1px solid black;
+  }
+
+  tr,
+  td {
+    padding: 15px !important;
+    // height: 32px !important;
+  }
+  th {
+    padding: 15px !important;
+    text-align: center !important;
+  }
+  .deleteicon {
+    color: red($color: #ff0000) !important;
+    text-align: center !important;
+  }
+
+  button {
+    margin-top: 5px;
+    margin-bottom: 5px !important;
+  }
+  .totalamount {
+    display: flex;
+    text-align: center;
+    margin-top: -1px;
+    border: 1px solid #000000;
+    border-left: none;
+    border-top: none;
+    .amount-in-words {
+      width: 60%;
+    }
+    h4 {
+      margin: auto;
+      padding: 5px;
+      width: 40%;
+      justify-content: center;
+      text-align: initial;
+      border-left: 1px solid #000000;
+    }
+  }
+}
+
+/* ----------------------table------------------------ */
+
+.ant-table-column-title {
+  font-weight: 600 !important;
+  font-size: 24px !important;
+}
+.ant-table-thead > tr > th,
+.ant-table-tbody > tr > td {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: center;
+}
+.ant-table-tbody > tr > td,
+.ant-table-tbody > tr > td > p {
+  margin: 0 !important;
+}
+.ant-tooltip-inner {
+  font-family: "Saumil_guj2" !important;
+  font-weight: 600;
+}
+// --------------------Edit& Delete icons------------------------
+.icon-group-table {
+  padding: 10px;
+  i {
+    font-size: 20px;
+  }
+}
+// ---------------------pagination-num---------------------------
+.ant-table-pagination {
+  .page-layout,
+  li {
+    height: 35px !important;
+    line-height: 35px !important;
+  }
+}
+
+/* --------------------Table-Empty-place-holder------------------ */
+.ant-table-placeholder {
+  background-color: #a5a5a5;
+  .ant-empty-description {
+    font-family: 'Saumil_guj2' !important;
+    color: white;
+  }
+}
+
+.td-total-animal-table {
+  p {
+    padding: 10px;
+  }
+}
+
+.vigat-col {
+  padding: 14px !important;
+  border: none;
+}
+
+// ----------------------table input hover outline none------------------------
+.editable-row:hover .editable-cell-value-wrap {
+  border: none !important;
+  border-radius: 0px !important;
+  padding: 11px !important;
+}
+
+// -------------------table input----------------------------------
+.income-expense-table {
+  .ant-form-item-children {
+    input:hover {
+      border: none !important;
+      border-radius: 0px !important;
+    }
+  }
+}
+
+//-----------------------input date---------------------------
