@@ -103,8 +103,7 @@ export const deleteEmployee = data => dispatch =>
   new Promise((resolve, reject) => {
     fetchUrl(
       employeeList.employeeDelete.method,
-      employeeList.employeeDelete.url,
-      data
+      `${employeeList.employeeDelete.url}/${data}`
     )
       .then(res => {
         resolve(res);

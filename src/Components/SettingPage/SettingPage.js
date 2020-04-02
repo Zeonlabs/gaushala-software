@@ -18,7 +18,8 @@ import {
   message
 } from "antd";
 import OtpScreen from "./OtpScreen";
-import { addUser } from "../../Actions/SetUpUser";
+import { addUser, editUser, getOtp } from "../../Actions/SetUpUser";
+import { getAnimalChart } from "../../Actions/ChartActions";
 
 const { Option } = Select;
 const { Header, Content, Footer, Sider } = Layout;
@@ -38,6 +39,22 @@ export class SettingPage extends Component {
       pin: ""
     };
   }
+  componentDidMount = () => {
+    if (this.props.totalAnimalCount === null) {
+      this.props.getAnimalChart().then(res => {
+        console.log("SettingPage -> componentDidMount -> res", res);
+        this.setState({
+          username: res.name,
+          mobilenumber: res.phone
+        });
+      });
+    } else {
+      this.setState({
+        username: this.props.totalAnimalCount.name,
+        mobilenumber: this.props.totalAnimalCount.phone
+      });
+    }
+  };
 
   enterLoading = () => {
     this.setState({ loading: true });
@@ -45,19 +62,20 @@ export class SettingPage extends Component {
 
   enterIconLoading = () => {
     this.setState({ iconLoading: true });
-    const { username, mobilenumber, pin } = this.state;
-    if (username !== "" && mobilenumber !== "" && pin !== "") {
+    const { username, mobilenumber } = this.state;
+    if (username !== "" && mobilenumber !== "") {
       const data = {
         name: username,
-        phone: mobilenumber,
-        pin
+        phone: mobilenumber
+        // pin
       };
-      this.props.addUser(data).then(res => {
+      this.props.editUser(data).then(res => {
+        message.success("Update data sucessfully !");
         this.setState({
-          iconLoading: false,
-          username: "",
-          mobilenumber: "",
-          pin: ""
+          iconLoading: false
+          // username: "",
+          // mobilenumber: "",
+          // pin: ""
         });
       });
     } else {
@@ -72,6 +90,7 @@ export class SettingPage extends Component {
     this.setState({
       visible: true
     });
+    this.props.getOtp();
   };
 
   handleOk = () => {
@@ -127,6 +146,10 @@ export class SettingPage extends Component {
 
   render() {
     const { visible, confirmLoading } = this.state;
+    console.log(
+      "SettingPage -> render ->  visible, confirmLoading ",
+      this.props.totalAnimalCount
+    );
 
     return (
       <PageWrapper title="saoiTMga">
@@ -213,6 +236,7 @@ export class SettingPage extends Component {
                 placeholder="naama"
                 value={this.state.username}
                 onChange={this.onChangeUserName}
+                defaultValue={this.state.username}
               />
             </Form.Item>
           </Col>
@@ -224,12 +248,13 @@ export class SettingPage extends Component {
                 maxLength={10}
                 className=""
                 value={this.state.mobilenumber}
+                defaultValue={this.state.mobilenumber}
                 onChange={this.onChangeMobileNumber}
                 placeholder="0000000000"
               />
             </Form.Item>
           </Col>
-          <Col span={4} offset={1}>
+          {/* <Col span={4} offset={1}>
             <Form.Item label="paIna naMbar">
               <InputNumber
                 maxLength={4}
@@ -239,7 +264,7 @@ export class SettingPage extends Component {
                 placeholder="0000000000"
               />
             </Form.Item>
-          </Col>
+          </Col> */}
           {/* ------------------------------Save Button------------------------------ */}
           <Col className="button-group-print" span={3}>
             <Button
@@ -260,9 +285,13 @@ export class SettingPage extends Component {
         <Row className="row-margin">
           <Col offset={1} className="pin-set margin-left">
             <label>paIna naMbar:</label>
-            <Tag className="tag-clock" onClick={this.showModal} color="#f50">
+            <Button
+              className="tag-clock"
+              onClick={this.showModal}
+              type="danger"
+            >
               saoT nyau paIna naMbar
-            </Tag>
+            </Button>
           </Col>
         </Row>
         <Footer
@@ -276,8 +305,15 @@ export class SettingPage extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  ...state.Test
+});
 
-const mapDispatchToProps = {};
+// const mapDispatchToProps = {};
 
-export default connect(mapStateToProps, { addUser })(SettingPage);
+export default connect(mapStateToProps, {
+  addUser,
+  getAnimalChart,
+  editUser,
+  getOtp
+})(SettingPage);

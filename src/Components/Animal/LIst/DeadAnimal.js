@@ -157,18 +157,18 @@ class DeadAnimal extends Component {
   }
 
   componentDidMount = () => {
-    if (this.props.deadAnimalList.length > 0) {
+    // if (this.props.deadAnimalList.length > 0) {
+    //   this.setState({
+    //     data: this.props.deadAnimalList
+    //   });
+    // } else {
+    this.props.getDeadAnimal(this.state.pagination).then(res => {
+      console.log("this is a log in a  creadit animal api ->", res);
       this.setState({
-        data: this.props.deadAnimalList
+        data: res.docs
       });
-    } else {
-      this.props.getDeadAnimal(this.state.pagination).then(res => {
-        console.log("this is a log in a  creadit animal api ->", res);
-        this.setState({
-          data: res.docs
-        });
-      });
-    }
+    });
+    // }
   };
 
   handleDelete = (key, record) => {

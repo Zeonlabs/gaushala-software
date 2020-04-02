@@ -14,6 +14,23 @@ body {
   overflow: hidden;
 }
 
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+  background-color: rgba(240, 240, 240, 0);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-image: linear-gradient(135deg, #001529 10%, #1890ff 100%);
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
@@ -261,6 +278,6 @@ label {
 .ant-layout {
   overflow: hidden;
 }
-.income-form-wrapper{
-  display: flow-root !important; 
+.income-form-wrapper {
+  display: flow-root !important;
 }

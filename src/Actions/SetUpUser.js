@@ -15,6 +15,29 @@ export const addUser = data => dispatch =>
       });
   });
 
+export const editUser = data => dispatch =>
+  new Promise((resolve, reject) => {
+    fetchUrl(Setting.editUser.method, Setting.editUser.url, data)
+      .then(res => {
+        resolve(res);
+      })
+      .catch(e => {
+        console.log("e", e);
+        reject(e);
+      });
+  });
+
+export const getOtp = () => dispatch =>
+  new Promise((resolve, reject) => {
+    fetchUrl(Setting.getOtp.method, Setting.getOtp.url)
+      .then(res => {
+        resolve(res);
+      })
+      .catch(e => {
+        console.log("e", e);
+        reject(e);
+      });
+  });
 // export const getEmployee = id => dispatch =>
 //   new Promise((resolve, reject) => {
 //     // console.log("TCL: data", id);

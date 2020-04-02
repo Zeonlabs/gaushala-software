@@ -1,8 +1,21 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Form, Input, Button, Row, Col, Drawer, Select, DatePicker } from "antd";
+import {
+  Form,
+  Input,
+  Button,
+  Row,
+  Col,
+  Drawer,
+  Select,
+  DatePicker,
+  Modal
+} from "antd";
 import { getEmployeeDocs } from "../../Actions/Employee";
 import "../Cheques/SideDrawer.scss";
+import { employeeList } from "../../js/apiList";
+
+const baseUrl = "http://localhost:8081";
 
 class ProfileView extends Component {
   constructor(props) {
@@ -30,56 +43,35 @@ class ProfileView extends Component {
   render() {
     const { visible, onClose, data } = this.props;
     console.log("ProfileView -> render -> data", data);
+    console.log(
+      "ProfileView -> render -> {`${baseUrl}/${employeeList.employeeGetDocs.url}/${this.props.data._id}`}",
+      `${baseUrl}${employeeList.employeeGetDocs.url}/${this.props.data._id}`
+    );
     return (
-        <Drawer
-          visible={visible}
-          width={540}
-          placement="right"
-          closable={false}
-          onClose={onClose}
-        >
-          <div className="income-model-wrapper">
-            <Row>
-              <h2 className="form-titel ">caok fIlTr</h2>
-            </Row>
-
-            <div>
-              <Form className="form-income" onSubmit={this.handleSubmit}>
-                <Row
-                  type="flex"
-                  justify="space-between"
-                  className="member-form-wrapper"
-                >
-                  {/* ------------------------------Date--------------------------------- */}
-                  <Col span={24}></Col>
-
-                  {/* -----------------------------cheque Num-------------------------------- */}
-                  <Col className="gutter-row" span={24}></Col>
-                </Row>
-
-                <div className="m-btn-gru">
-                  {/* ----------------------------Report Button------------------------------- */}
-                  <Form.Item>
-                    <Button
-                      size="default"
-                      type="primary"
-                      htmlType="submit"
-                      icon="snippets"
-                    >
-                      JnaroT rIpaaoT
-                    </Button>
-                  </Form.Item>
-                </div>
-              </Form>
-            </div>
-          </div>
-          <p>{data.name}</p>
-          <p>{data.phone}</p>
-          <p>{data.address}</p>
-          <p>{data.type}</p>
-          {/* <img src={"data:image/jpeg;base64," + btoa(this.state.userDocs)} /> */}
-        </Drawer>
-
+      <Modal
+        centered
+        // maskClosable={false}
+        visible={visible}
+        footer={null}
+        // onOk={this.handelData}
+        onCancel={onClose}
+      >
+        <div className="income-model-wrapper">
+          <Row>
+            <h2 className="form-titel ">caok fIlTr</h2>
+          </Row>
+        </div>
+        <img
+          className="profile-view-image"
+          src={`${baseUrl}${employeeList.employeeGetDocs.url}/${this.props.data._id}`}
+          alt="userDoc"
+        />
+        {/* <p className="employee-name">{data.name}</p>
+        <p>{data.phone}</p>
+        <p>{data.address}</p>
+        <p>{data.type}</p> */}
+        {/* <img src={"data:image/jpeg;base64," + btoa(this.state.userDocs)} /> */}
+      </Modal>
     );
   }
 }

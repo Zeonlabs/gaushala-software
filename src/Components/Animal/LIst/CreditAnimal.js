@@ -252,19 +252,37 @@ class CreditAnimal extends Component {
       "CreditAnimal -> componentDidMount -> this.props.incomeAnimalList",
       this.props.incomeAnimalList
     );
-    if (this.props.incomeAnimalList.length > 0) {
+    // if (this.props.incomeAnimalList.length > 0) {
+    //   this.setState({
+    //     data: this.props.incomeAnimalList
+    //   });
+    // } else {
+    this.props.getIncomeAnimal(this.state.pagination).then(res => {
+      // console.log("this is a log in a  creadit animal api ->", res);
       this.setState({
-        data: this.props.incomeAnimalList
+        data: res.docs
       });
-    } else {
-      this.props.getIncomeAnimal(this.state.pagination).then(res => {
-        console.log("this is a log in a  creadit animal api ->", res);
-        this.setState({
-          data: res.docs
-        });
-      });
-    }
+    });
+    // }
   };
+
+  // componentDidUpdate = prevProps => {
+  //   console.log(
+  //     "CreditAnimal -> prevProps---------------------------------------",
+  //     prevProps.incomeAnimalList,
+  //     this.props.incomeAnimalList
+  //   );
+  //   if (
+  //     prevProps.incomeAnimalList.length !== this.props.incomeAnimalList.length
+  //   ) {
+  //     this.props.getIncomeAnimal(this.state.pagination).then(res => {
+  //       console.log("this is a log in a  creadit animal api ->", res);
+  //       this.setState({
+  //         data: res.docs
+  //       });
+  //     });
+  //   }
+  // };
 
   handelback = () => {
     console.log("back", this.props);

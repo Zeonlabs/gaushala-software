@@ -60,8 +60,12 @@ class DeadAnimal extends Component {
     console.log("TCL: data", data);
     if (this.props.type) {
       this.props.submit(this.props.data._id, data);
+      this.props.form.resetFields();
     } else {
-      this.props.addDeadAnimal(data).then(res => this.props.toggleModel());
+      this.props.addDeadAnimal(data).then(res => {
+        this.props.toggleModel();
+        this.props.form.resetFields();
+      });
     }
   };
 

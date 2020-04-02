@@ -108,18 +108,18 @@ class TotalAnimal extends Component {
   }
 
   componentDidMount = () => {
-    if (this.props.totalAnimalList.length > 0) {
+    // if (this.props.totalAnimalList.length > 0) {
+    //   this.setState({
+    //     data: this.props.totalAnimalList
+    //   });
+    // } else {
+    this.props.getTotalAnimal(this.state.pagination).then(res => {
+      console.log("this is a log in a  creadit animal api ->", res);
       this.setState({
-        data: this.props.totalAnimalList
+        data: res.docs
       });
-    } else {
-      this.props.getTotalAnimal(this.state.pagination).then(res => {
-        console.log("this is a log in a  creadit animal api ->", res);
-        this.setState({
-          data: res.docs
-        });
-      });
-    }
+    });
+    // }
   };
 
   onChange = (dates, dateStrings) => {

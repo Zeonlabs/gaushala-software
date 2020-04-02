@@ -76,8 +76,12 @@ class DebitAnimal extends Component {
     console.log("TCL: data", data);
     if (this.props.type) {
       this.props.submit(this.props.data._id, data);
+      this.props.form.resetFields();
     } else {
-      this.props.addGivenAnimal(data).then(res => this.props.toggleModel());
+      this.props.addGivenAnimal(data).then(res => {
+        this.props.toggleModel();
+        this.props.form.resetFields();
+      });
     }
   };
 

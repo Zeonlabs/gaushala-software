@@ -3,7 +3,9 @@ const apiList = {
 };
 
 export const Setting = {
-  addUser: { method: "POST", url: "/me/setup" }
+  addUser: { method: "POST", url: "/me/setup" },
+  editUser: { method: "PATCH", url: "/me" },
+  getOtp: { method: "GET", url: "/me/req/otp" }
 };
 
 export const employeeList = {
