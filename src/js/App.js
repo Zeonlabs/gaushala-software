@@ -1,15 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import { BrowserRouter, Redirect, Route, Switch, } from "react-router-dom";
-import { getToken } from './LocalStorage';
-import routes from './Routes';
+import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
+import { getToken } from "./LocalStorage";
+import routes from "./Routes";
 // import { renderRoutes } from "react-router-config";
 // import ScrollToTop from './ScrollTop';
 // import Routes from "../routes";
 // import routes from "./Routes";
 // import AppD from "../app";
 // import Home from "../containers/Home/Home";
-import Home from '../Components/Dashboard/Home';
+import Home from "../Components/Dashboard/Home";
 import CharityIncome from "../Components/CharityIncome/CharityIncome";
 import Expences from "../Components/Expences/Expences";
 import Cheques from "../Components/Cheques/Cheques";
@@ -18,7 +18,8 @@ import Employees from "../Components/Employees/Employees";
 import Notes from "../Components/Notes/Notes";
 import TrustMembers from "../Components/TrustMembers/TrustMembers";
 import Income from "../Components/CharityIncome/Income";
-import SettingPage from "../Components/SettingPage/SettingPage"
+import SettingPage from "../Components/SettingPage/SettingPage";
+import Login from "../Components/Login/LoginPage";
 // import {
 //   getCities,
 // } from '../actions/global';
@@ -26,25 +27,26 @@ import SettingPage from "../Components/SettingPage/SettingPage"
 const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
-    render={(props) => (
-      getToken()
-
-        ? <Component {...props} />
-        : <Redirect to={{ pathname: '/' }} />
-    )
-        }
+    render={props =>
+      getToken() ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to={{ pathname: "/" }} />
+      )
+    }
   />
 );
 
 const LoginRoute = ({ component: LoginComponent, ...rest }) => (
   <Route
     {...rest}
-    render={(props) => (
-      getToken()
-        ? <Redirect to={{ pathname: '/home' }} />
-        : <LoginComponent {...props} />
-    )
-        }
+    render={props =>
+      getToken() ? (
+        <Redirect to={{ pathname: "/home" }} />
+      ) : (
+        <LoginComponent {...props} />
+      )
+    }
   />
 );
 
@@ -53,6 +55,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         {/* <LoginRoute exact path={routes.login} component={Home} /> */}
+        <Route exact path={routes.login} component={Login} />
         <Route path={routes.dashboard} component={Home} />
         <Route path={routes.charity} component={Income} />
         <Route path={routes.expences} component={Expences} />

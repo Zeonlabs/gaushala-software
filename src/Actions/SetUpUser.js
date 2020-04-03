@@ -78,6 +78,10 @@ export const valiDateOtp = data => dispatch =>
   new Promise((resolve, reject) => {
     fetchUrl(Setting.validateOtp.method, `${Setting.validateOtp.url}${data}`)
       .then(res => {
+        console.log(
+          "resjasdgjhhhhhhhhhhhh____________+++++++++++++++++++++++==",
+          res
+        );
         resolve(res);
       })
       .catch(e => {

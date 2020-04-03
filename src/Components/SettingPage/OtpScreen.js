@@ -173,14 +173,17 @@ class OtpScreen extends Component {
     if (this.state.otp.length === 4) {
       // console.log('this is a log in a handel otp next button -------', this.state.otp);
       const data = parseInt(this.state.otp);
-      console.log(
-        "data-------------=========================---------------------",
-        data
-      );
+      // console.log(
+      //   "data-------------=========================---------------------",
+      //   data
+      // );
       this.props
         .valiDateOtp(data)
         .then(res => {
-          // console.log('Otp Match', res);
+          // console.log(
+          //   "Otp Match--------------------........................>>>>>>>>>>>>>>>>>>>>>",
+          //   res
+          // );
           // this.props.next();
           this.setState({
             verify: false
@@ -188,6 +191,7 @@ class OtpScreen extends Component {
           this.props.newPinSetup(data);
         })
         .catch(e => {
+          message.warning("invalid Otp");
           this.setState({
             wrongOtp: true,
             verify: false,

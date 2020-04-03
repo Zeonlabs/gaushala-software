@@ -28,6 +28,7 @@ const ACTION_HANDLERS = {
       queryUrl = `${queryUrl}?${query}`;
     }
     return axios.get(baseUrl + queryUrl, {
+      // withCredentials: true,
       cancelToken: new axios.CancelToken(c => {
         cancel.push({ url, c });
       })
@@ -61,47 +62,34 @@ export const setHeaders = (contentType, authToken) => {
 };
 
 export const showErrorAsToast = (error, type) => {
-  if (
-    error.response &&
-    Object.prototype.hasOwnProperty.call(error.response, "data")
-  ) {
-    const value = error.response.data;
-    if (Object.prototype.hasOwnProperty.call(value, "errors")) {
-      const { errors } = value;
+  const { response } = error;
+  if (response?.data) {
+    const { errors, message: msg } = response.data;
+    if (errors) {
       Object.keys(errors).forEach(x => {
         if (typeof errors[x] === "object") {
           Object.keys(errors[x]).forEach(y => {
-            return notification.error({ message: errors[x][y] });
+            // message.error(errors[x][y]);
           });
-        } else if (errors[x].length) {
-          //  return( errors[x].map(e => message.error(e)))
+        } else if (Array.isArray(errors[x])) {
+          errors[x].map(e => {
+            /* message.error(e) */
+          });
         }
       });
     }
-    if (value.message !== undefined) {
-      if (typeof value.message === "string") {
-        return notification.error({ message: value.message });
-      }
-      return Promise.reject(value.message);
+    if (msg !== undefined && typeof msg === "string") {
+      // message.error(msg);
     }
   } else if (type.toUpperCase() !== "GET") {
-    return message.error("Something went wrong, Please do try again !");
+    // message.error('Something went wrong, Please do try again !');
   }
-
-  if (Object.prototype.hasOwnProperty.call(error.response, "data")) {
-    const value = error.response.data;
-    if (value.data) {
-      if (Object.prototype.hasOwnProperty.call(value.data, "phone_verified")) {
-        return Promise.reject(error.response.data);
-      }
-    }
-  }
-  if (error.response.status === 401) {
-    LocalStorage.clean();
-    window.location.href = routes.login;
-  }
+  // if (response?.status === 401) {
+  //   LocalStorage.clean();
+  //   window.location.href = routes.login;
+  // }
   cache = [];
-  return Promise.reject(error.response.data.message);
+  return Promise.reject(error);
 };
 
 export const fetchUrl = (
@@ -110,17 +98,19 @@ export const fetchUrl = (
   data,
   authToken = true,
   fetchBaseResponse = false,
-  contentType
+  contentType,
+  shouldRefetch
 ) => {
-  console.log("TCL: fetchUrl -> type", type, url, data);
+  console.log("type", type);
   setHeaders(contentType, authToken);
-  if (type.toUpperCase() === "GET") {
-    if (cache.indexOf(url) !== -1) {
-      const controller = cancel.filter(i => i.url === url);
-      // console.log("controller", controller);
-      controller.map(item => item.c());
-    } else {
-      cache.push(url);
+  if (!shouldRefetch) {
+    if (type.toUpperCase() === "GET") {
+      if (cache.indexOf(url) !== -1) {
+        const controller = cancel.filter(i => i.url === url);
+        controller.map(item => item.c());
+      } else {
+        cache.push(url);
+      }
     }
   }
   const handler = ACTION_HANDLERS[type.toUpperCase()];
@@ -128,5 +118,131 @@ export const fetchUrl = (
     ? handler(url, data)
         .then(res => Promise.resolve(res.data))
         .catch(error => showErrorAsToast(error, type))
-    : handler(url, data);
+    : handler(url, data).catch(error => showErrorAsToast(error, type));
 };
+
+// import axios from "axios";
+// import { message } from "antd";
+// import qs from "qs";
+// import Cookies from "js-cookie";
+// import LocalStorage, {
+//   Crypto,
+//   getToken,
+//   localStorageKey
+// } from "./LocalStorage";
+// import routes from "./routes";
+
+// const isOnline = require("is-online");
+
+// const baseUrl = `${process.env.MIX_FETCH_URL}/`;
+// const domainUrl = `${process.env.MIX_DOMAIN_URL}/`;
+// const GET = "GET";
+// const DELETE = "DELETE";
+// const POST = "POST";
+// const PUT = "PUT";
+// const PATCH = "PATCH";
+// let cache = [];
+// const cancel = [];
+// const ACTION_HANDLERS = {
+//   [GET]: (url, data) => {
+//     let queryUrl = url;
+//     if (data !== undefined) {
+//       const query = qs.stringify(data);
+//       queryUrl = `${queryUrl}?${query}`;
+//     }
+//     return axios.get(baseUrl + queryUrl, {
+//       withCredentials: true,
+//       cancelToken: new axios.CancelToken(c => {
+//         cancel.push({ url, c });
+//       })
+//     });
+//   },
+//   [DELETE]: (url, data) => axios.delete(baseUrl + url, { data }),
+//   [POST]: (url, data) =>
+//     axios.post(baseUrl + url, data, {
+//       credentials: "include",
+//       withCredentials: true
+//     }),
+//   [PUT]: (url, data) =>
+//     axios.put(baseUrl + url, data, {
+//       credentials: "include",
+//       withCredentials: true
+//     }),
+//   [PATCH]: (url, data) =>
+//     axios.patch(baseUrl + url, data, {
+//       credentials: "include",
+//       withCredentials: true
+//     })
+// };
+// export const setHeaders = (contentType, authToken) => {
+//   // set auth token
+
+//   const token = Cookies.get("nekotfrsc");
+//   // console.log('token', token);
+//   axios.defaults.headers.common["X-CSRFToken"] = `${token || "hh"}`;
+
+//   if (contentType) {
+//     axios.defaults.headers.post["Content-Type"] = contentType;
+//     axios.defaults.headers.post.Accept = "application/json";
+//   } else {
+//     delete axios.defaults.headers.post["Content-Type"];
+//   }
+// };
+// export const showErrorAsToast = (error, type) => {
+//   const { response } = error;
+//   if (response?.data) {
+//     const { errors, message: msg } = response.data;
+//     if (errors) {
+//       Object.keys(errors).forEach(x => {
+//         if (typeof errors[x] === "object") {
+//           Object.keys(errors[x]).forEach(y => {
+//             // message.error(errors[x][y]);
+//           });
+//         } else if (Array.isArray(errors[x])) {
+//           errors[x].map(e => {
+//             /* message.error(e) */
+//           });
+//         }
+//       });
+//     }
+//     if (msg !== undefined && typeof msg === "string") {
+//       // message.error(msg);
+//     }
+//   } else if (type.toUpperCase() !== "GET") {
+//     // message.error('Something went wrong, Please do try again !');
+//   }
+//   // if (response?.status === 401) {
+//   //   LocalStorage.clean();
+//   //   window.location.href = routes.login;
+//   // }
+//   cache = [];
+//   return Promise.reject(error);
+// };
+// export const fetchUrl = (
+//   type,
+//   url,
+//   data,
+//   authToken = true,
+//   fetchBaseResponse = false,
+//   contentType,
+//   shouldRefetch
+// ) => {
+//   console.log("type", type);
+//   setHeaders(contentType, authToken);
+//   if (!shouldRefetch) {
+//     if (type.toUpperCase() === "GET") {
+//       if (cache.indexOf(url) !== -1) {
+//         const controller = cancel.filter(i => i.url === url);
+//         controller.map(item => item.c());
+//       } else {
+//         cache.push(url);
+//       }
+//     }
+//   }
+//   const handler = ACTION_HANDLERS[type.toUpperCase()];
+//   return !fetchBaseResponse
+//     ? handler(url, data)
+//         .then(res => Promise.resolve(res.data))
+//         .catch(error => showErrorAsToast(error, type))
+//     : handler(url, data).catch(error => showErrorAsToast(error, type));
+// };

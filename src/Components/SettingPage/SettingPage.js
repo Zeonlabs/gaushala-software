@@ -178,7 +178,8 @@ export class SettingPage extends Component {
       };
       this.props.resetPin(data).then(res => {
         this.setState({
-          visible: false
+          visible: false,
+          visibleModal: false
         });
       });
     } else {
