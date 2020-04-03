@@ -111,6 +111,13 @@ class IncomeMobels extends Component {
       const id = this.props.data._id;
       console.log("incomeData -> id", id);
       this.props.submit(id, data);
+      if (values.sms === "yes") {
+        const data = {
+          phone: parseInt(values.phone, 10),
+          message
+        };
+        this.props.sendSms(data);
+      }
       // this.props.editIncome(id, data).then(res => this.props.toggleModel());
     } else {
       this.props.addIncome(data).then(res => {

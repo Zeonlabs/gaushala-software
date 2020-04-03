@@ -30,16 +30,18 @@
   width: 100%;
 }
 
-tbody,.ant-table-tbody {
-  // height:150px;
-  height: calc(100vh - 50vh);
-  overflow: scroll !important;
-  overflow-y: scroll !important;
+.table-income {
+  .ant-table {
+    // height:150px;
+    height: calc(100vh - 42vh);
+    overflow: scroll !important;
+    overflow-y: scroll !important;
+  }
 }
 
-// .income-expense-table {
-//   .ant-table {
-//     height: initial;
-//     overflow-y: hidden;
-//   }
-// }
+.income-expense-table {
+  .ant-table {
+    height: initial;
+    overflow-y: hidden;
+  }
+}

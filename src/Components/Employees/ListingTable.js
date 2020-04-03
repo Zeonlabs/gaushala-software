@@ -133,6 +133,7 @@ class ListingTable extends Component {
             pageSize: this.props.pageSize
           }}
           dataSource={this.props.data}
+          // scroll={{ x: 240, y: 500 }}
         />
       </div>
     );
