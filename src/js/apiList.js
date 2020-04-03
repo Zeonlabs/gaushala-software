@@ -5,7 +5,8 @@ const apiList = {
 export const Setting = {
   addUser: { method: "POST", url: "/me/setup" },
   editUser: { method: "PATCH", url: "/me" },
-  getOtp: { method: "GET", url: "/me/req/otp" }
+  getOtp: { method: "GET", url: "/me/req/otp" },
+  sendSms: { method: "POST", url: "/sms/send" }
 };
 
 export const employeeList = {

@@ -38,6 +38,19 @@ export const getOtp = () => dispatch =>
         reject(e);
       });
   });
+
+export const sendSms = data => dispatch =>
+  new Promise((resolve, reject) => {
+    fetchUrl(Setting.sendSms.method, Setting.sendSms.url, data)
+      .then(res => {
+        resolve(res);
+      })
+      .catch(e => {
+        console.log("e", e);
+        reject(e);
+      });
+  });
+
 // export const getEmployee = id => dispatch =>
 //   new Promise((resolve, reject) => {
 //     // console.log("TCL: data", id);
