@@ -51,6 +51,41 @@ export const sendSms = data => dispatch =>
       });
   });
 
+export const loginUser = data => dispatch =>
+  new Promise((resolve, reject) => {
+    fetchUrl(Setting.loginUser.method, Setting.loginUser.url, data)
+      .then(res => {
+        resolve(res);
+      })
+      .catch(e => {
+        console.log("e", e);
+        reject(e);
+      });
+  });
+export const resetPin = data => dispatch =>
+  new Promise((resolve, reject) => {
+    fetchUrl(Setting.resetPin.method, Setting.resetPin.url, data)
+      .then(res => {
+        resolve(res);
+      })
+      .catch(e => {
+        console.log("e", e);
+        reject(e);
+      });
+  });
+
+export const valiDateOtp = data => dispatch =>
+  new Promise((resolve, reject) => {
+    fetchUrl(Setting.validateOtp.method, `${Setting.validateOtp.url}${data}`)
+      .then(res => {
+        resolve(res);
+      })
+      .catch(e => {
+        console.log("e", e);
+        reject(e);
+      });
+  });
+
 // export const getEmployee = id => dispatch =>
 //   new Promise((resolve, reject) => {
 //     // console.log("TCL: data", id);

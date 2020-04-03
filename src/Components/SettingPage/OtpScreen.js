@@ -12,6 +12,7 @@ import {
 } from "antd";
 import { connect } from "react-redux";
 import OTPInput, { ResendOTP } from "../../Static/Widgets/lib/index";
+import { getOtp, valiDateOtp } from "../../Actions/SetUpUser";
 // import Cards from "../Common/Card";
 // import { setMobileNumber, setOtpPost } from "../../actions/global";
 // import { setLoginData } from "../../actions/localData";
@@ -106,7 +107,7 @@ class OtpScreen extends Component {
     });
 
     await this.props
-      .setMobileNumber(data)
+      .getOtp()
       .then(res => {
         this.setState({
           resendClick: false,
@@ -159,29 +160,32 @@ class OtpScreen extends Component {
       disabled
       onClick={this.handelResendClick}
     >
+      {/* here you need to change a font of resent otp */}
       {this.state.resendClick ? <Spin indicator={spinIcon} /> : "OTP Resent"}
     </button>
   );
 
   handleOtp = e => {
     e.preventDefault();
-    this.setState({
-      verify: true
-    });
+    // this.setState({
+    //   verify: true
+    // });
     if (this.state.otp.length === 4) {
       // console.log('this is a log in a handel otp next button -------', this.state.otp);
-      const data = {
-        otp: parseInt(this.state.otp)
-      };
+      const data = parseInt(this.state.otp);
+      console.log(
+        "data-------------=========================---------------------",
+        data
+      );
       this.props
-        .setOtpPost(data)
+        .valiDateOtp(data)
         .then(res => {
           // console.log('Otp Match', res);
-          this.props.next();
+          // this.props.next();
           this.setState({
             verify: false
           });
-          this.props.setLoginData();
+          this.props.newPinSetup(data);
         })
         .catch(e => {
           this.setState({
@@ -209,7 +213,7 @@ class OtpScreen extends Component {
               {/* <div className="otp-page-heading">
             <h1 className="login-heading-text">OTP Verification</h1>
           </div> */}
-              <h1>Aao.TI.paI vaorIfIkoSana</h1> 
+              <h1>Aao.TI.paI vaorIfIkoSana</h1>
               <div
                 className={
                   this.state.otpMessage === "Invalid"
@@ -231,7 +235,7 @@ class OtpScreen extends Component {
                         ? "Aao.TI.paI Aapana maaobaa[la naMbar par frI maaoklayaao."
                         : "Aao.TI.paI Aapana maaobaa[la naMbar par maaoklayaao."}
                     </p>
-                    <p className="">{`maao.: ${this.state.mobile}`}</p>
+                    <p className="">{`maao.: ${this.props.mobile}`}</p>
                   </>
                 )}
               </div>
@@ -267,7 +271,11 @@ class OtpScreen extends Component {
                     />
                   </div>
                   <div className="otp-button-width menu-list-title">
-                    <Button type="primary" style={{ padding: "0px 30px" }}>
+                    <Button
+                      type="primary"
+                      style={{ padding: "0px 30px" }}
+                      onClick={this.handleOtp}
+                    >
                       {this.state.verify ? (
                         <Spin indicator={spinIcon} />
                       ) : (
@@ -317,4 +325,4 @@ class OtpScreen extends Component {
 //   ...state.root
 // });
 
-export default OtpScreen;
+export default connect(null, { getOtp, valiDateOtp })(OtpScreen);

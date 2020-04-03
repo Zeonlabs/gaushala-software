@@ -86,11 +86,7 @@ class IncomeMobels extends Component {
     );
     const date = moment(values.date).format("YYYY-MM-DD");
     const messageDate = moment(values.date).format("DD-MM-YYYY");
-    const message = `સિતારામ ગૌશાળા ટ્સ્ટ 
-                    ગામઃવિરડી, તા:ગારીયાધાર, જી: ભાવનગર,
-                    ૨જી.નં :ઈ-3256- ભાવનગર આપ શ્રી દ્રારા 
-                    તા:${messageDate} ના રોજ ₹ ${finalTotal}/- દાન પેટે પ્રાપ્ત થયેલ છે. 
-                    સહકાર ખુબ આભાર.`;
+    const message = `સિતારામ ગૌશાળા ટ્સ્ટ ગામઃવિરડી, તા:ગારીયાધાર, જી: ભાવનગર,૨જી.નં :ઈ-3256- ભાવનગર આપ શ્રી દ્રારા તા:${messageDate} ના રોજ ₹ ${finalTotal}/- દાન પેટે પ્રાપ્ત થયેલ છે. સહકાર ખુબ આભાર.`;
 
     const data = {
       slip_no: values.slip_no,

@@ -18,7 +18,7 @@ import {
   message
 } from "antd";
 import OtpScreen from "./OtpScreen";
-import { addUser, editUser, getOtp } from "../../Actions/SetUpUser";
+import { addUser, editUser, getOtp, resetPin } from "../../Actions/SetUpUser";
 import { getAnimalChart } from "../../Actions/ChartActions";
 
 const { Option } = Select;
@@ -36,7 +36,11 @@ export class SettingPage extends Component {
       iconLoading: false,
       username: "",
       mobilenumber: "",
-      pin: ""
+      pin: "",
+      firstPin: 0,
+      secondPin: 0,
+      otp: 0
+      // newPinStatus:false
     };
   }
   componentDidMount = () => {
@@ -110,15 +114,23 @@ export class SettingPage extends Component {
     console.log("Clicked cancel button");
 
     this.setState({
-      visible: false
+      visible: false,
+      visibleModal: false
     });
   };
 
-  handelChange = () => {
+  handelNewPinSetup = data => {
     this.setState({
-      visibleModal: !this.state.visibleModal
+      visibleModal: true,
+      otp: data
     });
   };
+
+  // handelChange = () => {
+  //   this.setState({
+  //     visibleModal: !this.state.visibleModal
+  //   });
+  // };
 
   onChangeUserName = e => {
     console.log(
@@ -144,6 +156,36 @@ export class SettingPage extends Component {
     });
   };
 
+  handelFirstPin = e => {
+    console.log("SettingPage -> e", e);
+    this.setState({
+      firstPin: e
+    });
+  };
+
+  handelSecondPin = e => {
+    console.log("SettingPage -> e", e);
+    this.setState({
+      secondPin: e
+    });
+  };
+
+  handelResetPin = () => {
+    if (this.state.firstPin === this.state.secondPin) {
+      const data = {
+        otp: this.state.otp,
+        pin: this.state.secondPin
+      };
+      this.props.resetPin(data).then(res => {
+        this.setState({
+          visible: false
+        });
+      });
+    } else {
+      message.error("check the pin both pin has to be same !");
+    }
+  };
+
   render() {
     const { visible, confirmLoading } = this.state;
     console.log(
@@ -158,6 +200,7 @@ export class SettingPage extends Component {
             title="pIn se3"
             visible={visible}
             onOk={this.handleOk}
+            maskClosable={false}
             confirmLoading={confirmLoading}
             onCancel={this.handleCancel}
             footer={null}
@@ -183,39 +226,51 @@ export class SettingPage extends Component {
                   <Col span={8}></Col>
                   <Col span={8}>
                     <Form.Item label="nvo pIn n>br ]mero:">
-                      <Input />
+                      <InputNumber onChange={this.handelFirstPin} />
                     </Form.Item>
                     <Form.Item label="frI pIn n>br ]mero:">
-                      <Input />
+                      <InputNumber onChange={this.handelSecondPin} />
                     </Form.Item>
                   </Col>
                   <Col span={8}></Col>
                 </Row>
+
+                <Row gutter={[16, 16]}>
+                  <Col span={8}></Col>
+                  <Col span={8}></Col>
+                  <Col span={8} style={{ padding: 0 }}>
+                    {/* ------------------------------Submit button--------------------------- */}
+                    <Form.Item>
+                      <Button
+                        size="default"
+                        htmlType="submit"
+                        icon="safety-certificate"
+                        type="primary"
+                        style={{ float: "right" }}
+                        onClick={this.handelResetPin}
+                      >
+                        sabamaIT
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                </Row>
               </div>
-              <Row gutter={[16, 16]}>
-                <Col span={8}></Col>
-                <Col span={8}></Col>
-                <Col span={8} style={{ padding: 0 }}>
-                  {/* ------------------------------Submit button--------------------------- */}
-                  <Form.Item>
-                    <Button
-                      size="default"
-                      htmlType="submit"
-                      icon="safety-certificate"
-                      type="primary"
-                      style={{ float: "right" }}
-                    >
-                      sabamaIT
-                    </Button>
-                  </Form.Item>
-                </Col>
-              </Row>
             </div>
 
-            <OtpScreen
-              className="otp-verification-page"
-              handelShows={this.handelChange}
-            />
+            <div
+              className={
+                !this.state.visibleModal
+                  ? "display-pin-change"
+                  : "display-none-pin-change"
+              }
+            >
+              <OtpScreen
+                className="otp-verification-page"
+                // handelShows={this.handelChange}
+                mobile={this.state.mobilenumber}
+                newPinSetup={this.handelNewPinSetup}
+              />
+            </div>
           </Modal>
         </div>
 
@@ -315,5 +370,6 @@ export default connect(mapStateToProps, {
   addUser,
   getAnimalChart,
   editUser,
-  getOtp
+  getOtp,
+  resetPin
 })(SettingPage);

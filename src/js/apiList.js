@@ -6,7 +6,10 @@ export const Setting = {
   addUser: { method: "POST", url: "/me/setup" },
   editUser: { method: "PATCH", url: "/me" },
   getOtp: { method: "GET", url: "/me/req/otp" },
-  sendSms: { method: "POST", url: "/sms/send" }
+  sendSms: { method: "POST", url: "/sms/send" },
+  loginUser: { method: "POST", url: "/auth" },
+  resetPin: { method: "PATCh", url: "/me/reset/pin" },
+  validateOtp: { method: "GET", url: "/me/otp/validate/" }
 };
 
 export const employeeList = {
