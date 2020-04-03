@@ -65,6 +65,15 @@ export const Expense = [
     width: 250,
     render: (text, record) => convertNumberToType(text, "expense")
   },
+  {
+    title: "dana svaIkar",
+    dataIndex: "money",
+    key: "7",
+    width: 130,
+    render: (text, record) =>
+      // console.log("Income -> constructor -> record", text, record)
+      text.type === "cheque" ? <p>{text.cheque_no}</p> : <p>raokD</p>
+  },
   // {
   //   // Expense in
   //   title: "cukv~aI",
