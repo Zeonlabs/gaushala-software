@@ -52,11 +52,10 @@ class IncomeMobels extends Component {
 
   componentDidUpdate = prevProps => {
     if (prevProps !== this.props) {
-      // console.log(
-      //   "this is  aedit income modal --------------------------->",
-      //   this.props,
-      //   this.state.type
-      // );
+      console.log(
+        "this is  aedit income modal --------------------------->",
+        this.props
+      );
       if (this.props.modalType) {
         // console.log("this is  aedit this.props.modalType ->", this.props);
         this.setState({
@@ -66,6 +65,10 @@ class IncomeMobels extends Component {
           if (this.props.cash === "cheque") {
             this.setState({
               type: "cheque"
+            });
+          } else {
+            this.setState({
+              type: "cash"
             });
           }
         }
@@ -139,7 +142,8 @@ class IncomeMobels extends Component {
     this.props.form.resetFields();
     this.setState({
       type: "cash",
-      resetStatus: !this.state.resetStatus
+      resetStatus: !this.state.resetStatus,
+      typeStatus: ""
     });
   };
 
@@ -288,7 +292,8 @@ class IncomeMobels extends Component {
       tableData: "",
       resetStatus: !this.state.resetStatus,
       type: "cash",
-      printStatus: false
+      printStatus: false,
+      typeStatus: ""
     });
   };
 
