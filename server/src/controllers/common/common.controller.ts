@@ -2,6 +2,9 @@ import {Request, Response} from 'express'
 import {Model as MongoModel} from 'mongoose'
 import { IncomeModel, ExpenseModel, EmployeeModel, TrustMemberModel, AnimalIncomeModel, DeadAnimalModel, AnimalCostModel, GivenAnimalModel, AnimalStmtModel, GivenAnimal } from '../../schema'
 import { IncomeRepository, ExpenseRepository } from '../../repository'
+import {getStatusCode} from '../../common/utils.common'
+import {sendSms} from '../../common/sms.common'
+import { insufficientSmsBalanceException } from '../../common/exceptions.common'
 
 export const generateFilteredReport = (Model: MongoModel<IncomeModel | ExpenseModel | EmployeeModel | TrustMemberModel | AnimalIncomeModel | DeadAnimalModel | AnimalCostModel | GivenAnimalModel | AnimalStmtModel >) => async (req: Request, res: Response) => {
     try{
@@ -103,5 +106,18 @@ export const getIncomeExpenseAnalytics = async (req: Request, res: Response) => 
     }
     catch(e){
         res.status(e.code || 400).send({message: e.message})
+    }
+}
+
+export const smsController = async (req: Request, res: Response) => {
+    try{
+        const phone: number = req.body.phone;
+        const msg: string = req.body.message;
+        
+        const smsRes: any = await sendSms(phone, msg)
+        if(smsRes.responseCode == 3011) throw new insufficientSmsBalanceException()
+    }
+    catch(e){
+        res.status(getStatusCode(e.code)).send({ message: e.message })
     }
 }

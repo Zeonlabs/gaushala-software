@@ -30,3 +30,11 @@ export class insufficientSmsBalanceException extends Error{
     code=419
     message = 'insufficient sms balance'
 }
+export class InvalidOtpException extends Error{
+    code=401
+    message='invalid otp'
+}
+export class InvalidOtpRequest extends Error{
+    code=406
+    message='invalid otp request - otp not available'
+}

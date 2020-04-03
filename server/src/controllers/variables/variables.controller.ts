@@ -1,9 +1,10 @@
 import _ from 'lodash'
 import { Request, Response } from 'express';
 import { VariablesRepository } from '../../repository'
-import { PinNotFoundException, RequiredInputNotProvidedException, insufficientSmsBalanceException } from '../../common/exceptions.common';
+import { PinNotFoundException, RequiredInputNotProvidedException, insufficientSmsBalanceException, InvalidOtpException, InvalidOtpRequest } from '../../common/exceptions.common';
 import { VariablesModel } from '../../schema';
-import { sendOtpSms } from '../../common/sms.common';
+import { sendSms } from '../../common/sms.common';
+import { getStatusCode } from '../../common/utils.common';
 
 const initVariables = async (req: Request, res: Response) => {
     try{
@@ -42,14 +43,29 @@ const requestOtp = async (req: Request, res: Response) => {
         const {phone, otp} = await variablesRepo.issueOtp()
 
         //TODO: send otp to sms
-        const smsRes: any = await sendOtpSms(phone, otp)
+        const smsRes: any = await sendSms(phone, `Your software PIN reset OTP is ${otp}`)
         if(smsRes.responseCode == 3011) throw new insufficientSmsBalanceException()
 
         res.send()
     }
     catch(e){
-        console.log(e)
+        // console.log(e)
         res.status(e.code || 400).send({ message: e.message })
+    }
+}
+
+const validateOtp = async (req: Request, res: Response) => {
+    try{
+        const inputOtp: number = parseInt(req.params.otp);
+        const variablesRepo = new VariablesRepository()
+        const otp = await variablesRepo.getOtp(inputOtp)
+
+        if(!otp) throw new InvalidOtpRequest()
+        if(inputOtp != otp) throw new InvalidOtpException()
+        res.send()
+    }
+    catch(e){
+        res.status(getStatusCode(e.code)).send({ message: e.message })
     }
 }
 
@@ -64,7 +80,7 @@ const resetPin = async (req: Request, res: Response) => {
     }
     catch(e){
         console.log(e)
-        res.status(e.code || 400).send({message: e.message})
+        res.status(getStatusCode(e.code)).send({message: e.message})
     }
 }
 
@@ -75,7 +91,7 @@ const getVars = async (req: Request, res: Response) => {
         res.json(vars)
     }
     catch(e){
-        res.status(e.code || 400).send({message: e.message})
+        res.status(getStatusCode(e.code)).send({message: e.message})
     }
 }
 
@@ -83,6 +99,7 @@ export {
     initVariables,
     updateTrustInfo,
     requestOtp,
+    validateOtp,
     resetPin,
     getVars
 }

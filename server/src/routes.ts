@@ -1,5 +1,5 @@
 import {Application, Router} from 'express'
-import { saveIncome, initVariables, saveExpense, addTrustMember, deleteTrustMember, updateTrustMember, addNote, updateNote, deleteNote, generateFilteredReport, saveEmployee, getEmpDoc, deleteIncome, deleteExpense, editIncome, editExpense, saveAnimalIncome, deleteAnimalIncome, editAnimalIncome, saveDeadAnimal, deleteDeadAnimal, editDeadAnimal, saveGivenAnimal, deleteGivenAnimal, editGivenAnimal, saveAnimalCost, deleteAnimalCost, editAnimalCost, requestOtp, resetPin, updateTrustInfo, saveCheque, editCheque, deleteCheque, filteredChequeReport, getVars, getIncomeExpenseAnalytics, deleteEmployee, editEmployee } from './controllers'
+import { saveIncome, initVariables, saveExpense, addTrustMember, deleteTrustMember, updateTrustMember, addNote, updateNote, deleteNote, generateFilteredReport, saveEmployee, getEmpDoc, deleteIncome, deleteExpense, editIncome, editExpense, saveAnimalIncome, deleteAnimalIncome, editAnimalIncome, saveDeadAnimal, deleteDeadAnimal, editDeadAnimal, saveGivenAnimal, deleteGivenAnimal, editGivenAnimal, saveAnimalCost, deleteAnimalCost, editAnimalCost, requestOtp, resetPin, updateTrustInfo, saveCheque, editCheque, deleteCheque, filteredChequeReport, getVars, getIncomeExpenseAnalytics, deleteEmployee, editEmployee, smsController, validateOtp } from './controllers'
 import { paginationMiddleware } from './middlewares/pagination/pagination.middleware'
 import { Income, Expense, TrustMember, Note, Employee, AnimalIncome, DeadAnimal, GivenAnimal, AnimalCost, AnimalStmt, Cheque } from './schema'
 import { auth } from './common/auth.common'
@@ -21,7 +21,7 @@ export class Routes{
             chequeRouter = Router()
 
         app.post('/auth', auth)
-
+        app.post('/sms/send', smsController)
         app.get('/inex/analytics', getIncomeExpenseAnalytics)
 
         variablesRouter.post('/setup', initVariables)
@@ -29,7 +29,8 @@ export class Routes{
         variablesRouter.patch('/', updateTrustInfo)
         variablesRouter.get('/req/otp', requestOtp)
         variablesRouter.patch('/reset/pin', resetPin)
-        
+        variablesRouter.get('/otp/validate/:otp', validateOtp)
+
         incomeRoute.post('/add', saveIncome)
         incomeRoute.patch('/edit/:id', editIncome)
         incomeRoute.delete('/delete/:id', deleteIncome)
