@@ -111,6 +111,15 @@ class Income extends Component {
         width: 250,
         render: (text, record) => convertNumberToType(text, "expense")
       },
+      {
+        title: "dana svaIkar",
+        dataIndex: "money",
+        key: "7",
+        width: 130,
+        render: (text, record) =>
+          // console.log("Income -> constructor -> record", text, record)
+          text.type === "cheque" ? <p>{text.cheque_no}</p> : <p>raokD</p>
+      },
       // {
       //   // Expense in
       //   title: "cukv~aI",
@@ -347,7 +356,7 @@ class Income extends Component {
             size="large"
             type="primary"
             onClick={this.handelResetFilter}
-            style={{ marginBottom: 30,marginRight: 10,  }}
+            style={{ marginBottom: 30, marginRight: 10 }}
             // className="filter-button"
           >
             <Icon
@@ -364,7 +373,11 @@ class Income extends Component {
                 size="large"
                 type="primary"
                 // onClick={this.handelResetFilter}
-                style={{ backgroundColor: "#505D6F", color: "#ffffff",float: "right" }}
+                style={{
+                  backgroundColor: "#505D6F",
+                  color: "#ffffff",
+                  float: "right"
+                }}
                 // className="filter-button"
               >
                 <Icon
@@ -387,7 +400,6 @@ class Income extends Component {
               column={Expense}
             />
           </div>
-         
         </div>
         <FilterDrawer
           onClose={this.onClose}

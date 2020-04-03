@@ -53,7 +53,7 @@ class ResicentalAnimal extends Component {
           });
         }
       }
-      if (this.props.totalAnimalCount === 0) {
+      if (this.props.totalAnimalCount === null) {
         this.props.getAnimalChart().then(res => {
           const total = res.stats.animal;
           delete total.big;
@@ -91,8 +91,12 @@ class ResicentalAnimal extends Component {
     console.log("TCL: data", data);
     if (this.props.type) {
       this.props.submit(this.props.data._id, data);
+      this.props.form.resetFields();
     } else {
-      this.props.addCostAnimal(data).then(res => this.props.toggleModel());
+      this.props.addCostAnimal(data).then(res => {
+        this.props.toggleModel();
+        this.props.form.resetFields();
+      });
     }
   };
 

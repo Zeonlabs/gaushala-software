@@ -15,6 +15,9 @@ import Index from "./AddCheque/Index";
 import ListingTable from "./ListingTable";
 import FilterDatas from "./FilterData";
 import { useFlexLayout } from "react-table";
+import ReactToPrint from "react-to-print";
+import ReportPrint from "../PrintTemplate/Report";
+import { ChequeColumn } from "../PrintTemplate/Report/Columns/ChequeColumn";
 
 export class Cheques extends Component {
   constructor(props) {
@@ -189,8 +192,7 @@ export class Cheques extends Component {
             <Icon type="close" style={{ fontSize: 17 }} />
             rIsaoT
           </Button>
-          
-          
+
           <Button
             className="button-text-size"
             type="primary"
@@ -199,28 +201,43 @@ export class Cheques extends Component {
               backgroundColor: "#505D6F",
               color: "#ffffff",
               marginLeft: 20,
-              float:"right"
+              float: "right"
             }}
             size="large"
             onClick={this.handelPopup}
           >
             nyau caok
           </Button>
-          <Button
-            className="button-text-size"
-            type="primary"
-            icon="printer"
-            style={{
-              backgroundColor: "#505D6F",
-              color: "#ffffff",
-              marginLeft: 20,
-              float:"right"
-            }}
-            size="large"
-            onClick={this.handelPopup}
-          >
-            ipa`nT rIpaaoT
-          </Button>
+          <ReactToPrint
+            trigger={() => (
+              <Button
+                className="button-text-size"
+                type="primary"
+                icon="printer"
+                style={{
+                  backgroundColor: "#505D6F",
+                  color: "#ffffff",
+                  marginLeft: 20,
+                  float: "right"
+                }}
+                size="large"
+                // onClick={this.handelPopup}
+              >
+                ipa`nT rIpaaoT
+              </Button>
+            )}
+            content={() => this.componentRef}
+          />
+          <div style={{ display: "none" }}>
+            <ReportPrint
+              //---------------------------------------Change title of report from here----------------------------------------------------
+              name="Aavak rIpaaoT"
+              ref={el => (this.componentRef = el)}
+              data={this.state.data || []}
+              type="Expense"
+              column={ChequeColumn}
+            />
+          </div>
 
           <FilterDatas
             visible={this.state.showFilter}

@@ -152,18 +152,18 @@ class ResidentalAnimal extends Component {
   }
 
   componentDidMount = () => {
-    if (this.props.costAnimalList.length > 0) {
+    // if (this.props.costAnimalList.length > 0) {
+    //   this.setState({
+    //     data: this.props.costAnimalList
+    //   });
+    // } else {
+    this.props.getCostAnimal(this.state.pagination).then(res => {
+      console.log("this is a log in a  creadit animal api ->", res);
       this.setState({
-        data: this.props.costAnimalList
+        data: res.docs
       });
-    } else {
-      this.props.getCostAnimal(this.state.pagination).then(res => {
-        console.log("this is a log in a  creadit animal api ->", res);
-        this.setState({
-          data: res.docs
-        });
-      });
-    }
+    });
+    // }
   };
 
   paginate = page => {

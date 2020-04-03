@@ -64,8 +64,12 @@ class CreaditAnimal extends Component {
     console.log("TCL: data", data);
     if (this.props.type) {
       this.props.submit(this.props.data._id, data);
+      this.props.form.resetFields();
     } else {
-      this.props.addIncomeAnimal(data).then(res => this.props.toggleModel());
+      this.props.addIncomeAnimal(data).then(res => {
+        this.props.toggleModel();
+        this.props.form.resetFields();
+      });
     }
   };
 
@@ -137,7 +141,7 @@ class CreaditAnimal extends Component {
           maskClosable={false}
           visible={this.props.visible}
           footer={null}
-          onOk={this.props.toggleModel}
+          // onOk={this.handelOk}
           onCancel={this.handleReset}
         >
           <h2 className="form-titel">Aavaola paSauAao nau rPsTr</h2>

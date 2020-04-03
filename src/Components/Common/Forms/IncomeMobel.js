@@ -29,6 +29,7 @@ import { convertNumberToType, convertTypeToNumber } from "../../../js/Helper";
 import IncomePrintSlip from "../../PrintTemplate";
 import ExpensePrintSlip from "../../PrintTemplate/ExpensePrint";
 import { Expense } from "../../PrintTemplate/Report/Columns/Expese";
+import { sendSms } from "../../../utils/sms.utils";
 
 const { Option } = Select;
 
@@ -81,9 +82,17 @@ class IncomeMobels extends Component {
   incomeData = (values, finalTotal, itemData) => {
     console.log(
       "IncomeMobels -> incomeData -> convertTypeToNumber(values.type)",
-      convertTypeToNumber(values.type, "income")
+      values
     );
     const date = moment(values.date).format("YYYY-MM-DD");
+    const messageDate = moment(values.date).format("DD-MM-YYYY");
+    const message = (
+      <p>
+        સિતારામ ગૌશાળા ટ્સ્ટ ગામઃવિરડી, તા:ગારીયાધાર, જી: ભાવનગર,૨જી.નં :
+        ઈ-3256- ભાવનગર આપ શ્રી દ્રારા તા:{`${messageDate}`} ના રોજ ₹{" "}
+        {`${finalTotal}`}/- દાન પેટે પ્રાપ્ત થયેલ છે. સહકાર ખુબ આભાર.
+      </p>
+    );
     const data = {
       slip_no: values.slip_no,
       date,
@@ -113,6 +122,9 @@ class IncomeMobels extends Component {
           page: 1,
           limit: 20
         };
+        if (values.sms === "yes") {
+          sendSms(parseInt(values.phone, 10), message);
+        }
         this.props.getIncome(pagination).then(res => this.props.toggleModel());
       });
     }
