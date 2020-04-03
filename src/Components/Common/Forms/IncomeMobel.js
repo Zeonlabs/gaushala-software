@@ -37,7 +37,7 @@ class IncomeMobels extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: "",
+      type: "cash",
       tableData: "",
       value: 0,
       finalTotal: 0,
@@ -45,7 +45,8 @@ class IncomeMobels extends Component {
       resetStatus: true,
       printStatus: false,
       data: {},
-      itemData: []
+      itemData: [],
+      typeStatus: ""
     };
   }
 
@@ -61,7 +62,7 @@ class IncomeMobels extends Component {
         this.setState({
           value: this.props.data.phone
         });
-        if (this.state.type === "") {
+        if (this.state.typeStatus === "") {
           if (this.props.cash === "cheque") {
             this.setState({
               type: "cheque"
@@ -260,7 +261,8 @@ class IncomeMobels extends Component {
   onChangeType = e => {
     console.log("radio checked", e.target.value);
     this.setState({
-      type: e.target.value
+      type: e.target.value,
+      typeStatus: "cash"
     });
   };
 
