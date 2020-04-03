@@ -41,11 +41,11 @@ const requestOtp = async (req: Request, res: Response) => {
     try{
         const variablesRepo = new VariablesRepository()
         const {phone, otp} = await variablesRepo.issueOtp()
-
+console.log(otp)
         //TODO: send otp to sms
         const smsRes: any = await sendSms(phone, `Your software PIN reset OTP is ${otp}`)
         if(smsRes.responseCode == 3011) throw new insufficientSmsBalanceException()
-
+        console.log(smsRes)
         res.send()
     }
     catch(e){
@@ -58,7 +58,7 @@ const validateOtp = async (req: Request, res: Response) => {
     try{
         const inputOtp: number = parseInt(req.params.otp);
         const variablesRepo = new VariablesRepository()
-        const otp = await variablesRepo.getOtp(inputOtp)
+        const otp = await variablesRepo.getOtp()
 
         if(!otp) throw new InvalidOtpRequest()
         if(inputOtp != otp) throw new InvalidOtpException()

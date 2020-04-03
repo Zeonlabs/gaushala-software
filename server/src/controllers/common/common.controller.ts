@@ -114,7 +114,7 @@ export const smsController = async (req: Request, res: Response) => {
         const phone: number = req.body.phone;
         const msg: string = req.body.message;
         
-        const smsRes: any = await sendSms(phone, msg)
+        const smsRes: any = await sendSms(phone, msg, 'unicode')
         if(smsRes.responseCode == 3011) throw new insufficientSmsBalanceException()
     }
     catch(e){
