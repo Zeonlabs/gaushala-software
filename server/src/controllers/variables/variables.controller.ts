@@ -12,19 +12,19 @@ const initVariables = async (req: Request, res: Response) => {
         if(!input.pin) throw new PinNotFoundException()
         if(!input.phone) throw new RequiredInputNotProvidedException()
         const variablesRepo = new VariablesRepository()
-
+        
         const doc = await variablesRepo.saveInitInfo(input)
         res.send(doc)
     }
     catch(e){
-        console.log(e)
-        res.status(e.code || 400).send({message: e.message})
+        res.status(getStatusCode(e.code)).send({message: e.message})
     }
 }
 
 const updateTrustInfo = async (req: Request, res: Response) => {
     try{
         const input = _.pick(req.body, ['name', 'phone'])
+
         if(!input.name && !input.phone) throw new RequiredInputNotProvidedException()
         const variablesRepo = new VariablesRepository()
 
@@ -32,8 +32,7 @@ const updateTrustInfo = async (req: Request, res: Response) => {
         res.send(doc)
     }
     catch(e){
-        console.log(e)
-        res.status(e.code || 400).send({message: e.message})
+        res.status(getStatusCode(e.code)).send({message: e.message})
     }
 }
 
@@ -41,16 +40,14 @@ const requestOtp = async (req: Request, res: Response) => {
     try{
         const variablesRepo = new VariablesRepository()
         const {phone, otp} = await variablesRepo.issueOtp()
-console.log(otp)
-        //TODO: send otp to sms
+
         const smsRes: any = await sendSms(phone, `Your software PIN reset OTP is ${otp}`)
         if(smsRes.responseCode == 3011) throw new insufficientSmsBalanceException()
-        console.log(smsRes)
+
         res.send()
     }
     catch(e){
-        // console.log(e)
-        res.status(e.code || 400).send({ message: e.message })
+        res.status(getStatusCode(e.code)).send({ message: e.message })
     }
 }
 
@@ -79,7 +76,6 @@ const resetPin = async (req: Request, res: Response) => {
         res.send({ message: 'ok' })
     }
     catch(e){
-        console.log(e)
         res.status(getStatusCode(e.code)).send({message: e.message})
     }
 }
