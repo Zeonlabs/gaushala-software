@@ -1,7 +1,7 @@
-import {AUTH_KEY, TRANS_DND_ROUTE, senderId, signature, smsContentType, URL} from './sms.config.json'
+import {AUTH_KEY, TRANS_DND_ROUTE, senderId, signature, URL} from './sms.config.json'
 import request from 'request'
 
-export const sendSms = (phone: number, smsContent: string, ) => {
+export const sendSms = (phone: number, smsContent: string, smsContentType: string = 'english') => {
     return new Promise((resolve, reject) => {
         let options = { 
             method: 'POST',
