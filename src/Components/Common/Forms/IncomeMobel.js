@@ -37,7 +37,7 @@ class IncomeMobels extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      type: "cash",
+      type: "",
       tableData: "",
       value: 0,
       finalTotal: 0,
@@ -49,24 +49,25 @@ class IncomeMobels extends Component {
     };
   }
 
-  componentDidMount() {
-    // console.log("this is  aedit income modal ->", this.props);
-    // const { type, modalType, data } = this.props;
-    // if (type === "income") {
-    // if (modalType === "edit") {
-    // console.log("this is  aedit income modal ->", data);
-    // }
-    // }
-  }
-
   componentDidUpdate = prevProps => {
     if (prevProps !== this.props) {
-      console.log("this is  aedit income modal ->", this.props);
+      // console.log(
+      //   "this is  aedit income modal --------------------------->",
+      //   this.props,
+      //   this.state.type
+      // );
       if (this.props.modalType) {
-        console.log("this is  aedit this.props.modalType ->", this.props);
+        // console.log("this is  aedit this.props.modalType ->", this.props);
         this.setState({
           value: this.props.data.phone
         });
+        if (this.state.type === "") {
+          if (this.props.cash === "cheque") {
+            this.setState({
+              type: "cheque"
+            });
+          }
+        }
       }
     }
   };
@@ -551,8 +552,7 @@ class IncomeMobels extends Component {
               </Col>
               <Col span={8}>
                 {/* ------------------------------Cheque No--------------------------------- */}
-                {this.state.type === "cheque" ||
-                this.props.cash === "cheque" ? (
+                {this.state.type === "cheque" ? (
                   <Form.Item className="cheque-no" label="caok naM.:">
                     {getFieldDecorator("chequeno", {
                       rules: [{ required: true }],
