@@ -33,7 +33,8 @@
 .table-income {
   .ant-table {
     // height:150px;
-    height: calc(100vh - 42vh);
+    // height: calc(100vh - 42vh);
+    height: 64vh;
     overflow: scroll !important;
     overflow-y: scroll !important;
   }
