@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import MenuBar from "../Common/MenuBar";
+import _ from 'lodash'
 import PageWrapper from "../Common/PageWrapper/PageWrapper";
 import LineChart from "./LineChart";
 import { getLinearChart, getAnimalChart } from "../../Actions/ChartActions";
@@ -7,6 +7,8 @@ import { connect } from "react-redux";
 import AnimalChart from "./AnimalChart";
 import AnimatedNumber from "animated-number-react";
 // import LoaderAnimation from "../../Static/Widgets/LoaderAnimation";
+import { arrangeDate } from "./arrangeDate";
+import { BarChart } from "./barChart";
 
 import "./Home.scss";
 
@@ -16,17 +18,41 @@ class Home extends Component {
     this.state = {
       linearDataIncome: { x: 0, y: 0 },
       linearDataExpence: {},
-      capital: 0
+      capital: 0,
+      incomeData: [{ x: 0, y: 0 }],
+      expenceData: [{ x: 0, y: 0 }],
+      totalIncome: 0,
+      totalExpense: 0
     };
   }
 
-  // componentDidMount() {
-  //   this.props.getAnimalChart().then(res => {
-  //     this.setState({
-  //       capital: res.stats.capital
-  //     });
-  //   });
-  // }
+  componentDidMount = () => {
+    const getDate = (year, month) => `${month < 10 ? '0' + month : month}-${year}`
+
+    this.props.getLinearChart().then(res => {
+      const arrangedIncomeDate = arrangeDate(res.income)
+      const arrangedExpenseDate = arrangeDate(res.expense)
+
+      const incomeData = arrangedIncomeDate.map(val => ({
+        x: getDate(val.year, val.month),
+        y: val.amount
+      }))
+
+      const expenseData = arrangedExpenseDate.map(val => ({
+        x: getDate(val.year, val.month),
+        y: val.amount
+      }))
+
+      this.setState({ 
+          incomeData: incomeData, 
+          expenceData: expenseData,
+          totalIncome: _.sumBy(res.income, 'amount'),
+          totalExpense: _.sumBy(res.expense, 'amount')
+        }
+      )
+    })
+  }
+
 
   componentDidUpdate = prevProps => {
     if (prevProps.totalAnimalCount !== this.props.totalAnimalCount) {
@@ -36,13 +62,13 @@ class Home extends Component {
     }
   };
   formatValue = value => value.toFixed(0);
+
   render() {
     return (
       <PageWrapper>
         <div className="dashboard">
           <LineChart
-          // income={this.state.linearDataIncome}
-          // expence={this.state.linearDataExpence}
+            data={{income: this.state.incomeData, expense: this.state.expenceData}}
           />
 
           <div className="btml-grph">
@@ -56,44 +82,36 @@ class Home extends Component {
               </div>
 
               <div className="padding-row">
-                <div className="row">
-                  <div className="column-50 color-green">
-                    <h3 className="green">Aavak</h3>
-                    <h2>
-                      <AnimatedNumber
-                        className="text-center"
-                        value={this.state.capital}
-                        duration={1800}
-                        formatValue={this.formatValue}
-                      />
-                    </h2>
+                <div className='row' style={{height: 250}} >
+                  <div className="column-50" >
+                    <BarChart  data={[
+                      {
+                        type: "aavaka",
+                        income: this.state.totalIncome
+                      }, 
+                      {
+                        type: 'javak',
+                        expense: this.state.totalExpense
+                      }
+                    ]
+                  } />
                   </div>
-                  <div className="column-50 color-red">
-                  <h3 className="red">Javak</h3>
-                    <h2>
-                      <AnimatedNumber
-                        className="text-center"
-                        value={this.state.capital}
-                        duration={1800}
-                        formatValue={this.formatValue}
-                      />
-                    </h2>
+
+                  <div className="column-50" >
+                    <div className="row color-yellow margin-top-15">
+                      <h3 className="yellow margin-top">baolaonsa</h3>
+                      <h2>
+                        <AnimatedNumber
+                          className="text-center"
+                          value={this.state.capital}
+                          duration={1800}
+                          formatValue={this.formatValue}
+                        />
+                      </h2>
+                    </div>
                   </div>
                 </div>
-               
-               <div className="row color-yellow margin-top-15">
-                  <h3 className="yellow margin-top">baolaonsa</h3>
-                    <h2>
-                      <AnimatedNumber
-                        className="text-center"
-                        value={this.state.capital}
-                        duration={1800}
-                        formatValue={this.formatValue}
-                      />
-                    </h2>
-                  </div>
               </div>
-            
             </div>
           </div>
         </div>
