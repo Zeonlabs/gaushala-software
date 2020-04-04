@@ -9,6 +9,7 @@ import AnimatedNumber from "animated-number-react";
 // import LoaderAnimation from "../../Static/Widgets/LoaderAnimation";
 
 import "./Home.scss";
+import { withRouter } from "react-router";
 
 class Home extends Component {
   constructor(props) {
@@ -16,17 +17,16 @@ class Home extends Component {
     this.state = {
       linearDataIncome: { x: 0, y: 0 },
       linearDataExpence: {},
-      capital: 0
+      capital: 0,
+      statusCode: ""
     };
   }
 
-  // componentDidMount() {
-  //   this.props.getAnimalChart().then(res => {
-  //     this.setState({
-  //       capital: res.stats.capital
-  //     });
-  //   });
-  // }
+  componentDidMount() {
+    this.setState({
+      statusCode: this.props.location.state.status
+    });
+  }
 
   componentDidUpdate = prevProps => {
     if (prevProps.totalAnimalCount !== this.props.totalAnimalCount) {
@@ -37,18 +37,23 @@ class Home extends Component {
   };
   formatValue = value => value.toFixed(0);
   render() {
+    // console.log(
+    //   ";;;;;;;;;;;[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]sddddddddddddd",
+    //   this.props.totalAnimalCount
+    // );
     return (
       <PageWrapper>
         <div className="dashboard">
           <LineChart
-          // income={this.state.linearDataIncome}
-          // expence={this.state.linearDataExpence}
+            // income={this.state.linearDataIncome}
+            // expence={this.state.linearDataExpence}
+            statusCode={this.props.location.state.status}
           />
 
           <div className="btml-grph">
             <div className="piechrt-div">
               <h3 className="dashbrd-label">paSauAao</h3>
-              <AnimalChart />
+              <AnimalChart statusCode={this.props.location.state.status} />
             </div>
             <div className="balance-div">
               <div className="padding-row-15">
@@ -69,7 +74,7 @@ class Home extends Component {
                     </h2>
                   </div>
                   <div className="column-50 color-red">
-                  <h3 className="red">Javak</h3>
+                    <h3 className="red">Javak</h3>
                     <h2>
                       <AnimatedNumber
                         className="text-center"
@@ -80,20 +85,19 @@ class Home extends Component {
                     </h2>
                   </div>
                 </div>
-               
-               <div className="row color-yellow margin-top-15">
+
+                <div className="row color-yellow margin-top-15">
                   <h3 className="yellow margin-top">baolaonsa</h3>
-                    <h2>
-                      <AnimatedNumber
-                        className="text-center"
-                        value={this.state.capital}
-                        duration={1800}
-                        formatValue={this.formatValue}
-                      />
-                    </h2>
-                  </div>
+                  <h2>
+                    <AnimatedNumber
+                      className="text-center"
+                      value={this.state.capital}
+                      duration={1800}
+                      formatValue={this.formatValue}
+                    />
+                  </h2>
+                </div>
               </div>
-            
             </div>
           </div>
         </div>
@@ -107,6 +111,6 @@ const mapStateToProps = state => ({
   // ...state.Animals
 });
 
-export default connect(mapStateToProps, { getAnimalChart, getLinearChart })(
-  Home
+export default withRouter(
+  connect(mapStateToProps, { getAnimalChart, getLinearChart })(Home)
 );

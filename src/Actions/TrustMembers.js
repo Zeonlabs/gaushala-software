@@ -5,7 +5,11 @@ import { fetchUrl } from "../js/fetchUrl";
 export const getMembers = id => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", id);
-    fetchUrl("get", `/trust-member`, id)
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205" ? "Post" : "get",
+      `/trust-member`,
+      id
+    )
       .then(res => {
         dispatch({ type: listing.trustMembersListing, payload: res.docs });
         resolve(res);
@@ -54,7 +58,11 @@ export const deleteMembers = id => dispatch =>
 export const filterMembers = id => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", id);
-    fetchUrl("get", `/trust-member/filter`, id)
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205" ? "Post" : "get",
+      `/trust-member/filter`,
+      id
+    )
       .then(res => {
         resolve(res);
       })

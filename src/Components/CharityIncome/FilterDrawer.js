@@ -33,23 +33,28 @@ class FilterDrawers extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
-        this.props.onClose();
-        Object.keys(values).forEach(
-          key => values[key] === undefined && delete values[key]
-        );
-        console.log("Received values After trime: ", values);
-        const data = {
-          dateFrom: values.daterange ? this.state.start_date : undefined,
-          dateTo: values.daterange ? this.state.end_date : undefined,
-          ...values
-        };
-        delete data.daterange;
-        Object.keys(data).forEach(
-          key => data[key] === undefined && delete data[key]
-        );
-        this.props.submit(data);
-        this.props.form.resetFields();
+        // console.log("Received values of form: ", values);
+        if (this.props.statusCode === "205") {
+          this.props.onClose();
+          this.props.form.resetFields();
+        } else {
+          this.props.onClose();
+          Object.keys(values).forEach(
+            key => values[key] === undefined && delete values[key]
+          );
+          // console.log("Received values After trime: ", values);
+          const data = {
+            dateFrom: values.daterange ? this.state.start_date : undefined,
+            dateTo: values.daterange ? this.state.end_date : undefined,
+            ...values
+          };
+          delete data.daterange;
+          Object.keys(data).forEach(
+            key => data[key] === undefined && delete data[key]
+          );
+          this.props.submit(data);
+          this.props.form.resetFields();
+        }
       }
     });
   };

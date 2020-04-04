@@ -111,24 +111,19 @@ class IncomeMobels extends Component {
       note: values.note
     };
     console.log("TCL: data", data);
-    if (this.props.modalType === "edit") {
-      const id = this.props.data._id;
-      console.log("incomeData -> id", id);
-      this.props.submit(id, data);
-      if (values.sms === "yes") {
-        const data = {
-          phone: parseInt(values.phone, 10),
-          message
-        };
-        this.props.sendSms(data);
-      }
-      // this.props.editIncome(id, data).then(res => this.props.toggleModel());
+    if (localStorage.getItem("reversePin") === "205") {
+      this.props.form.resetFields();
+      this.setState({
+        type: "cash",
+        resetStatus: !this.state.resetStatus,
+        typeStatus: ""
+      });
+      this.props.toggleModel();
     } else {
-      this.props.addIncome(data).then(res => {
-        const pagination = {
-          page: 1,
-          limit: 20
-        };
+      if (this.props.modalType === "edit") {
+        const id = this.props.data._id;
+        console.log("incomeData -> id", id);
+        this.props.submit(id, data);
         if (values.sms === "yes") {
           const data = {
             phone: parseInt(values.phone, 10),
@@ -136,15 +131,32 @@ class IncomeMobels extends Component {
           };
           this.props.sendSms(data);
         }
-        this.props.getIncome(pagination).then(res => this.props.toggleModel());
+        // this.props.editIncome(id, data).then(res => this.props.toggleModel());
+      } else {
+        this.props.addIncome(data).then(res => {
+          const pagination = {
+            page: 1,
+            limit: 20
+          };
+          if (values.sms === "yes") {
+            const data = {
+              phone: parseInt(values.phone, 10),
+              message
+            };
+            this.props.sendSms(data);
+          }
+          this.props
+            .getIncome(pagination)
+            .then(res => this.props.toggleModel());
+        });
+      }
+      this.props.form.resetFields();
+      this.setState({
+        type: "cash",
+        resetStatus: !this.state.resetStatus,
+        typeStatus: ""
       });
     }
-    this.props.form.resetFields();
-    this.setState({
-      type: "cash",
-      resetStatus: !this.state.resetStatus,
-      typeStatus: ""
-    });
   };
 
   expenseData = (values, finalTotal, itemData) => {
@@ -167,25 +179,37 @@ class IncomeMobels extends Component {
       note: values.note
     };
     console.log("TCL: data", data);
-    if (this.props.modalType === "edit") {
-      const id = this.props.data._id;
-      console.log("incomeData -> id", id);
-      this.props.submit(id, data);
-      // this.props.editExpense(id, data).then(res => this.props.toggleModel());
+    if (localStorage.getItem("reversePin") === "205") {
+      this.props.form.resetFields();
+      this.setState({
+        type: "cash",
+        resetStatus: !this.state.resetStatus,
+        typeStatus: ""
+      });
+      this.props.toggleModel();
     } else {
-      this.props.addExpense(data).then(res => {
-        const pagination = {
-          page: 1,
-          limit: 20
-        };
-        this.props.getExpense(pagination).then(res => this.props.toggleModel());
+      if (this.props.modalType === "edit") {
+        const id = this.props.data._id;
+        console.log("incomeData -> id", id);
+        this.props.submit(id, data);
+        // this.props.editExpense(id, data).then(res => this.props.toggleModel());
+      } else {
+        this.props.addExpense(data).then(res => {
+          const pagination = {
+            page: 1,
+            limit: 20
+          };
+          this.props
+            .getExpense(pagination)
+            .then(res => this.props.toggleModel());
+        });
+      }
+      this.props.form.resetFields();
+      this.setState({
+        type: "cash",
+        resetStatus: !this.state.resetStatus
       });
     }
-    this.props.form.resetFields();
-    this.setState({
-      type: "cash",
-      resetStatus: !this.state.resetStatus
-    });
   };
 
   handleSubmit = e => {

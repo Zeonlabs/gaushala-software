@@ -5,6 +5,7 @@ import { Button, Row, Col, InputNumber, message } from "antd";
 import { withRouter } from "react-router";
 import FirstPage from "./FirstPage";
 import ForgotPasswordModal from "../SettingPage/ForgotPasswordModal";
+import axios from "axios";
 
 class Login extends Component {
   constructor(props) {
@@ -48,13 +49,25 @@ class Login extends Component {
       const pin = {
         pin: this.state.pin
       };
-      this.props
-        .loginUser(pin)
+      axios
+        .post("http://localhost:8081/auth", pin)
         .then(res => {
-          console.log("Login -> handleSubmit -> res", res.ok);
-          this.props.history.push("/dashboard");
+          console.log("Employees -> res", res);
+          const location = {
+            pathname: "/dashboard",
+            state: { status: res.status }
+          };
+          this.props.history.push(location);
+          localStorage.setItem("reversePin", res.status);
         })
         .catch(e => message.error("invalid Pin !"));
+      // this.props
+      //   .loginUser(pin)
+      //   .then(res => {
+      //     console.log("Login -> handleSubmit -> res", res.ok);
+      //     this.props.history.push("/dashboard");
+      //   })
+      //   .catch(e => message.error("invalid Pin !"));
     } else {
       message.error("please enter pin");
     }

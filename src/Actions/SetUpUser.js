@@ -55,6 +55,7 @@ export const loginUser = data => dispatch =>
   new Promise((resolve, reject) => {
     fetchUrl(Setting.loginUser.method, Setting.loginUser.url, data)
       .then(res => {
+        // console.log("res,status", stus.responce.status);
         resolve(res);
       })
       .catch(e => {
@@ -78,10 +79,10 @@ export const valiDateOtp = data => dispatch =>
   new Promise((resolve, reject) => {
     fetchUrl(Setting.validateOtp.method, `${Setting.validateOtp.url}${data}`)
       .then(res => {
-        console.log(
-          "resjasdgjhhhhhhhhhhhh____________+++++++++++++++++++++++==",
-          res
-        );
+        // console.log(
+        //   "resjasdgjhhhhhhhhhhhh____________+++++++++++++++++++++++==",
+        //   res
+        // );
         resolve(res);
       })
       .catch(e => {

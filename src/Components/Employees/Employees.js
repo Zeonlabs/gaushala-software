@@ -115,20 +115,25 @@ export class Employees extends Component {
   handelDataAdd = data => {
     this.loadingTrue();
     console.log("Employees -> handelDataAdd -> data", data);
-    axios
-      .post("http://localhost:8081/employee/add", data)
-      .then(res => {
-        console.log("Employees -> res", res);
-        this.props.getEmployee(this.state.pagination).then(res => {
-          console.log("res in a income model =->", res);
-          this.setState({
-            data: res.docs
+    if (localStorage.getItem("reversePin") === "205") {
+      this.loadingFalse();
+      this.handelEmployeePopup();
+    } else {
+      axios
+        .post("http://localhost:8081/employee/add", data)
+        .then(res => {
+          console.log("Employees -> res", res);
+          this.props.getEmployee(this.state.pagination).then(res => {
+            console.log("res in a income model =->", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
           });
-          this.loadingFalse();
-        });
-        this.handelEmployeePopup();
-      })
-      .catch(e => this.loadingFalse());
+          this.handelEmployeePopup();
+        })
+        .catch(e => this.loadingFalse());
+    }
   };
 
   handelDelete = record => {

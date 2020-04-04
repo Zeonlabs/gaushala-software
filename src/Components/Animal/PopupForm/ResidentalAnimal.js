@@ -89,14 +89,20 @@ class ResicentalAnimal extends Component {
       item: this.state.tableData
     };
     console.log("TCL: data", data);
-    if (this.props.type) {
-      this.props.submit(this.props.data._id, data);
+    if (localStorage.getItem("reversePin") === "205") {
+      // this.loadingFalse();
+      this.props.toggleModel();
       this.props.form.resetFields();
     } else {
-      this.props.addCostAnimal(data).then(res => {
-        this.props.toggleModel();
+      if (this.props.type) {
+        this.props.submit(this.props.data._id, data);
         this.props.form.resetFields();
-      });
+      } else {
+        this.props.addCostAnimal(data).then(res => {
+          this.props.toggleModel();
+          this.props.form.resetFields();
+        });
+      }
     }
   };
 

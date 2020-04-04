@@ -226,24 +226,28 @@ class DeadAnimal extends Component {
     console.log("From: ", dates[0], ", to: ", dates[1]);
     console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
     let value = {};
-    if (dates.length > 1) {
-      value = {
-        dateFrom: moment(dates[0]).format("YYYY-MM-DD"),
-        dateTo: moment(dates[1]).format("YYYY-MM-DD")
-      };
+    if (localStorage.getItem("reversePin") === "205") {
+      this.loadingFalse();
     } else {
-      value = {};
+      if (dates.length > 1) {
+        value = {
+          dateFrom: moment(dates[0]).format("YYYY-MM-DD"),
+          dateTo: moment(dates[1]).format("YYYY-MM-DD")
+        };
+      } else {
+        value = {};
+      }
+      this.props
+        .getFilterDeadAnimal(value)
+        .then(res => {
+          console.log("CreditAnimal -> onChange -> res", res);
+          this.setState({
+            data: res
+          });
+          this.loadingFalse();
+        })
+        .catch(e => this.loadingFalse());
     }
-    this.props
-      .getFilterDeadAnimal(value)
-      .then(res => {
-        console.log("CreditAnimal -> onChange -> res", res);
-        this.setState({
-          data: res
-        });
-        this.loadingFalse();
-      })
-      .catch(e => this.loadingFalse());
   };
 
   handelback = () => {

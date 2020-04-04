@@ -6,7 +6,9 @@ export const getFilterCostAnimal = data => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", data);
     fetchUrl(
-      Animal.animalCostFilterGet.method,
+      localStorage.getItem("reversePin") === "205"
+        ? "Post"
+        : Animal.animalCostFilterGet.method,
       Animal.animalCostFilterGet.url,
       data
     )
@@ -22,7 +24,13 @@ export const getFilterCostAnimal = data => dispatch =>
 export const getCostAnimal = id => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", id);
-    fetchUrl(Animal.animalCostGet.method, Animal.animalCostGet.url, id)
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205"
+        ? "Post"
+        : Animal.animalCostGet.method,
+      Animal.animalCostGet.url,
+      id
+    )
       .then(res => {
         dispatch({ type: animal.costAnmimalList, payload: res.docs });
         resolve(res);
@@ -35,7 +43,13 @@ export const getCostAnimal = id => dispatch =>
 export const getTotalAnimal = id => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", id);
-    fetchUrl(Animal.totalAnimalReport.method, Animal.totalAnimalReport.url, id)
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205"
+        ? "Post"
+        : Animal.totalAnimalReport.method,
+      Animal.totalAnimalReport.url,
+      id
+    )
       .then(res => {
         dispatch({ type: animal.totalAnmimalList, payload: res.docs });
         resolve(res);
@@ -49,7 +63,9 @@ export const getFilterTotalAnimal = id => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", id);
     fetchUrl(
-      Animal.totalAnimalFilterGet.method,
+      localStorage.getItem("reversePin") === "205"
+        ? "Post"
+        : Animal.totalAnimalFilterGet.method,
       Animal.totalAnimalFilterGet.url,
       id
     )

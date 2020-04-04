@@ -6,7 +6,9 @@ export const getFilterGivenAnimal = data => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", data);
     fetchUrl(
-      Animal.givenAnimalFilterGet.method,
+      localStorage.getItem("reversePin") === "205"
+        ? "Post"
+        : Animal.givenAnimalFilterGet.method,
       Animal.givenAnimalFilterGet.url,
       data
     )
@@ -22,7 +24,13 @@ export const getFilterGivenAnimal = data => dispatch =>
 export const getGivenAnimal = id => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", id);
-    fetchUrl(Animal.givenAnimalGet.method, Animal.givenAnimalGet.url, id)
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205"
+        ? "Post"
+        : Animal.givenAnimalGet.method,
+      Animal.givenAnimalGet.url,
+      id
+    )
       .then(res => {
         dispatch({ type: animal.givenAnmimalList, payload: res.docs });
         resolve(res);

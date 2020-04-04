@@ -116,7 +116,7 @@ export const fetchUrl = (
   const handler = ACTION_HANDLERS[type.toUpperCase()];
   return !fetchBaseResponse
     ? handler(url, data)
-        .then(res => Promise.resolve(res.data))
+        .then(res => Promise.resolve(res.data, res))
         .catch(error => showErrorAsToast(error, type))
     : handler(url, data).catch(error => showErrorAsToast(error, type));
 };

@@ -97,18 +97,23 @@ export class TrustMembers extends Component {
   handelDataAdd = data => {
     this.loadingTrue();
     console.log("Employees -> handelDataAdd -> data", data);
-    this.props.addMembers(data).then(res => {
-      this.props
-        .getMembers(this.state.pagination)
-        .then(res => {
-          this.setState({
-            data: res.docs
-          });
-          this.loadingFalse();
-          this.handelShowPopup();
-        })
-        .catch(e => this.loadingFalse());
-    });
+    if (localStorage.getItem("reversePin") === "205") {
+      this.loadingFalse();
+      this.handelShowPopup();
+    } else {
+      this.props.addMembers(data).then(res => {
+        this.props
+          .getMembers(this.state.pagination)
+          .then(res => {
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+            this.handelShowPopup();
+          })
+          .catch(e => this.loadingFalse());
+      });
+    }
   };
 
   handelAddEdit = (id, data) => {

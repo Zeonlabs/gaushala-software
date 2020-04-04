@@ -49,7 +49,7 @@ class Income extends Component {
       visible: false,
       income: false,
       loading: true,
-      data: "",
+      data: [],
       editData: { money: { type: "cash" } },
       pagination: {
         page: 1,
@@ -204,13 +204,20 @@ class Income extends Component {
         loading: false
       });
     } else {
-      this.props.getIncome(pagination).then(res => {
-        // console.log("res in a income model =->", res);
-        this.setState({
-          data: res.docs,
-          loading: false
+      this.props
+        .getIncome(pagination)
+        .then(res => {
+          // console.log("res in a income model =->", res);
+          this.setState({
+            data: res.docs,
+            loading: false
+          });
+        })
+        .catch(e => {
+          this.setState({
+            loading: false
+          });
         });
-      });
     }
   };
 
@@ -223,9 +230,15 @@ class Income extends Component {
   };
 
   loadingTrue = () => {
-    this.setState({
-      loading: true
-    });
+    if (localStorage.getItem("reversePin") === "205") {
+      this.setState({
+        loading: false
+      });
+    } else {
+      this.setState({
+        loading: true
+      });
+    }
   };
 
   loadingFalse = () => {
@@ -241,15 +254,6 @@ class Income extends Component {
   };
 
   onClose = () => {
-    this.props
-      .getIncome(this.state.pagination)
-      .then(res => {
-        console.log("res in a income model =->", res);
-        this.setState({
-          data: res.docs
-        });
-      })
-      .catch(e => message.error(e));
     this.setState({
       visible: false
     });
@@ -302,16 +306,20 @@ class Income extends Component {
   handelFilterGet = data => {
     this.loadingTrue();
     console.log("Income -> handelFilterGet -> data", data);
-    this.props
-      .getFilterIncome(data)
-      .then(res => {
-        console.log("res in a income model =->", res);
-        this.setState({
-          data: res
-        });
-        this.loadingFalse();
-      })
-      .catch(e => message.error(e));
+    if (localStorage.getItem("reversePin") === "205") {
+      // this.loadingFalse();
+    } else {
+      this.props
+        .getFilterIncome(data)
+        .then(res => {
+          console.log("res in a income model =->", res);
+          this.setState({
+            data: res
+          });
+          this.loadingFalse();
+        })
+        .catch(e => message.error(e));
+    }
   };
 
   handelClosePopUp = () => {
@@ -336,7 +344,7 @@ class Income extends Component {
   };
 
   handelResetFilter = () => {
-    const data = {};
+    const data = [];
     this.handelFilterGet(data);
   };
 
@@ -425,6 +433,7 @@ class Income extends Component {
           onClose={this.onClose}
           visible={this.state.visible}
           submit={this.handelFilterGet}
+          statusCode={localStorage.getItem("reversePin")}
         />
         <IncomeMobel
           visible={this.state.income}

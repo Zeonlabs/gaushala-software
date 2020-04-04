@@ -5,7 +5,13 @@ import apiList, { Animal } from "../../js/apiList";
 export const getFilterIncomeAnimal = data => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", data);
-    fetchUrl(Animal.incomeGet.method, Animal.incomeFilterGet.url, data)
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205"
+        ? "Post"
+        : Animal.incomeGet.method,
+      Animal.incomeFilterGet.url,
+      data
+    )
       .then(res => {
         // dispatch({ type: listing.incomeListing, payload: res.docs });
         resolve(res);
@@ -18,7 +24,13 @@ export const getFilterIncomeAnimal = data => dispatch =>
 export const getIncomeAnimal = id => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", id);
-    fetchUrl(Animal.incomeGet.method, Animal.incomeGet.url, id)
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205"
+        ? "Post"
+        : Animal.incomeGet.method,
+      Animal.incomeGet.url,
+      id
+    )
       .then(res => {
         dispatch({ type: animal.incomeAnimalsting, payload: res.docs });
         resolve(res);

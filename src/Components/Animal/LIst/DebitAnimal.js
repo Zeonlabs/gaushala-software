@@ -288,16 +288,20 @@ class DebitAnimal extends Component {
       ...this.state.date,
       tag: this.state.tagText
     };
-    this.props
-      .getFilterGivenAnimal(data)
-      .then(res => {
-        console.log("CreditAnimal -> onChange -> res", res);
-        this.setState({
-          data: res
-        });
-        this.loadingFalse();
-      })
-      .catch(e => this.loadingFalse());
+    if (localStorage.getItem("reversePin") === "205") {
+      this.loadingFalse();
+    } else {
+      this.props
+        .getFilterGivenAnimal(data)
+        .then(res => {
+          console.log("CreditAnimal -> onChange -> res", res);
+          this.setState({
+            data: res
+          });
+          this.loadingFalse();
+        })
+        .catch(e => this.loadingFalse());
+    }
   };
 
   handleDelete = (key, record) => {

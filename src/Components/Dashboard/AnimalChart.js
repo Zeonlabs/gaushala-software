@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { getAnimalChart } from "../../Actions/ChartActions";
-import "./Home.scss"
+import "./Home.scss";
 
 import { PieChart } from "./nivoPieChart";
 
@@ -15,7 +15,7 @@ class AnimalChart extends Component {
   }
 
   componentDidMount = () => {
-    this.props.getAnimalChart().then(res => {
+    this.props.getAnimalChart(this.props.statusCode).then(res => {
       const ArrayMap = Object.values(res.stats.animal);
 
       const newData = [

@@ -210,13 +210,20 @@ class Income extends Component {
       });
     } else {
       // const id = this.props.match.params.pid;
-      this.props.getExpense(pagination).then(res => {
-        // console.log("res in a income model =->", res);
-        this.setState({
-          data: res.docs,
-          loading: false
+      this.props
+        .getExpense(pagination)
+        .then(res => {
+          // console.log("res in a income model =->", res);
+          this.setState({
+            data: res.docs,
+            loading: false
+          });
+        })
+        .catch(e => {
+          this.setState({
+            loading: false
+          });
         });
-      });
     }
   };
 
@@ -245,20 +252,7 @@ class Income extends Component {
   };
 
   onClose = () => {
-    this.loadingTrue();
-    this.props
-      .getExpense(this.state.pagination)
-      .then(res => {
-        console.log("res in a income model =->", res);
-        this.setState({
-          data: res.docs
-        });
-        this.loadingFalse();
-      })
-      .catch(e => {
-        message.error(e);
-        this.loadingFalse();
-      });
+    this.loadingFalse();
     this.setState({
       visible: false
     });
@@ -291,20 +285,24 @@ class Income extends Component {
 
   handelFilterGet = data => {
     this.loadingTrue();
-    console.log("Income -> handelFilterGet -> data", data);
-    this.props
-      .getFilterExpense(data)
-      .then(res => {
-        console.log("res in a income model =->", res);
-        this.loadingFalse();
-        this.setState({
-          data: res
+    if (localStorage.getItem("reversePin") === "205") {
+      this.loadingFalse();
+    } else {
+      // console.log("Income -> handelFilterGet -> data", data);
+      this.props
+        .getFilterExpense(data)
+        .then(res => {
+          console.log("res in a income model =->", res);
+          this.loadingFalse();
+          this.setState({
+            data: res
+          });
+        })
+        .catch(e => {
+          message.error(e);
+          this.loadingFalse();
         });
-      })
-      .catch(e => {
-        message.error(e);
-        this.loadingFalse();
-      });
+    }
   };
 
   handelClosePopUp = () => {

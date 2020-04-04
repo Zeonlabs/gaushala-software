@@ -5,7 +5,11 @@ import { fetchUrl } from "../js/fetchUrl";
 export const getNotes = id => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", id);
-    fetchUrl("get", `/note`, id)
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205" ? "Post" : "get",
+      `/note`,
+      id
+    )
       .then(res => {
         dispatch({ type: listing.noteListing, payload: res.docs });
         resolve(res);

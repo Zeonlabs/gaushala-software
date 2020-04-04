@@ -61,13 +61,20 @@ export class Cheques extends Component {
         loading: false
       });
     } else {
-      this.props.getCheque(pagination).then(res => {
-        console.log("Employees -> componentDidMount -> res", res);
-        this.setState({
-          data: res.docs,
-          loading: false
+      this.props
+        .getCheque(pagination)
+        .then(res => {
+          console.log("Employees -> componentDidMount -> res", res);
+          this.setState({
+            data: res.docs,
+            loading: false
+          });
+        })
+        .catch(e => {
+          this.setState({
+            loading: false
+          });
         });
-      });
     }
   };
 
@@ -100,37 +107,46 @@ export class Cheques extends Component {
 
   handelDataAdd = data => {
     this.loadingTrue();
-    console.log("Employees -> handelDataAdd -> data", data);
-    this.props.addCheque(data).then(res => {
-      this.props
-        .getCheque(this.state.pagination)
-        .then(res => {
-          this.setState({
-            data: res.docs
-          });
-          this.loadingFalse();
-          this.handelShowPopup();
-        })
-        .catch(e => this.loadingFalse());
-    });
+    if (localStorage.getItem("reversePin") === "205") {
+      this.loadingFalse();
+      this.handelShowPopup();
+    } else {
+      console.log("Employees -> handelDataAdd -> data", data);
+      this.props.addCheque(data).then(res => {
+        this.props
+          .getCheque(this.state.pagination)
+          .then(res => {
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+            this.handelShowPopup();
+          })
+          .catch(e => this.loadingFalse());
+      });
+    }
   };
 
   handelAddEdit = (id, data) => {
     this.loadingTrue();
-    console.log("TrustMembers -> handelAddEdit -> data", id, data);
-    this.props.editCheque(id, data).then(res => {
-      this.props
-        .getCheque(this.state.pagination)
-        .then(res => {
-          this.setState({
-            data: res.docs
-            // income: false
-          });
-          this.loadingFalse();
-          this.handelShowPopup();
-        })
-        .catch(e => this.loadingFalse());
-    });
+    if (localStorage.getItem("reversePin") === "205") {
+      this.loadingFalse();
+    } else {
+      console.log("TrustMembers -> handelAddEdit -> data", id, data);
+      this.props.editCheque(id, data).then(res => {
+        this.props
+          .getCheque(this.state.pagination)
+          .then(res => {
+            this.setState({
+              data: res.docs
+              // income: false
+            });
+            this.loadingFalse();
+            this.handelShowPopup();
+          })
+          .catch(e => this.loadingFalse());
+      });
+    }
   };
 
   handelDelete = record => {
@@ -155,20 +171,24 @@ export class Cheques extends Component {
 
   handelFilter = data => {
     this.loadingTrue();
-    console.log("Income -> handelFilterGet -> data", data);
-    this.props
-      .filterCheque(data)
-      .then(res => {
-        console.log("res in a income model =->", res);
-        this.setState({
-          data: res
+    // console.log("Income -> handelFilterGet -> data", data);
+    if (localStorage.getItem("reversePin") === "205") {
+      this.loadingFalse();
+    } else {
+      this.props
+        .filterCheque(data)
+        .then(res => {
+          // console.log("res in a income model =->", res);
+          this.setState({
+            data: res
+          });
+          this.loadingFalse();
+        })
+        .catch(e => {
+          message.error(e);
+          this.loadingFalse();
         });
-        this.loadingFalse();
-      })
-      .catch(e => {
-        message.error(e);
-        this.loadingFalse();
-      });
+    }
   };
 
   handelResetFilter = () => {

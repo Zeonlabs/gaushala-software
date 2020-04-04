@@ -191,16 +191,20 @@ class CreditAnimal extends Component {
     } else {
       value = {};
     }
-    this.props
-      .getFilterIncomeAnimal(value)
-      .then(res => {
-        console.log("CreditAnimal -> onChange -> res", res);
-        this.setState({
-          data: res
-        });
-        this.loadingFalse();
-      })
-      .catch(e => this.loadingFalse());
+    if (localStorage.getItem("reversePin") === "205") {
+      this.loadingFalse();
+    } else {
+      this.props
+        .getFilterIncomeAnimal(value)
+        .then(res => {
+          console.log("CreditAnimal -> onChange -> res", res);
+          this.setState({
+            data: res
+          });
+          this.loadingFalse();
+        })
+        .catch(e => this.loadingFalse());
+    }
   };
 
   handelEdit = (text, record) => {

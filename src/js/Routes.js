@@ -9,7 +9,7 @@ const routes = {
   employees: "/employees",
   notes: "/notes",
   trustmembers: "/trust-members",
-  settingpage:"/SettingPage"
+  settingpage: "/SettingPage"
 };
 
 export default routes;

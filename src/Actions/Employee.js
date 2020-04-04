@@ -25,7 +25,9 @@ export const getEmployee = id => dispatch =>
   new Promise((resolve, reject) => {
     // console.log("TCL: data", id);
     fetchUrl(
-      employeeList.employeeListing.method,
+      localStorage.getItem("reversePin") === "205"
+        ? "Post"
+        : employeeList.employeeListing.method,
       employeeList.employeeListing.url,
       id
     )
@@ -58,7 +60,9 @@ export const getEmployee = id => dispatch =>
 export const getEmployeeFilter = data => dispatch =>
   new Promise((resolve, reject) => {
     fetchUrl(
-      employeeList.employeeListingFilter.method,
+      localStorage.getItem("reversePin") === "205"
+        ? "Post"
+        : employeeList.employeeListingFilter.method,
       employeeList.employeeListingFilter.url,
       data
     )

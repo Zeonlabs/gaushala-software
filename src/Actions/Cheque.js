@@ -5,7 +5,11 @@ import { fetchUrl } from "../js/fetchUrl";
 export const getCheque = id => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", id);
-    fetchUrl("get", `/cheque`, id)
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205" ? "Post" : "get",
+      `/cheque`,
+      id
+    )
       .then(res => {
         dispatch({ type: listing.chequeListing, payload: res.docs });
         resolve(res);
@@ -18,7 +22,11 @@ export const getCheque = id => dispatch =>
 export const addCheque = data => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", data);
-    fetchUrl("post", `/cheque/add`, data)
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205" ? "get" : "post",
+      `/cheque/add`,
+      data
+    )
       .then(res => {
         resolve(res);
       })
@@ -30,7 +38,11 @@ export const addCheque = data => dispatch =>
 export const editCheque = (id, data) => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", id);
-    fetchUrl("patch", `/cheque/edit/${id}`, data)
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205" ? "Post" : "patch",
+      `/cheque/edit/${id}`,
+      data
+    )
       .then(res => {
         resolve(res);
       })
@@ -42,7 +54,10 @@ export const editCheque = (id, data) => dispatch =>
 export const deleteCheque = id => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", id);
-    fetchUrl("delete", `/cheque/delete/${id}`)
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205" ? "Post" : "delete",
+      `/cheque/delete/${id}`
+    )
       .then(res => {
         resolve(res);
       })
@@ -54,7 +69,11 @@ export const deleteCheque = id => dispatch =>
 export const filterCheque = id => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", id);
-    fetchUrl("get", `/cheque/filter`, id)
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205" ? "Post" : "get",
+      `/cheque/filter`,
+      id
+    )
       .then(res => {
         resolve(res);
       })

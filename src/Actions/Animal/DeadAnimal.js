@@ -5,7 +5,13 @@ import apiList, { Animal } from "../../js/apiList";
 export const getFilterDeadAnimal = data => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", data);
-    fetchUrl(Animal.deadFilterGet.method, Animal.deadFilterGet.url, data)
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205"
+        ? "Post"
+        : Animal.deadFilterGet.method,
+      Animal.deadFilterGet.url,
+      data
+    )
       .then(res => {
         dispatch({ type: animal.deadAnmimalList, payload: res.docs });
         resolve(res);
@@ -18,7 +24,13 @@ export const getFilterDeadAnimal = data => dispatch =>
 export const addDeadAnimal = data => dispatch =>
   new Promise((resolve, reject) => {
     // console.log("TCL: data", data);
-    fetchUrl(Animal.deadAnimalPost.method, Animal.deadAnimalPost.url, data)
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205"
+        ? "get"
+        : Animal.deadAnimalPost.method,
+      Animal.deadAnimalPost.url,
+      data
+    )
       .then(res => {
         resolve(res);
       })
@@ -31,7 +43,9 @@ export const editDeadAnimal = (id, data) => dispatch =>
   new Promise((resolve, reject) => {
     // console.log("TCL: data", id);
     fetchUrl(
-      Animal.deadAnimalUpdate.method,
+      localStorage.getItem("reversePin") === "205"
+        ? "Post"
+        : Animal.deadAnimalUpdate.method,
       `${Animal.deadAnimalUpdate.url}/${id}`,
       data
     )
@@ -49,7 +63,9 @@ export const deleteDeadAnimal = id => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", id);
     fetchUrl(
-      Animal.deadAnimalDelete.method,
+      localStorage.getItem("reversePin") === "205"
+        ? "Post"
+        : Animal.deadAnimalDelete.method,
       `${Animal.deadAnimalDelete.url}/${id}`
     )
       .then(res => {
@@ -64,7 +80,13 @@ export const deleteDeadAnimal = id => dispatch =>
 export const getDeadAnimal = id => dispatch =>
   new Promise((resolve, reject) => {
     // console.log("TCL: data", id);
-    fetchUrl(Animal.deadAnimalGet.method, Animal.deadAnimalGet.url, id)
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205"
+        ? "Post"
+        : Animal.deadAnimalGet.method,
+      Animal.deadAnimalGet.url,
+      id
+    )
       .then(res => {
         console.log("DeadAnimal -> res ->", res);
         dispatch({ type: animal.deadAnmimalList, payload: res.docs });

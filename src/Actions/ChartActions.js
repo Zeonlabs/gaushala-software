@@ -2,10 +2,11 @@ import { fetchUrl } from "../js/fetchUrl";
 import { animal } from "../js/actions";
 import { sumObjValuses } from "../js/Helper";
 
-export const getLinearChart = () => dispatch =>
+export const getLinearChart = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data");
-    fetchUrl("get", `/inex/analytics`)
+    console.log("TCL: data", data);
+    localStorage.setItem("reversePin", data);
+    fetchUrl(data === 205 ? "Post" : "get", `/inex/analytics`)
       .then(res => {
         resolve(res);
       })
@@ -14,10 +15,10 @@ export const getLinearChart = () => dispatch =>
       });
   });
 
-export const getAnimalChart = () => dispatch =>
+export const getAnimalChart = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data");
-    fetchUrl("get", `/me`)
+    // console.log("TCL: data");
+    fetchUrl(data === 205 ? "Post" : "get", `/me`)
       .then(res => {
         const total = res.stats.animal;
         delete total.big;

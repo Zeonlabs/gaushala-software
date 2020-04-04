@@ -65,14 +65,18 @@ export class Notes extends Component {
 
   handelDataAdd = data => {
     console.log("Employees -> handelDataAdd -> data", data);
-    this.props.addNotes(data).then(res => {
-      this.props.getNotes(this.state.pagination).then(res => {
-        this.setState({
-          data: res.docs
+    if (localStorage.getItem("reversePin") === "205") {
+      this.handelAddTodos();
+    } else {
+      this.props.addNotes(data).then(res => {
+        this.props.getNotes(this.state.pagination).then(res => {
+          this.setState({
+            data: res.docs
+          });
+          this.handelAddTodos();
         });
-        this.handelAddTodos();
       });
-    });
+    }
   };
 
   handelAddEdit = (id, data) => {
