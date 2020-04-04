@@ -30,7 +30,11 @@ class Home extends Component {
   componentDidMount = () => {
     const getDate = (year, month) =>
       `${month < 10 ? "0" + month : month}-${year}`;
-    if (this.props.location.state.status === 205) {
+    if (
+      this.props.location.state
+        ? this.props.location.state.status === 205
+        : localStorage.getItem("reversePin") === "205"
+    ) {
     } else {
       this.props.getLinearChart().then(res => {
         const arrangedIncomeDate = arrangeDate(res.income);
@@ -76,7 +80,7 @@ class Home extends Component {
           <LineChart
             // income={this.state.linearDataIncome}
             // expence={this.state.linearDataExpence}
-            statusCode={this.props.location.state.status}
+            // statusCode={this.props.location.state.status}
             data={{
               income: this.state.incomeData,
               expense: this.state.expenceData
@@ -86,7 +90,13 @@ class Home extends Component {
           <div className="btml-grph">
             <div className="piechrt-div">
               <h3 className="dashbrd-label">paSauAao</h3>
-              <AnimalChart statusCode={this.props.location.state.status} />
+              <AnimalChart
+                statusCode={
+                  this.props.location.state
+                    ? this.props.location.state.status
+                    : parseInt(localStorage.getItem("reversePin"), 10)
+                }
+              />
             </div>
             <div className="balance-div">
               <div className="padding-row-15">
