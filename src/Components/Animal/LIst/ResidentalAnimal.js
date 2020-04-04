@@ -41,7 +41,8 @@ class ResidentalAnimal extends Component {
       income: false,
       total: 0,
       tagText: "",
-      date: {}
+      date: {},
+      loading: true
     };
     this.columns = [
       {
@@ -157,16 +158,37 @@ class ResidentalAnimal extends Component {
     //     data: this.props.costAnimalList
     //   });
     // } else {
-    this.props.getCostAnimal(this.state.pagination).then(res => {
-      console.log("this is a log in a  creadit animal api ->", res);
-      this.setState({
-        data: res.docs
+    this.props
+      .getCostAnimal(this.state.pagination)
+      .then(res => {
+        console.log("this is a log in a  creadit animal api ->", res);
+        this.setState({
+          data: res.docs,
+          loading: false
+        });
+      })
+      .catch(e => {
+        this.setState({
+          loading: false
+        });
       });
-    });
     // }
   };
 
+  loadingTrue = () => {
+    this.setState({
+      loading: true
+    });
+  };
+
+  loadingFalse = () => {
+    this.setState({
+      loading: false
+    });
+  };
+
   paginate = page => {
+    this.loadingTrue();
     this.setState(
       {
         pagination: {
@@ -175,12 +197,16 @@ class ResidentalAnimal extends Component {
         }
       },
       () =>
-        this.props.getCostAnimal(this.state.pagination).then(res => {
-          console.log("this is a log in a  creadit animal api ->", res);
-          this.setState({
-            data: res.docs
-          });
-        })
+        this.props
+          .getCostAnimal(this.state.pagination)
+          .then(res => {
+            console.log("this is a log in a  creadit animal api ->", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse())
     );
   };
 
@@ -195,19 +221,28 @@ class ResidentalAnimal extends Component {
   };
 
   handelSubmit = (id, data) => {
+    this.loadingTrue();
     console.log("CreditAnimal -> handelSubmit -> id, data", id, data);
-    this.props.editCostAnimal(id, data).then(res => {
-      this.handelClosePopUp();
-      this.props.getCostAnimal(this.state.pagination).then(res => {
-        console.log("res in a income model =->", res);
-        this.setState({
-          data: res.docs
-        });
-      });
-    });
+    this.props
+      .editCostAnimal(id, data)
+      .then(res => {
+        this.handelClosePopUp();
+        this.props
+          .getCostAnimal(this.state.pagination)
+          .then(res => {
+            console.log("res in a income model =->", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse());
+      })
+      .catch(e => this.loadingFalse());
   };
 
   handleDelete = (key, record) => {
+    this.loadingTrue();
     console.log("Income -> handleDelete -> key, record", key, record);
     this.props.deleteCostAnimal(record._id).then(res => {
       this.props
@@ -217,12 +252,14 @@ class ResidentalAnimal extends Component {
           this.setState({
             data: res.docs
           });
+          this.loadingFalse();
         })
-        .catch(e => message.error(e));
+        .catch(e => this.loadingFalse());
     });
   };
 
   onChange = (dates, dateStrings) => {
+    this.loadingTrue();
     console.log("From: ", dates[0], ", to: ", dates[1]);
     console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
     let value = {};
@@ -234,12 +271,16 @@ class ResidentalAnimal extends Component {
     } else {
       value = {};
     }
-    this.props.getFilterCostAnimal(value).then(res => {
-      console.log("CreditAnimal -> onChange -> res", res);
-      this.setState({
-        data: res
-      });
-    });
+    this.props
+      .getFilterCostAnimal(value)
+      .then(res => {
+        console.log("CreditAnimal -> onChange -> res", res);
+        this.setState({
+          data: res
+        });
+        this.loadingFalse();
+      })
+      .catch(e => this.loadingFalse());
   };
 
   handelClosePopUp = () => {
@@ -296,7 +337,7 @@ class ResidentalAnimal extends Component {
             <Col span={12}>
               <div className="m-btn-gru">
                 {/* ------------------------------Generat Button--------------------------------- */}
-                <Form.Item>
+                {/* <Form.Item>
                   <Button
                     size="default"
                     type="primary"
@@ -305,7 +346,7 @@ class ResidentalAnimal extends Component {
                   >
                     JnaroT rIpaaoT
                   </Button>
-                </Form.Item>
+                </Form.Item> */}
                 {/* ------------------------------Print button--------------------------- */}
                 <ReactToPrint
                   trigger={() => (
@@ -347,7 +388,9 @@ class ResidentalAnimal extends Component {
         />
         <div className="table">
           <Table
+            className="animal-table"
             columns={this.columns}
+            loading={this.state.loading}
             pagination={{
               onChange: this.paginate,
               current: this.state.pagination.page,

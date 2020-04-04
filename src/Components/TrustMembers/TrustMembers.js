@@ -34,7 +34,8 @@ export class TrustMembers extends Component {
         limit: 20
       },
       editData: "",
-      income: false
+      income: false,
+      loading: true
     };
   }
 
@@ -45,15 +46,24 @@ export class TrustMembers extends Component {
     };
     if (this.props.trustMembers.length > 0) {
       this.setState({
-        data: this.props.trustMembers
+        data: this.props.trustMembers,
+        loading: false
       });
     } else {
-      this.props.getMembers(pagination).then(res => {
-        console.log("Employees -> componentDidMount -> res", res);
-        this.setState({
-          data: res.docs
+      this.props
+        .getMembers(pagination)
+        .then(res => {
+          console.log("Employees -> componentDidMount -> res", res);
+          this.setState({
+            data: res.docs,
+            loading: false
+          });
+        })
+        .catch(e => {
+          this.setState({
+            loading: false
+          });
         });
-      });
     }
   };
 
@@ -72,59 +82,92 @@ export class TrustMembers extends Component {
     });
   };
 
+  loadingTrue = () => {
+    this.setState({
+      loading: true
+    });
+  };
+
+  loadingFalse = () => {
+    this.setState({
+      loading: false
+    });
+  };
+
   handelDataAdd = data => {
+    this.loadingTrue();
     console.log("Employees -> handelDataAdd -> data", data);
     this.props.addMembers(data).then(res => {
-      this.props.getMembers(this.state.pagination).then(res => {
-        this.setState({
-          data: res.docs
-        });
-        this.handelShowPopup();
-      });
+      this.props
+        .getMembers(this.state.pagination)
+        .then(res => {
+          this.setState({
+            data: res.docs
+          });
+          this.loadingFalse();
+          this.handelShowPopup();
+        })
+        .catch(e => this.loadingFalse());
     });
   };
 
   handelAddEdit = (id, data) => {
+    this.loadingTrue();
     console.log("TrustMembers -> handelAddEdit -> data", data);
     this.props.editMembers(id, data).then(res => {
-      this.props.getMembers(this.state.pagination).then(res => {
-        this.setState({
-          data: res.docs
-        });
-        this.handelShowPopup();
-      });
+      this.props
+        .getMembers(this.state.pagination)
+        .then(res => {
+          this.setState({
+            data: res.docs
+          });
+          this.loadingFalse();
+          this.handelShowPopup();
+        })
+        .catch(e => this.loadingFalse());
     });
   };
 
   handelDelete = record => {
+    this.loadingTrue();
     console.log("Income -> handleDelete -> key, record", record);
-    this.props.deleteMembers(record._id).then(res => {
-      this.props
-        .getMembers(this.state.pagination)
-        .then(res => {
-          console.log("res in a income model =->", res);
-          this.setState({
-            data: res.docs
-          });
-        })
-        .catch(e => message.error(e));
-    });
+    this.props
+      .deleteMembers(record._id)
+      .then(res => {
+        this.props
+          .getMembers(this.state.pagination)
+          .then(res => {
+            console.log("res in a income model =->", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse());
+      })
+      .catch(e => this.loadingFalse());
   };
 
   handelFilter = value => {
+    this.loadingTrue();
     console.log("Employees -> handelFilter -> value", value);
     const data = {
       position: value === "All" ? "" : value
     };
-    this.props.filterMembers(data).then(res => {
-      console.log("Employees -> res", res);
-      this.setState({
-        data: res
-      });
-    });
+    this.props
+      .filterMembers(data)
+      .then(res => {
+        console.log("Employees -> res", res);
+        this.setState({
+          data: res
+        });
+        this.loadingFalse();
+      })
+      .catch(e => this.loadingFalse());
   };
 
   paginate = page => {
+    this.loadingTrue();
     this.setState(
       {
         pagination: {
@@ -133,12 +176,16 @@ export class TrustMembers extends Component {
         }
       },
       () =>
-        this.props.getMembers(this.state.pagination).then(res => {
-          console.log("Employees -> componentDidMount -> res", res);
-          this.setState({
-            data: res.docs
-          });
-        })
+        this.props
+          .getMembers(this.state.pagination)
+          .then(res => {
+            console.log("Employees -> componentDidMount -> res", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse())
     );
   };
 
@@ -172,7 +219,7 @@ export class TrustMembers extends Component {
                   icon="printer"
                   style={{
                     backgroundColor: "#505D6F",
-                    color: "#ffffff",
+                    color: "#ffffff"
                   }}
                 >
                   ipa`nT
@@ -213,6 +260,7 @@ export class TrustMembers extends Component {
               pagination={this.paginate}
               current={this.state.pagination.page}
               pageSize={this.state.pagination.limit}
+              loading={this.state.loading}
             />
           </div>
         </div>

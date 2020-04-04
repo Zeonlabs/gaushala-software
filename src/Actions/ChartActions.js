@@ -25,6 +25,7 @@ export const getAnimalChart = () => dispatch =>
         const total_count = sumObjValuses(total);
         const resObj = {
           ...res.stats,
+          ...res,
           animal_total: total_count
         };
         console.log("total_count", total_count);

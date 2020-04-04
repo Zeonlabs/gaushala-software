@@ -9,11 +9,14 @@ import {
   Drawer,
   Select,
   DatePicker,
-  Modal
+  Modal,
+  Icon
 } from "antd";
 import { getEmployeeDocs } from "../../Actions/Employee";
 import "../Cheques/SideDrawer.scss";
 import { employeeList } from "../../js/apiList";
+import ReactToPrint from "react-to-print";
+import DocumentPrint from "../PrintTemplate/DocumentPrint";
 
 const baseUrl = "http://localhost:8081";
 
@@ -61,11 +64,43 @@ class ProfileView extends Component {
             <h2 className="form-titel ">caok fIlTr</h2>
           </Row>
         </div>
-        <img
+        <ReactToPrint
+          trigger={() => (
+            <Button
+              shape="squre"
+              size="large"
+              type="primary"
+              // onClick={this.handelResetFilter}
+              style={{
+                backgroundColor: "#505D6F",
+                marginRight: 10,
+                color: "#ffffff",
+                float: "right"
+              }}
+            >
+              <Icon
+                type="printer"
+                theme="filled"
+                // onClick={this.handelResetFilter}
+              />
+              ipa`nT
+            </Button>
+          )}
+          content={() => this.componentRef}
+        />
+        <DocumentPrint
+          ref={el => (this.componentRef = el)}
+          //---------------------------------------Change title of report from here----------------------------------------------------
+          name="Aavak rIpaaoT"
+          className="profile-view-image"
+          src={`${baseUrl}${employeeList.employeeGetDocs.url}/${this.props.data._id}`}
+        />
+        {/* </div> */}
+        {/* <img
           className="profile-view-image"
           src={`${baseUrl}${employeeList.employeeGetDocs.url}/${this.props.data._id}`}
           alt="userDoc"
-        />
+        /> */}
         {/* <p className="employee-name">{data.name}</p>
         <p>{data.phone}</p>
         <p>{data.address}</p>

@@ -19,14 +19,16 @@ class ListingTable extends Component {
             <div>{this.props.data.findIndex(x => x._id === text) + 1}</div>
           ) : null
       },
-      { 
+      {
         title: "taarIKa",
         dataIndex: "date",
         key: "date",
         className: "income-table-td-height table-font-english",
         width: 130,
         render: (text, record) => (
-          <div className="  english-font-input">{moment(text).format("YYYY-MM-DD")}</div>
+          <div className="  english-font-input">
+            {moment(text).format("YYYY-MM-DD")}
+          </div>
         )
       },
       {
@@ -113,7 +115,9 @@ class ListingTable extends Component {
     return (
       <div className="table">
         <Table
+          className="table-income"
           columns={this.columns}
+          loading={this.props.loading}
           pagination={{
             onChange: this.props.pagination,
             current: this.props.current,

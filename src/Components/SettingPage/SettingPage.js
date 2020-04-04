@@ -20,6 +20,7 @@ import {
 import OtpScreen from "./OtpScreen";
 import { addUser, editUser, getOtp, resetPin } from "../../Actions/SetUpUser";
 import { getAnimalChart } from "../../Actions/ChartActions";
+import ForgotPasswordModal from "./ForgotPasswordModal";
 
 const { Option } = Select;
 const { Header, Content, Footer, Sider } = Layout;
@@ -53,6 +54,10 @@ export class SettingPage extends Component {
         });
       });
     } else {
+      console.log(
+        "SettingPage -> componentDidMount -> this.props.totalAnimalCount",
+        this.props.totalAnimalCount
+      );
       this.setState({
         username: this.props.totalAnimalCount.name,
         mobilenumber: this.props.totalAnimalCount.phone
@@ -75,6 +80,7 @@ export class SettingPage extends Component {
       };
       this.props.editUser(data).then(res => {
         message.success("Update data sucessfully !");
+        localStorage.setItem("phone", data.phone);
         this.setState({
           iconLoading: false
           // username: "",
@@ -188,7 +194,7 @@ export class SettingPage extends Component {
   };
 
   render() {
-    const { visible, confirmLoading } = this.state;
+    const { visible, confirmLoading, visibleModal, mobilenumber } = this.state;
     console.log(
       "SettingPage -> render ->  visible, confirmLoading ",
       this.props.totalAnimalCount
@@ -197,82 +203,18 @@ export class SettingPage extends Component {
     return (
       <PageWrapper title="saoiTMga">
         <div>
-          <Modal
-            title="pIn se3"
+          <ForgotPasswordModal
             visible={visible}
-            onOk={this.handleOk}
-            maskClosable={false}
+            handleOk={this.handleOk}
             confirmLoading={confirmLoading}
-            onCancel={this.handleCancel}
-            footer={null}
-          >
-            <Row>
-              <h1 className="form-titel">saoT nyau paIna naMbar</h1>
-            </Row>
-
-            <div className="form-income">
-              <div
-                className={
-                  this.state.visibleModal
-                    ? "display-pin-change"
-                    : "display-none-pin-change"
-                }
-              >
-                {/* =============================otp pin set========================== */}
-
-                <h2 style={{ textAlign: "center", fontWeight: "bolder" }}>
-                  nvo pIn n>br se3 kro
-                </h2>
-                <Row gutter={[16, 16]}>
-                  <Col span={8}></Col>
-                  <Col span={8}>
-                    <Form.Item label="nvo pIn n>br ]mero:">
-                      <InputNumber onChange={this.handelFirstPin} />
-                    </Form.Item>
-                    <Form.Item label="frI pIn n>br ]mero:">
-                      <InputNumber onChange={this.handelSecondPin} />
-                    </Form.Item>
-                  </Col>
-                  <Col span={8}></Col>
-                </Row>
-
-                <Row gutter={[16, 16]}>
-                  <Col span={8}></Col>
-                  <Col span={8}></Col>
-                  <Col span={8} style={{ padding: 0 }}>
-                    {/* ------------------------------Submit button--------------------------- */}
-                    <Form.Item>
-                      <Button
-                        size="default"
-                        htmlType="submit"
-                        icon="safety-certificate"
-                        type="primary"
-                        style={{ float: "right" }}
-                        onClick={this.handelResetPin}
-                      >
-                        sabamaIT
-                      </Button>
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </div>
-            </div>
-
-            <div
-              className={
-                !this.state.visibleModal
-                  ? "display-pin-change"
-                  : "display-none-pin-change"
-              }
-            >
-              <OtpScreen
-                className="otp-verification-page"
-                // handelShows={this.handelChange}
-                mobile={this.state.mobilenumber}
-                newPinSetup={this.handelNewPinSetup}
-              />
-            </div>
-          </Modal>
+            handleCancel={this.handleCancel}
+            visibleModal={visibleModal}
+            handelFirstPin={this.handelFirstPin}
+            handelSecondPin={this.handelSecondPin}
+            handelResetPin={this.handelResetPin}
+            mobilenumber={mobilenumber}
+            handelNewPinSetup={this.handelNewPinSetup}
+          />
         </div>
 
         <h1>saaofTvaor saoiTMga</h1>

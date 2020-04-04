@@ -26,6 +26,7 @@ import { convertNumberToType } from "../../js/Helper";
 import ReportPrint from "../PrintTemplate/Report";
 import ReactToPrint from "react-to-print";
 import { IncomeColumn } from "../PrintTemplate/Report/Columns/Income";
+// import Loading from "../Loading/Loading";
 
 // const data = [];
 // for (let i = 0; i < 100; i++) {
@@ -47,6 +48,7 @@ class Income extends Component {
     this.state = {
       visible: false,
       income: false,
+      loading: true,
       data: "",
       editData: { money: { type: "cash" } },
       pagination: {
@@ -198,13 +200,15 @@ class Income extends Component {
     // const id = this.props.match.params.pid;
     if (this.props.incomeList.length > 0) {
       this.setState({
-        data: this.props.incomeList
+        data: this.props.incomeList,
+        loading: false
       });
     } else {
       this.props.getIncome(pagination).then(res => {
         // console.log("res in a income model =->", res);
         this.setState({
-          data: res.docs
+          data: res.docs,
+          loading: false
         });
       });
     }
@@ -216,6 +220,18 @@ class Income extends Component {
         data: this.props.incomeList
       });
     }
+  };
+
+  loadingTrue = () => {
+    this.setState({
+      loading: true
+    });
+  };
+
+  loadingFalse = () => {
+    this.setState({
+      loading: false
+    });
   };
 
   showDrawer = () => {
@@ -244,7 +260,7 @@ class Income extends Component {
       page,
       limit: 20
     };
-
+    this.loadingTrue();
     this.setState(
       {
         pagination: {
@@ -255,6 +271,7 @@ class Income extends Component {
       () =>
         this.props.getIncome(this.state.pagination).then(res => {
           console.log("res in a income model =->", res);
+          this.loadingFalse();
           this.setState({
             data: res.docs
           });
@@ -264,6 +281,7 @@ class Income extends Component {
   };
 
   handleDelete = (key, record) => {
+    this.loadingTrue();
     console.log("Income -> handleDelete -> key, record", key, record);
     this.props.deleteIncome(record._id).then(res => {
       this.props
@@ -273,6 +291,7 @@ class Income extends Component {
           this.setState({
             data: res.docs
           });
+          this.loadingFalse();
         })
         .catch(e => message.error(e));
     });
@@ -281,6 +300,7 @@ class Income extends Component {
   };
 
   handelFilterGet = data => {
+    this.loadingTrue();
     console.log("Income -> handelFilterGet -> data", data);
     this.props
       .getFilterIncome(data)
@@ -289,6 +309,7 @@ class Income extends Component {
         this.setState({
           data: res
         });
+        this.loadingFalse();
       })
       .catch(e => message.error(e));
   };
@@ -300,6 +321,7 @@ class Income extends Component {
   };
 
   handelSubmit = (id, data) => {
+    this.loadingTrue();
     this.props.editIncome(id, data).then(res => {
       // this.props.toggleModel();
       this.handelClosePopUp();
@@ -308,6 +330,7 @@ class Income extends Component {
         this.setState({
           data: res.docs
         });
+        this.loadingFalse();
       });
     });
   };
@@ -336,18 +359,17 @@ class Income extends Component {
     return (
       <PageWrapper title="Aavak rIpaaoT">
         <div className="row income-form-wrapper">
-        
-            <Button
-              shape="squre"
-              size="large"
-              type="primary"
-              onClick={this.showDrawer}
-              style={{ marginBottom: 30, marginRight: 10, fontSize: "22px" }}
-            >
-              <Icon type="filter" theme="filled" style={{ fontSize: 22 }} />
-              fIlTr
-            </Button>
-          
+          <Button
+            shape="squre"
+            size="large"
+            type="primary"
+            onClick={this.showDrawer}
+            style={{ marginBottom: 30, marginRight: 10, fontSize: "22px" }}
+          >
+            <Icon type="filter" theme="filled" style={{ fontSize: 22 }} />
+            fIlTr
+          </Button>
+
           <div style={{ display: "none" }}>
             <ReportPrint
               //---------------------------------------Change title of report from here----------------------------------------------------
@@ -363,7 +385,7 @@ class Income extends Component {
             size="large"
             type="primary"
             onClick={this.handelResetFilter}
-            style={{ marginBottom: 30,marginRight: 10, }}
+            style={{ marginBottom: 30, marginRight: 10 }}
             // className="filter-button"
           >
             <Icon
@@ -373,27 +395,31 @@ class Income extends Component {
             />
             rIsaoT
           </Button>
-        
-        
-              <ReactToPrint
-                trigger={() => (
-                  <Button
-                    shape="squre"
-                    size="large"
-                    type="primary"
-                    // onClick={this.handelResetFilter}
-                    style={{ backgroundColor: "#505D6F",marginRight: 10, color: "#ffffff",float: "right", }}
-                  >
-                    <Icon
-                      type="printer"
-                      theme="filled"
-                      // onClick={this.handelResetFilter}
-                    />
-                    ipa`nT
-                  </Button>
-                )}
-                content={() => this.componentRef}
-              />
+
+          <ReactToPrint
+            trigger={() => (
+              <Button
+                shape="squre"
+                size="large"
+                type="primary"
+                // onClick={this.handelResetFilter}
+                style={{
+                  backgroundColor: "#505D6F",
+                  marginRight: 10,
+                  color: "#ffffff",
+                  float: "right"
+                }}
+              >
+                <Icon
+                  type="printer"
+                  theme="filled"
+                  // onClick={this.handelResetFilter}
+                />
+                ipa`nT
+              </Button>
+            )}
+            content={() => this.componentRef}
+          />
         </div>
         <FilterDrawer
           onClose={this.onClose}
@@ -410,9 +436,14 @@ class Income extends Component {
           cash={this.state.editData.money.type}
         />
         <div className="">
+          {/* <div>
+            {/* {this.state.loading ? <Loading type="spinningBubbles" /> : ""} 
+            <Loading type="spinningBubbles" />
+          </div> */}
           <Table
             className="table-income table-income-expense"
             columns={columns}
+            loading={this.state.loading}
             dataSource={this.state.data || []}
             pagination={{
               onChange: this.paginate,

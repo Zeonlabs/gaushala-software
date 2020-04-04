@@ -37,7 +37,8 @@ export class Employees extends Component {
         limit: 20
       },
       editData: "",
-      income: false
+      income: false,
+      loading: true
     };
 
     [8, 16, 24, 32, 40, 48].forEach((value, i) => {
@@ -58,16 +59,37 @@ export class Employees extends Component {
     };
     if (this.props.employeeListing.length > 0) {
       this.setState({
-        data: this.props.employeeListing
+        data: this.props.employeeListing,
+        loading: false
       });
     } else {
-      this.props.getEmployee(pagination).then(res => {
-        console.log("Employees -> componentDidMount -> res", res);
-        this.setState({
-          data: res.docs
+      this.props
+        .getEmployee(pagination)
+        .then(res => {
+          console.log("Employees -> componentDidMount -> res", res);
+          this.setState({
+            data: res.docs,
+            loading: false
+          });
+        })
+        .catch(e => {
+          this.setState({
+            loading: false
+          });
         });
-      });
     }
+  };
+
+  loadingTrue = () => {
+    this.setState({
+      loading: true
+    });
+  };
+
+  loadingFalse = () => {
+    this.setState({
+      loading: false
+    });
   };
 
   onGutterChange = gutterKey => {
@@ -91,32 +113,42 @@ export class Employees extends Component {
   };
 
   handelDataAdd = data => {
+    this.loadingTrue();
     console.log("Employees -> handelDataAdd -> data", data);
-    axios.post("http://localhost:8081/employee/add", data).then(res => {
-      console.log("Employees -> res", res);
-      this.props.getEmployee(this.state.pagination).then(res => {
-        console.log("res in a income model =->", res);
-        this.setState({
-          data: res.docs
-        });
-      });
-      this.handelEmployeePopup();
-    });
-  };
-
-  handelDelete = record => {
-    console.log("Income -> handleDelete -> key, record", record);
-    this.props.deleteEmployee(record._id).then(res => {
-      this.props
-        .getEmployee(this.state.pagination)
-        .then(res => {
+    axios
+      .post("http://localhost:8081/employee/add", data)
+      .then(res => {
+        console.log("Employees -> res", res);
+        this.props.getEmployee(this.state.pagination).then(res => {
           console.log("res in a income model =->", res);
           this.setState({
             data: res.docs
           });
-        })
-        .catch(e => message.error(e));
-    });
+          this.loadingFalse();
+        });
+        this.handelEmployeePopup();
+      })
+      .catch(e => this.loadingFalse());
+  };
+
+  handelDelete = record => {
+    this.loadingTrue();
+    console.log("Income -> handleDelete -> key, record", record);
+    this.props
+      .deleteEmployee(record._id)
+      .then(res => {
+        this.props
+          .getEmployee(this.state.pagination)
+          .then(res => {
+            console.log("res in a income model =->", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse());
+      })
+      .catch(e => this.loadingFalse());
   };
 
   handelEdit = record => {
@@ -128,6 +160,7 @@ export class Employees extends Component {
   };
 
   paginate = page => {
+    this.loadingTrue();
     this.setState(
       {
         pagination: {
@@ -136,38 +169,55 @@ export class Employees extends Component {
         }
       },
       () =>
-        this.props.getEmployee(this.state.pagination).then(res => {
-          console.log("Employees -> componentDidMount -> res", res);
-          this.setState({
-            data: res.docs
-          });
-        })
+        this.props
+          .getEmployee(this.state.pagination)
+          .then(res => {
+            console.log("Employees -> componentDidMount -> res", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse())
     );
   };
 
   handelFilter = value => {
+    this.loadingTrue();
     console.log("Employees -> handelFilter -> value", value);
     const data = {
       type: value === "No" ? "" : value
     };
-    this.props.getEmployeeFilter(data).then(res => {
-      console.log("Employees -> res", res);
-      this.setState({
-        data: res
-      });
-    });
+    this.props
+      .getEmployeeFilter(data)
+      .then(res => {
+        console.log("Employees -> res", res);
+        this.setState({
+          data: res
+        });
+        this.loadingFalse();
+      })
+      .catch(e => this.loadingFalse());
   };
 
   handelEditSubmit = (id, data) => {
+    this.loadingTrue();
     console.log("Employees -> handelEditSubmit -> data", data);
-    this.props.editEmployee(id, data).then(res => {
-      this.props.getEmployee(this.state.pagination).then(res => {
-        this.setState({
-          data: res.docs
-        });
-        this.handelEmployeePopup();
-      });
-    });
+    this.props
+      .editEmployee(id, data)
+      .then(res => {
+        this.props
+          .getEmployee(this.state.pagination)
+          .then(res => {
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+            this.handelEmployeePopup();
+          })
+          .catch(e => this.loadingFalse());
+      })
+      .catch(e => this.loadingFalse());
   };
 
   render() {
@@ -221,6 +271,7 @@ export class Employees extends Component {
             pagination={this.paginate}
             current={this.state.pagination.page}
             pageSize={this.state.pagination.limit}
+            loading={this.state.loading}
           />
         </div>
       </PageWrapper>

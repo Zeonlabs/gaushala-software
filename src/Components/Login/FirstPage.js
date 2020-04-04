@@ -2,12 +2,15 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { addUser } from "../../Actions/SetUpUser";
 import { Form, Input, Button, Row, Col, InputNumber } from "antd";
+import NumericInput from "../Common/Forms/InputNumber";
 
 class FirstPage extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = {
+      value: 0
+    };
   }
 
   handleSubmit = e => {
@@ -17,9 +20,16 @@ class FirstPage extends Component {
       if (!err) {
         this.props.addUser(values).then(res => {
           console.log("FirstPage -> res", res);
+          this.props.change();
+          localStorage.setItem("addUser", "yes");
+          localStorage.setItem("phone", values.phone);
         });
       }
     });
+  };
+
+  onChange = value => {
+    this.setState({ value });
   };
 
   render() {
@@ -42,12 +52,11 @@ class FirstPage extends Component {
             <Col span={8}>
               {/* ------------------------------Mobile no.--------------------------------- */}
 
-              <Form.Item className="" label="maaobaa[la naM">
+              <Form.Item className="" label="maaobaa[la naM.:">
                 {getFieldDecorator("phone", {
                   rules: [{ required: true, len: 10 }]
-                  // initialValue: type && data.phone
                 })(
-                  <InputNumber
+                  <NumericInput
                     value={this.state.value}
                     onChange={this.onChange}
                   />
@@ -56,7 +65,7 @@ class FirstPage extends Component {
             </Col>
             <Col span={16}>
               {/* ------------------------------Address-------------------------------- */}
-              <Form.Item className="ant-col-24" label="paIn:">
+              <Form.Item className="ant-col-24" label="paIna:">
                 {getFieldDecorator("pin", {
                   rules: [{ required: true }]
                   // initialValue: type && data.address
@@ -91,4 +100,5 @@ class FirstPage extends Component {
 }
 
 const FirstPages = Form.create({ name: "Income" })(FirstPage);
+
 export default connect(null, { addUser })(FirstPages);

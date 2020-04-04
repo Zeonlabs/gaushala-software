@@ -43,7 +43,8 @@ class DebitAnimal extends Component {
       income: false,
       total: 0,
       tagText: "",
-      date: {}
+      date: {},
+      loading: true
     };
     this.columns = [
       {
@@ -188,13 +189,33 @@ class DebitAnimal extends Component {
     //     data: this.props.getAnimalList
     //   });
     // } else {
-    this.props.getGivenAnimal(this.state.pagination).then(res => {
-      console.log("this is a log in a  creadit animal api ->", res);
-      this.setState({
-        data: res.docs
+    this.props
+      .getGivenAnimal(this.state.pagination)
+      .then(res => {
+        console.log("this is a log in a  creadit animal api ->", res);
+        this.setState({
+          data: res.docs,
+          loading: false
+        });
+      })
+      .catch(e => {
+        this.setState({
+          loading: false
+        });
       });
-    });
     // }
+  };
+
+  loadingTrue = () => {
+    this.setState({
+      loading: true
+    });
+  };
+
+  loadingFalse = () => {
+    this.setState({
+      loading: false
+    });
   };
 
   handelText = e => {
@@ -241,47 +262,66 @@ class DebitAnimal extends Component {
   };
 
   handelSubmit = (id, data) => {
+    this.loadingTrue();
     console.log("CreditAnimal -> handelSubmit -> id, data", id, data);
-    this.props.editGivenAnimal(id, data).then(res => {
-      this.handelClosePopUp();
-      this.props.getGivenAnimal(this.state.pagination).then(res => {
-        console.log("res in a income model =->", res);
-        this.setState({
-          data: res.docs
-        });
-      });
-    });
+    this.props
+      .editGivenAnimal(id, data)
+      .then(res => {
+        this.handelClosePopUp();
+        this.props
+          .getGivenAnimal(this.state.pagination)
+          .then(res => {
+            console.log("res in a income model =->", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse());
+      })
+      .catch(e => this.loadingFalse());
   };
 
   filterData = () => {
+    this.loadingTrue();
     const data = {
       ...this.state.date,
       tag: this.state.tagText
     };
-    this.props.getFilterGivenAnimal(data).then(res => {
-      console.log("CreditAnimal -> onChange -> res", res);
-      this.setState({
-        data: res
-      });
-    });
+    this.props
+      .getFilterGivenAnimal(data)
+      .then(res => {
+        console.log("CreditAnimal -> onChange -> res", res);
+        this.setState({
+          data: res
+        });
+        this.loadingFalse();
+      })
+      .catch(e => this.loadingFalse());
   };
 
   handleDelete = (key, record) => {
+    this.loadingTrue();
     console.log("Income -> handleDelete -> key, record", key, record);
-    this.props.deleteGivenAnimal(record._id).then(res => {
-      this.props
-        .getGivenAnimal(this.state.pagination)
-        .then(res => {
-          console.log("res in a income model =->", res);
-          this.setState({
-            data: res.docs
-          });
-        })
-        .catch(e => message.error(e));
-    });
+    this.props
+      .deleteGivenAnimal(record._id)
+      .then(res => {
+        this.props
+          .getGivenAnimal(this.state.pagination)
+          .then(res => {
+            console.log("res in a income model =->", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse());
+      })
+      .catch(e => this.loadingFalse());
   };
 
   paginate = page => {
+    this.loadingTrue();
     this.setState(
       {
         pagination: {
@@ -290,12 +330,16 @@ class DebitAnimal extends Component {
         }
       },
       () =>
-        this.props.getGivenAnimal(this.state.pagination).then(res => {
-          console.log("this is a log in a  creadit animal api ->", res);
-          this.setState({
-            data: res.docs
-          });
-        })
+        this.props
+          .getGivenAnimal(this.state.pagination)
+          .then(res => {
+            console.log("this is a log in a  creadit animal api ->", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse())
     );
   };
 
@@ -391,6 +435,8 @@ class DebitAnimal extends Component {
         />
         <div className="table">
           <Table
+            className="animal-table"
+            loading={this.state.loading}
             columns={this.columns}
             pagination={{
               onChange: this.paginate,

@@ -34,7 +34,8 @@ class TotalAnimal extends Component {
         limit: 20
       },
       editData: "",
-      income: false
+      income: false,
+      loading: true
     };
     this.columns = [
       {
@@ -113,16 +114,37 @@ class TotalAnimal extends Component {
     //     data: this.props.totalAnimalList
     //   });
     // } else {
-    this.props.getTotalAnimal(this.state.pagination).then(res => {
-      console.log("this is a log in a  creadit animal api ->", res);
-      this.setState({
-        data: res.docs
+    this.props
+      .getTotalAnimal(this.state.pagination)
+      .then(res => {
+        console.log("this is a log in a  creadit animal api ->", res);
+        this.setState({
+          data: res.docs,
+          loading: false
+        });
+      })
+      .catch(e => {
+        this.setState({
+          loading: false
+        });
+        // }
       });
+  };
+
+  loadingTrue = () => {
+    this.setState({
+      loading: true
     });
-    // }
+  };
+
+  loadingFalse = () => {
+    this.setState({
+      loading: false
+    });
   };
 
   onChange = (dates, dateStrings) => {
+    this.loadingTrue();
     console.log("From: ", dates[0], ", to: ", dates[1]);
     console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
     let value = {};
@@ -134,12 +156,16 @@ class TotalAnimal extends Component {
     } else {
       value = {};
     }
-    this.props.getFilterTotalAnimal(value).then(res => {
-      console.log("CreditAnimal -> onChange -> res", res);
-      this.setState({
-        data: res
-      });
-    });
+    this.props
+      .getFilterTotalAnimal(value)
+      .then(res => {
+        console.log("CreditAnimal -> onChange -> res", res);
+        this.setState({
+          data: res
+        });
+        this.loadingFalse();
+      })
+      .catch(e => this.loadingFalse());
   };
 
   handelback = () => {
@@ -148,6 +174,7 @@ class TotalAnimal extends Component {
   };
 
   paginate = page => {
+    this.loadingTrue();
     this.setState(
       {
         pagination: {
@@ -156,12 +183,16 @@ class TotalAnimal extends Component {
         }
       },
       () =>
-        this.props.getTotalAnimal(this.state.pagination).then(res => {
-          console.log("this is a log in a  creadit animal api ->", res);
-          this.setState({
-            data: res.docs
-          });
-        })
+        this.props
+          .getTotalAnimal(this.state.pagination)
+          .then(res => {
+            console.log("this is a log in a  creadit animal api ->", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse())
     );
   };
 
@@ -208,7 +239,7 @@ class TotalAnimal extends Component {
             <Col span={12}>
               <div className="m-btn-gru">
                 {/* ------------------------------Generat Button--------------------------------- */}
-                <Form.Item>
+                {/* <Form.Item>
                   <Button
                     size="default"
                     type="primary"
@@ -217,7 +248,7 @@ class TotalAnimal extends Component {
                   >
                     JnaroT rIpaaoT
                   </Button>
-                </Form.Item>
+                </Form.Item> */}
                 {/* ------------------------------Print button--------------------------- */}
                 <ReactToPrint
                   trigger={() => (
@@ -252,6 +283,8 @@ class TotalAnimal extends Component {
         <div className="table">
           <Table
             columns={this.columns}
+            className="animal-table"
+            loading={this.state.loading}
             pagination={{
               onChange: this.paginate,
               current: this.state.pagination.page,

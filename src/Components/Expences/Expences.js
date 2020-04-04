@@ -41,6 +41,7 @@ class Income extends Component {
     this.state = {
       visible: false,
       expense: false,
+      loading: true,
       data: "",
       editData: { money: { type: "cash" } },
       pagination: {
@@ -204,17 +205,31 @@ class Income extends Component {
     };
     if (this.props.expenseList.length > 0) {
       this.setState({
-        data: this.props.expenseList
+        data: this.props.expenseList,
+        loading: false
       });
     } else {
       // const id = this.props.match.params.pid;
       this.props.getExpense(pagination).then(res => {
         // console.log("res in a income model =->", res);
         this.setState({
-          data: res.docs
+          data: res.docs,
+          loading: false
         });
       });
     }
+  };
+
+  loadingTrue = () => {
+    this.setState({
+      loading: true
+    });
+  };
+
+  loadingFalse = () => {
+    this.setState({
+      loading: false
+    });
   };
 
   componentDidUpdate = prevPorps => {
@@ -230,6 +245,7 @@ class Income extends Component {
   };
 
   onClose = () => {
+    this.loadingTrue();
     this.props
       .getExpense(this.state.pagination)
       .then(res => {
@@ -237,14 +253,19 @@ class Income extends Component {
         this.setState({
           data: res.docs
         });
+        this.loadingFalse();
       })
-      .catch(e => message.error(e));
+      .catch(e => {
+        message.error(e);
+        this.loadingFalse();
+      });
     this.setState({
       visible: false
     });
   };
 
   paginate = page => {
+    this.loadingTrue();
     this.setState(
       {
         pagination: {
@@ -253,28 +274,37 @@ class Income extends Component {
         }
       },
       () => {
-        this.props.getExpense(this.state.pagination).then(res => {
-          console.log("res in a income model =->", res);
-          this.setState({
-            data: res.docs
-          });
-        });
+        this.props
+          .getExpense(this.state.pagination)
+          .then(res => {
+            console.log("res in a income model =->", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse());
       }
     );
     // const id = this.props.match.params.pid;
   };
 
   handelFilterGet = data => {
+    this.loadingTrue();
     console.log("Income -> handelFilterGet -> data", data);
     this.props
       .getFilterExpense(data)
       .then(res => {
         console.log("res in a income model =->", res);
+        this.loadingFalse();
         this.setState({
           data: res
         });
       })
-      .catch(e => message.error(e));
+      .catch(e => {
+        message.error(e);
+        this.loadingFalse();
+      });
   };
 
   handelClosePopUp = () => {
@@ -284,6 +314,7 @@ class Income extends Component {
   };
 
   handelSubmit = (id, data) => {
+    this.loadingTrue();
     console.log("Income -> handelSubmit -> data", data);
     this.props.editExpense(id, data).then(res => {
       // this.props.toggleModel();
@@ -291,6 +322,7 @@ class Income extends Component {
       this.props.getExpense(this.state.pagination).then(res => {
         console.log("res in a income model =->", res);
         this.handelClosePopUp();
+        this.loadingFalse();
         this.setState({
           data: res.docs
         });
@@ -419,6 +451,7 @@ class Income extends Component {
           <Table
             className="table-income table-income-expense"
             columns={columns}
+            loading={this.state.loading}
             dataSource={this.state.data || []}
             pagination={{
               onChange: this.paginate,

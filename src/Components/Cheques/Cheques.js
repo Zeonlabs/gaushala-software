@@ -24,6 +24,7 @@ export class Cheques extends Component {
     super(props);
 
     this.state = {
+      loading: true,
       openPopup: false,
       showFilter: false,
       data: "",
@@ -56,16 +57,30 @@ export class Cheques extends Component {
     };
     if (this.props.chequeList.length > 0) {
       this.setState({
-        data: this.props.chequeList
+        data: this.props.chequeList,
+        loading: false
       });
     } else {
       this.props.getCheque(pagination).then(res => {
         console.log("Employees -> componentDidMount -> res", res);
         this.setState({
-          data: res.docs
+          data: res.docs,
+          loading: false
         });
       });
     }
+  };
+
+  loadingTrue = () => {
+    this.setState({
+      loading: true
+    });
+  };
+
+  loadingFalse = () => {
+    this.setState({
+      loading: false
+    });
   };
 
   handelShowPopup = () => {
@@ -84,31 +99,42 @@ export class Cheques extends Component {
   };
 
   handelDataAdd = data => {
+    this.loadingTrue();
     console.log("Employees -> handelDataAdd -> data", data);
     this.props.addCheque(data).then(res => {
-      this.props.getCheque(this.state.pagination).then(res => {
-        this.setState({
-          data: res.docs
-        });
-        this.handelShowPopup();
-      });
+      this.props
+        .getCheque(this.state.pagination)
+        .then(res => {
+          this.setState({
+            data: res.docs
+          });
+          this.loadingFalse();
+          this.handelShowPopup();
+        })
+        .catch(e => this.loadingFalse());
     });
   };
 
   handelAddEdit = (id, data) => {
+    this.loadingTrue();
     console.log("TrustMembers -> handelAddEdit -> data", id, data);
     this.props.editCheque(id, data).then(res => {
-      this.props.getCheque(this.state.pagination).then(res => {
-        this.setState({
-          data: res.docs
-          // income: false
-        });
-        this.handelShowPopup();
-      });
+      this.props
+        .getCheque(this.state.pagination)
+        .then(res => {
+          this.setState({
+            data: res.docs
+            // income: false
+          });
+          this.loadingFalse();
+          this.handelShowPopup();
+        })
+        .catch(e => this.loadingFalse());
     });
   };
 
   handelDelete = record => {
+    this.loadingTrue();
     console.log("Income -> handleDelete -> key, record", record);
     this.props.deleteCheque(record._id).then(res => {
       this.props
@@ -118,12 +144,17 @@ export class Cheques extends Component {
           this.setState({
             data: res.docs
           });
+          this.loadingFalse();
         })
-        .catch(e => message.error(e));
+        .catch(e => {
+          message.error(e);
+          this.loadingFalse();
+        });
     });
   };
 
   handelFilter = data => {
+    this.loadingTrue();
     console.log("Income -> handelFilterGet -> data", data);
     this.props
       .filterCheque(data)
@@ -132,8 +163,12 @@ export class Cheques extends Component {
         this.setState({
           data: res
         });
+        this.loadingFalse();
       })
-      .catch(e => message.error(e));
+      .catch(e => {
+        message.error(e);
+        this.loadingFalse();
+      });
   };
 
   handelResetFilter = () => {
@@ -142,6 +177,7 @@ export class Cheques extends Component {
   };
 
   paginate = page => {
+    this.loadingTrue();
     this.setState(
       {
         pagination: {
@@ -150,12 +186,16 @@ export class Cheques extends Component {
         }
       },
       () =>
-        this.props.getCheque(this.state.pagination).then(res => {
-          console.log("Employees -> componentDidMount -> res", res);
-          this.setState({
-            data: res.docs
-          });
-        })
+        this.props
+          .getCheque(this.state.pagination)
+          .then(res => {
+            console.log("Employees -> componentDidMount -> res", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse())
     );
   };
 
@@ -249,6 +289,7 @@ export class Cheques extends Component {
           <ListingTable
             data={this.state.data || []}
             // editUSer={this.handelEdit}
+            loading={this.state.loading}
             editPopupOpen={this.handelEdit}
             delete={this.handelDelete}
             pagination={this.paginate}

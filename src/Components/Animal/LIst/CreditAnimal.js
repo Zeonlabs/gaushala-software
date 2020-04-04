@@ -30,6 +30,7 @@ class CreditAnimal extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loading: true,
       data: "",
       sequence: 1,
       pagination: {
@@ -165,7 +166,20 @@ class CreditAnimal extends Component {
     ];
   }
 
+  loadingTrue = () => {
+    this.setState({
+      loading: true
+    });
+  };
+
+  loadingFalse = () => {
+    this.setState({
+      loading: false
+    });
+  };
+
   onChange = (dates, dateStrings) => {
+    this.loadingTrue();
     console.log("From: ", dates[0], ", to: ", dates[1]);
     console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
     let value = {};
@@ -177,12 +191,16 @@ class CreditAnimal extends Component {
     } else {
       value = {};
     }
-    this.props.getFilterIncomeAnimal(value).then(res => {
-      console.log("CreditAnimal -> onChange -> res", res);
-      this.setState({
-        data: res
-      });
-    });
+    this.props
+      .getFilterIncomeAnimal(value)
+      .then(res => {
+        console.log("CreditAnimal -> onChange -> res", res);
+        this.setState({
+          data: res
+        });
+        this.loadingFalse();
+      })
+      .catch(e => this.loadingFalse());
   };
 
   handelEdit = (text, record) => {
@@ -194,6 +212,7 @@ class CreditAnimal extends Component {
   };
 
   handleDelete = (key, record) => {
+    this.loadingTrue();
     console.log("Income -> handleDelete -> key, record", key, record);
     this.props.deleteIncomeAnimal(record._id).then(res => {
       this.props
@@ -203,27 +222,37 @@ class CreditAnimal extends Component {
           this.setState({
             data: res.docs
           });
+          this.loadingFalse();
         })
-        .catch(e => message.error(e));
+        .catch(e => this.loadingFalse());
     });
     // const dataSource = [...this.state.data];
     // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
   };
 
   handelSubmit = (id, data) => {
+    this.loadingTrue();
     console.log("CreditAnimal -> handelSubmit -> id, data", id, data);
-    this.props.editIncomeAnimal(id, data).then(res => {
-      this.handelClosePopUp();
-      this.props.getIncomeAnimal(this.state.pagination).then(res => {
-        console.log("res in a income model =->", res);
-        this.setState({
-          data: res.docs
-        });
-      });
-    });
+    this.props
+      .editIncomeAnimal(id, data)
+      .then(res => {
+        this.handelClosePopUp();
+        this.props
+          .getIncomeAnimal(this.state.pagination)
+          .then(res => {
+            console.log("res in a income model =->", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse());
+      })
+      .catch(r => this.loadingFalse());
   };
 
   paginate = page => {
+    this.loadingTrue();
     this.setState(
       {
         pagination: {
@@ -232,12 +261,16 @@ class CreditAnimal extends Component {
         }
       },
       () =>
-        this.props.getIncomeAnimal(this.state.pagination).then(res => {
-          console.log("this is a log in a  creadit animal api ->", res);
-          this.setState({
-            data: res.docs
-          });
-        })
+        this.props
+          .getIncomeAnimal(this.state.pagination)
+          .then(res => {
+            console.log("this is a log in a  creadit animal api ->", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse())
     );
   };
 
@@ -257,12 +290,16 @@ class CreditAnimal extends Component {
     //     data: this.props.incomeAnimalList
     //   });
     // } else {
-    this.props.getIncomeAnimal(this.state.pagination).then(res => {
-      // console.log("this is a log in a  creadit animal api ->", res);
-      this.setState({
-        data: res.docs
-      });
-    });
+    this.props
+      .getIncomeAnimal(this.state.pagination)
+      .then(res => {
+        // console.log("this is a log in a  creadit animal api ->", res);
+        this.setState({
+          data: res.docs,
+          loading: false
+        });
+      })
+      .catch(e => this.loadingFalse());
     // }
   };
 
@@ -384,7 +421,9 @@ class CreditAnimal extends Component {
           <Table
             columns={this.columns}
             dataSource={this.state.data}
+            className="animal-table"
             bordered
+            loading={this.state.loading}
             pagination={{
               onChange: this.paginate,
               current: this.state.pagination.page,

@@ -39,7 +39,8 @@ class DeadAnimal extends Component {
       },
       editData: "",
       income: false,
-      total: 0
+      total: 0,
+      loading: true
     };
     this.columns = [
       {
@@ -162,16 +163,37 @@ class DeadAnimal extends Component {
     //     data: this.props.deadAnimalList
     //   });
     // } else {
-    this.props.getDeadAnimal(this.state.pagination).then(res => {
-      console.log("this is a log in a  creadit animal api ->", res);
-      this.setState({
-        data: res.docs
+    this.props
+      .getDeadAnimal(this.state.pagination)
+      .then(res => {
+        console.log("this is a log in a  creadit animal api ->", res);
+        this.setState({
+          data: res.docs,
+          loading: false
+        });
+      })
+      .catch(e => {
+        this.setState({
+          loading: false
+        });
       });
-    });
     // }
   };
 
+  loadingTrue = () => {
+    this.setState({
+      loading: true
+    });
+  };
+
+  loadingFalse = () => {
+    this.setState({
+      loading: false
+    });
+  };
+
   handleDelete = (key, record) => {
+    this.loadingTrue();
     console.log("Income -> handleDelete -> key, record", key, record);
     this.props.deleteDeadAnimal(record._id).then(res => {
       this.props
@@ -181,8 +203,9 @@ class DeadAnimal extends Component {
           this.setState({
             data: res.docs
           });
+          this.loadingFalse();
         })
-        .catch(e => message.error(e));
+        .catch(e => this.loadingFalse());
     });
     // const dataSource = [...this.state.data];
     // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
@@ -199,6 +222,7 @@ class DeadAnimal extends Component {
   };
 
   onChange = (dates, dateStrings) => {
+    this.loadingTrue();
     console.log("From: ", dates[0], ", to: ", dates[1]);
     console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
     let value = {};
@@ -210,12 +234,16 @@ class DeadAnimal extends Component {
     } else {
       value = {};
     }
-    this.props.getFilterDeadAnimal(value).then(res => {
-      console.log("CreditAnimal -> onChange -> res", res);
-      this.setState({
-        data: res
-      });
-    });
+    this.props
+      .getFilterDeadAnimal(value)
+      .then(res => {
+        console.log("CreditAnimal -> onChange -> res", res);
+        this.setState({
+          data: res
+        });
+        this.loadingFalse();
+      })
+      .catch(e => this.loadingFalse());
   };
 
   handelback = () => {
@@ -230,19 +258,28 @@ class DeadAnimal extends Component {
   };
 
   handelSubmit = (id, data) => {
+    this.loadingTrue();
     console.log("CreditAnimal -> handelSubmit -> id, data", id, data);
-    this.props.editDeadAnimal(id, data).then(res => {
-      this.handelClosePopUp();
-      this.props.getDeadAnimal(this.state.pagination).then(res => {
-        console.log("res in a income model =->", res);
-        this.setState({
-          data: res.docs
-        });
-      });
-    });
+    this.props
+      .editDeadAnimal(id, data)
+      .then(res => {
+        this.handelClosePopUp();
+        this.props
+          .getDeadAnimal(this.state.pagination)
+          .then(res => {
+            console.log("res in a income model =->", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse());
+      })
+      .catch(e => this.loadingFalse());
   };
 
   paginate = page => {
+    this.loadingTrue();
     this.setState(
       {
         pagination: {
@@ -251,12 +288,16 @@ class DeadAnimal extends Component {
         }
       },
       () =>
-        this.props.getDeadAnimal(this.state.pagination).then(res => {
-          console.log("this is a log in a  creadit animal api ->", res);
-          this.setState({
-            data: res.docs
-          });
-        })
+        this.props
+          .getDeadAnimal(this.state.pagination)
+          .then(res => {
+            console.log("this is a log in a  creadit animal api ->", res);
+            this.setState({
+              data: res.docs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse())
     );
   };
 
@@ -355,6 +396,8 @@ class DeadAnimal extends Component {
         <div className="table">
           <Table
             columns={this.columns}
+            className="animal-table"
+            loading={this.state.loading}
             pagination={{
               onChange: this.paginate,
               current: this.state.pagination.page,

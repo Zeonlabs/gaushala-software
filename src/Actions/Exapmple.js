@@ -44,20 +44,20 @@ export const addIncome = data => dispatch =>
         reject(e);
       });
   });
-  
-  export const getExpense = id => dispatch =>
-    new Promise((resolve, reject) => {
-      console.log("TCL: data", id);
-      fetchUrl("get", `/expense`, id)
-        .then(res => {
-          dispatch({ type: listing.expenseListing, payload: res.docs });
-          resolve(res);
-        })
-        .catch(e => {
-          reject(e);
-        });
-    });
-  
+
+export const getExpense = id => dispatch =>
+  new Promise((resolve, reject) => {
+    console.log("TCL: data", id);
+    fetchUrl("get", `/expense`, id)
+      .then(res => {
+        dispatch({ type: listing.expenseListing, payload: res.docs });
+        resolve(res);
+      })
+      .catch(e => {
+        reject(e);
+      });
+  });
+
 export const getIncome = id => dispatch =>
   new Promise((resolve, reject) => {
     console.log("TCL: data", id);
@@ -76,7 +76,7 @@ export const getFilterIncome = data => dispatch =>
     console.log("TCL: data", data);
     fetchUrl("get", `/income/filter`, data)
       .then(res => {
-        dispatch({ type: listing.incomeListing, payload: res.docs });
+        // dispatch({ type: listing.incomeListing, payload: res });
         resolve(res);
       })
       .catch(e => {
@@ -108,7 +108,6 @@ export const addExpense = data => dispatch =>
         reject(e);
       });
   });
-
 
 export const editExpense = (id, data) => dispatch =>
   new Promise((resolve, reject) => {

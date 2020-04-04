@@ -76,17 +76,17 @@
 .back-button-title {
   display: flot;
 }
-.main-header-row{
+.main-header-row {
   margin: -8px;
   border: 1px solid black;
   border-radius: 6px;
   cursor: pointer;
 
-  h1{
+  h1 {
     margin: 1px !important;
   }
 }
-.filter-icon{
+.filter-icon {
   margin-top: 15px;
 }
 
@@ -108,7 +108,7 @@
   }
   .ant-btn-primary:hover {
     color: #ffffff;
-    background-color: #3EA8FF;
+    background-color: #3ea8ff;
     border-color: #ffffff;
     text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.12);
     -webkit-box-shadow: 0 2px 0 rgba(0, 0, 0, 0.045);
@@ -116,13 +116,25 @@
   }
 }
 
-.filter-icon{
-  i{
+.filter-icon {
+  i {
     margin: 8px !important;
     font-size: 28px;
   }
-  h3{
+  h3 {
     font-size: 28px;
-    
   }
+}
+
+.animal-table {
+  .ant-table {
+    // height:150px;
+    height: calc(100vh - 58vh);
+    // overflow: scroll !important;
+    overflow-y: scroll !important;
+  }
+}
+
+.ant-collapse-header {
+  display: contents !important;
 }

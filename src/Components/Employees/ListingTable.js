@@ -126,6 +126,7 @@ class ListingTable extends Component {
         />
         <Table
           columns={this.columns}
+          loading={this.props.loading}
           pagination={{
             onChange: this.props.pagination,
             current: this.props.current,
