@@ -38,7 +38,8 @@ export const IncomeColumn = [
     title: "sarnaamau",
     dataIndex: "address",
     key: "address",
-    width: 300
+    // width: 300,
+    className: 'address'
   },
   {
     title: "rkma",
