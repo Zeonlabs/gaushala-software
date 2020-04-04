@@ -30,28 +30,30 @@ class Home extends Component {
   componentDidMount = () => {
     const getDate = (year, month) =>
       `${month < 10 ? "0" + month : month}-${year}`;
+    if (this.props.location.state.status === 205) {
+    } else {
+      this.props.getLinearChart().then(res => {
+        const arrangedIncomeDate = arrangeDate(res.income);
+        const arrangedExpenseDate = arrangeDate(res.expense);
 
-    this.props.getLinearChart().then(res => {
-      const arrangedIncomeDate = arrangeDate(res.income);
-      const arrangedExpenseDate = arrangeDate(res.expense);
+        const incomeData = arrangedIncomeDate.map(val => ({
+          x: getDate(val.year, val.month),
+          y: val.amount
+        }));
 
-      const incomeData = arrangedIncomeDate.map(val => ({
-        x: getDate(val.year, val.month),
-        y: val.amount
-      }));
+        const expenseData = arrangedExpenseDate.map(val => ({
+          x: getDate(val.year, val.month),
+          y: val.amount
+        }));
 
-      const expenseData = arrangedExpenseDate.map(val => ({
-        x: getDate(val.year, val.month),
-        y: val.amount
-      }));
-
-      this.setState({
-        incomeData: incomeData,
-        expenceData: expenseData,
-        totalIncome: _.sumBy(res.income, "amount"),
-        totalExpense: _.sumBy(res.expense, "amount")
+        this.setState({
+          incomeData: incomeData,
+          expenceData: expenseData,
+          totalIncome: _.sumBy(res.income, "amount"),
+          totalExpense: _.sumBy(res.expense, "amount")
+        });
       });
-    });
+    }
   };
 
   componentDidUpdate = prevProps => {
