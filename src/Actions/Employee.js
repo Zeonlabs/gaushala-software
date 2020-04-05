@@ -4,7 +4,7 @@ import { employeeList } from "../js/apiList";
 
 export const addEmployee = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("data", data);
+    // console.log("data", data);
     fetchUrl(
       employeeList.employeeAdd.method,
       employeeList.employeeAdd.url,
@@ -16,7 +16,7 @@ export const addEmployee = data => dispatch =>
         resolve(res);
       })
       .catch(e => {
-        console.log("e", e);
+        // console.log("e", e);
         reject(e);
       });
   });
@@ -32,7 +32,7 @@ export const getEmployee = id => dispatch =>
       id
     )
       .then(res => {
-        console.log("DeadAnimal -> res ->", res);
+        // console.log("DeadAnimal -> res ->", res);
         dispatch({ type: employee.employeesting, payload: res.docs });
         resolve(res);
       })

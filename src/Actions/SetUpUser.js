@@ -1,16 +1,16 @@
-import { employee } from "../js/actions";
+// import { employee } from "../js/actions";
 import { fetchUrl } from "../js/fetchUrl";
 import { Setting } from "../js/apiList";
 
 export const addUser = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("data", data);
+    // console.log("data", data);
     fetchUrl(Setting.addUser.method, Setting.addUser.url, data, false, false)
       .then(res => {
         resolve(res);
       })
       .catch(e => {
-        console.log("e", e);
+        // console.log("e", e);
         reject(e);
       });
   });
@@ -22,7 +22,7 @@ export const editUser = data => dispatch =>
         resolve(res);
       })
       .catch(e => {
-        console.log("e", e);
+        // console.log("e", e);
         reject(e);
       });
   });
@@ -34,7 +34,7 @@ export const getOtp = () => dispatch =>
         resolve(res);
       })
       .catch(e => {
-        console.log("e", e);
+        // console.log("e", e);
         reject(e);
       });
   });
@@ -46,7 +46,7 @@ export const sendSms = data => dispatch =>
         resolve(res);
       })
       .catch(e => {
-        console.log("e", e);
+        // console.log("e", e);
         reject(e);
       });
   });
@@ -59,7 +59,7 @@ export const loginUser = data => dispatch =>
         resolve(res);
       })
       .catch(e => {
-        console.log("e", e);
+        // console.log("e", e);
         reject(e);
       });
   });
@@ -70,7 +70,7 @@ export const resetPin = data => dispatch =>
         resolve(res);
       })
       .catch(e => {
-        console.log("e", e);
+        // console.log("e", e);
         reject(e);
       });
   });
@@ -86,7 +86,7 @@ export const valiDateOtp = data => dispatch =>
         resolve(res);
       })
       .catch(e => {
-        console.log("e", e);
+        // console.log("e", e);
         reject(e);
       });
   });

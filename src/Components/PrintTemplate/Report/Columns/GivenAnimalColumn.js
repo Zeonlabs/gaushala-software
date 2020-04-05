@@ -3,7 +3,7 @@ import moment from "moment";
 import React from "react";
 import { totalOfArray } from "../../../../js/Helper";
 
-let count = 0;
+// let count = 0;
 
 export const GivenAnimalColumn = [
   {
@@ -12,11 +12,7 @@ export const GivenAnimalColumn = [
     key: "1",
     width: 150,
     className: "",
-    render: (text, record) => {
-      const total = count + 1;
-      count = total;
-      return <p>{total}</p>;
-    }
+    render: (text, record) => <p>{}</p>
   },
   {
     title: "taarIKa",
@@ -115,7 +111,7 @@ export const GivenAnimalColumn = [
     width: 200,
     className: ""
   },
-  { 
+  {
     title: "gaaoSaaLaa T/sT vataI",
     dataIndex: "trusty",
     key: "trusty",

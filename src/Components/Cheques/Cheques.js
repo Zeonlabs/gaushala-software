@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PageWrapper from "../Common/PageWrapper/PageWrapper";
-import moment from "moment";
 import "./Cheque.scss";
 import { Button, Icon, message } from "antd";
 import {
@@ -14,7 +13,6 @@ import {
 import Index from "./AddCheque/Index";
 import ListingTable from "./ListingTable";
 import FilterDatas from "./FilterData";
-import { useFlexLayout } from "react-table";
 import ReactToPrint from "react-to-print";
 import ReportPrint from "../PrintTemplate/Report";
 import { ChequeColumn } from "../PrintTemplate/Report/Columns/ChequeColumn";
@@ -64,7 +62,6 @@ export class Cheques extends Component {
       this.props
         .getCheque(pagination)
         .then(res => {
-          console.log("Employees -> componentDidMount -> res", res);
           this.setState({
             data: res.docs,
             loading: false
@@ -111,7 +108,6 @@ export class Cheques extends Component {
       this.loadingFalse();
       this.handelShowPopup();
     } else {
-      console.log("Employees -> handelDataAdd -> data", data);
       this.props.addCheque(data).then(res => {
         this.props
           .getCheque(this.state.pagination)
@@ -132,7 +128,6 @@ export class Cheques extends Component {
     if (localStorage.getItem("reversePin") === "205") {
       this.loadingFalse();
     } else {
-      console.log("TrustMembers -> handelAddEdit -> data", id, data);
       this.props.editCheque(id, data).then(res => {
         this.props
           .getCheque(this.state.pagination)
@@ -151,12 +146,10 @@ export class Cheques extends Component {
 
   handelDelete = record => {
     this.loadingTrue();
-    console.log("Income -> handleDelete -> key, record", record);
     this.props.deleteCheque(record._id).then(res => {
       this.props
         .getCheque(this.state.pagination)
         .then(res => {
-          console.log("res in a income model =->", res);
           this.setState({
             data: res.docs
           });
@@ -171,14 +164,12 @@ export class Cheques extends Component {
 
   handelFilter = data => {
     this.loadingTrue();
-    // console.log("Income -> handelFilterGet -> data", data);
     if (localStorage.getItem("reversePin") === "205") {
       this.loadingFalse();
     } else {
       this.props
         .filterCheque(data)
         .then(res => {
-          // console.log("res in a income model =->", res);
           this.setState({
             data: res
           });
@@ -209,7 +200,6 @@ export class Cheques extends Component {
         this.props
           .getCheque(this.state.pagination)
           .then(res => {
-            console.log("Employees -> componentDidMount -> res", res);
             this.setState({
               data: res.docs
             });

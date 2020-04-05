@@ -7,7 +7,6 @@ import IncomeTable from "./IncomeTable";
 
 class IncomePrintSlip extends React.Component {
   render() {
-    console.warn("this is  a printing component ->", this.props);
     return (
       <div>
         <div className="slip-print">
@@ -24,7 +23,9 @@ class IncomePrintSlip extends React.Component {
             <div className="column-1">
               <h2 className="font-size-20">pahaoMca naM. : &nbsp;</h2>
               {/* --------------------------Slip Num --------------------------- */}
-              <h2 className="slip-num font-size-20">{this.props.voucher || 0}</h2>
+              <h2 className="slip-num font-size-20">
+                {this.props.voucher || 0}
+              </h2>
             </div>
 
             <div className="column-2">
@@ -78,15 +79,15 @@ class IncomePrintSlip extends React.Component {
             <div className="column-3">
               {/* <hr className="hr-left-sign"></hr> */}
               {/* --------------------------Slip sign --------------------------- */}
-              <h2 className="slip-sign-text">
-                
-              </h2>
+              {/* <h2 className="slip-sign-text"></h2> */}
             </div>
 
             <div className="column-4">
               <hr className="hr-right-sign"></hr>
               {/* --------------------------Slip sign --------------------------- */}
-              <h2 className="slip-sign-text">saItaarama gaaOSaaLaa T/sT vataI</h2>
+              <h2 className="slip-sign-text">
+                saItaarama gaaOSaaLaa T/sT vataI
+              </h2>
             </div>
           </div>
         </div>

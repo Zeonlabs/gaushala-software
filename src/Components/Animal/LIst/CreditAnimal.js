@@ -6,7 +6,6 @@ import {
   Button,
   Row,
   Col,
-  message,
   Table,
   Divider,
   Popconfirm
@@ -180,8 +179,6 @@ class CreditAnimal extends Component {
 
   onChange = (dates, dateStrings) => {
     this.loadingTrue();
-    console.log("From: ", dates[0], ", to: ", dates[1]);
-    console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
     let value = {};
     if (dates.length > 1) {
       value = {
@@ -197,7 +194,6 @@ class CreditAnimal extends Component {
       this.props
         .getFilterIncomeAnimal(value)
         .then(res => {
-          console.log("CreditAnimal -> onChange -> res", res);
           this.setState({
             data: res
           });
@@ -208,7 +204,6 @@ class CreditAnimal extends Component {
   };
 
   handelEdit = (text, record) => {
-    // console.log("this is a log in a handelEdit ->", text, record);
     this.setState({
       editData: record,
       income: true
@@ -217,12 +212,10 @@ class CreditAnimal extends Component {
 
   handleDelete = (key, record) => {
     this.loadingTrue();
-    console.log("Income -> handleDelete -> key, record", key, record);
     this.props.deleteIncomeAnimal(record._id).then(res => {
       this.props
         .getIncomeAnimal(this.state.pagination)
         .then(res => {
-          console.log("res in a income model =->", res);
           this.setState({
             data: res.docs
           });
@@ -236,7 +229,6 @@ class CreditAnimal extends Component {
 
   handelSubmit = (id, data) => {
     this.loadingTrue();
-    console.log("CreditAnimal -> handelSubmit -> id, data", id, data);
     this.props
       .editIncomeAnimal(id, data)
       .then(res => {
@@ -244,7 +236,6 @@ class CreditAnimal extends Component {
         this.props
           .getIncomeAnimal(this.state.pagination)
           .then(res => {
-            console.log("res in a income model =->", res);
             this.setState({
               data: res.docs
             });
@@ -268,7 +259,6 @@ class CreditAnimal extends Component {
         this.props
           .getIncomeAnimal(this.state.pagination)
           .then(res => {
-            console.log("this is a log in a  creadit animal api ->", res);
             this.setState({
               data: res.docs
             });
@@ -285,10 +275,6 @@ class CreditAnimal extends Component {
   };
 
   componentDidMount = () => {
-    console.log(
-      "CreditAnimal -> componentDidMount -> this.props.incomeAnimalList",
-      this.props.incomeAnimalList
-    );
     // if (this.props.incomeAnimalList.length > 0) {
     //   this.setState({
     //     data: this.props.incomeAnimalList
@@ -297,7 +283,6 @@ class CreditAnimal extends Component {
     this.props
       .getIncomeAnimal(this.state.pagination)
       .then(res => {
-        // console.log("this is a log in a  creadit animal api ->", res);
         this.setState({
           data: res.docs,
           loading: false
@@ -317,7 +302,6 @@ class CreditAnimal extends Component {
   //     prevProps.incomeAnimalList.length !== this.props.incomeAnimalList.length
   //   ) {
   //     this.props.getIncomeAnimal(this.state.pagination).then(res => {
-  //       console.log("this is a log in a  creadit animal api ->", res);
   //       this.setState({
   //         data: res.docs
   //       });
@@ -326,13 +310,10 @@ class CreditAnimal extends Component {
   // };
 
   handelback = () => {
-    console.log("back", this.props);
     this.props.back();
   };
 
   render() {
-    // console.log("TCL: CreditAnimal -> constructor -> props", this.props);
-
     return (
       <div>
         <Row className="main-header-row" gutter={[16, 16]}>

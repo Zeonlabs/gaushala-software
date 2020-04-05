@@ -1,19 +1,5 @@
 import React, { Component } from "react";
-import {
-  Modal,
-  Form,
-  Input,
-  Select,
-  Row,
-  Col,
-  Icon,
-  Divider,
-  Tag,
-  Button,
-  Layout,
-  InputNumber,
-  message
-} from "antd";
+import { Modal, Form, Row, Col, Button, InputNumber } from "antd";
 import OtpScreen from "./OtpScreen";
 
 class ForgotPasswordModal extends Component {

@@ -1,28 +1,11 @@
 import React, { Component } from "react";
-import {
-  Modal,
-  Form,
-  Input,
-  DatePicker,
-  Select,
-  Radio,
-  Button,
-  InputNumber,
-  Row,
-  Col,
-  Tag
-} from "antd";
+import { Modal, Form, DatePicker, Button, Row, Col, Tag } from "antd";
 import "../../Common/Forms/IncomeModels.styles.scss";
 import moment from "moment";
-import Tables from "../../Common/Forms/table";
 import { addCostAnimal } from "../../../Actions/Animal/TotalAnimal";
 import { getAnimalChart } from "../../../Actions/ChartActions";
-import NumericInput from "../../Common/Forms/InputNumber";
 import { connect } from "react-redux";
 import Index from "../Table";
-
-const { Option } = Select;
-
 class ResicentalAnimal extends Component {
   constructor(props) {
     super(props);
@@ -40,7 +23,6 @@ class ResicentalAnimal extends Component {
   componentDidUpdate = prevProps => {
     if (prevProps !== this.props) {
       const { data } = this.props;
-      console.log("this is  aedit income modal ->", this.props);
       if (this.props.type) {
         this.setState({
           data: data
@@ -80,7 +62,6 @@ class ResicentalAnimal extends Component {
   };
 
   costAnimalData = values => {
-    console.log("ResicentalAnimal -> componentDidMount -> values", values);
     const date = moment(values.date).format("YYYY-MM-DD");
     const data = {
       date,
@@ -88,7 +69,6 @@ class ResicentalAnimal extends Component {
       // name: values.name,
       item: this.state.tableData
     };
-    console.log("TCL: data", data);
     if (localStorage.getItem("reversePin") === "205") {
       // this.loadingFalse();
       this.props.toggleModel();
@@ -107,7 +87,6 @@ class ResicentalAnimal extends Component {
   };
 
   handleSubmit = e => {
-    console.log("TCL: e", e);
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -119,7 +98,6 @@ class ResicentalAnimal extends Component {
   sumValuses = obj => Object.values(obj).reduce((a, b) => a + b);
 
   onTableSubmit = data => {
-    console.log("TCL: onTableSubmit -> data", data);
     const total = parseInt(this.sumValuses(data), 10);
     this.setState({
       tableData: data,
@@ -128,7 +106,6 @@ class ResicentalAnimal extends Component {
   };
 
   onChangeType = e => {
-    console.log("radio checked", e.target.value);
     this.setState({
       type: e.target.value
     });
@@ -136,30 +113,18 @@ class ResicentalAnimal extends Component {
 
   onChangeSawingType = e => {};
 
-  onChanges = value => {
-    console.log(`selected ${value}`);
-  };
+  onChanges = value => {};
 
-  onBlur = () => {
-    console.log("blur");
-  };
+  onBlur = () => {};
 
-  onFocus = () => {
-    console.log("focus");
-  };
+  onFocus = () => {};
 
-  onSearch = val => {
-    console.log("search:", val);
-  };
+  onSearch = val => {};
   handleReset = () => {
     this.props.form.resetFields();
     this.props.toggleModel();
   };
   render() {
-    // console.warn(
-    //   "this is  a count of total animal in cost animal =>",
-    //   this.props.totalAnimalCount
-    // );
     const { type, data } = this.props;
     const { getFieldDecorator } = this.props.form;
     return (

@@ -4,7 +4,7 @@ import "./PageWrapper.scss";
 import SiderBar from "./SiderBar";
 import Header from "./Header";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 const PageWrapper = props => {
   const [state, setState] = useState({

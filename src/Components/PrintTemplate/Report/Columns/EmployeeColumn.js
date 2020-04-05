@@ -1,8 +1,8 @@
 // import { convertNumberToType } from "../../../../js/Helper";
-import moment from "moment";
+// import moment from "moment";
 import React from "react";
 
-let count = 0;
+// let count = 0;
 
 export const EmployeeColumn = [
   {
@@ -11,11 +11,7 @@ export const EmployeeColumn = [
     key: "1",
     width: 100,
     className: "",
-    render: (text, record) => {
-      const total = count + 1;
-      count = total;
-      return <p>{total}</p>;
-    }
+    render: (text, record) => <p>{}</p>
   },
   {
     title: "k-macaarI naao pa`kar",

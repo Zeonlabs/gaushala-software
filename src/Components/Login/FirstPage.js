@@ -16,10 +16,8 @@ class FirstPage extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      console.log("TCL: values", values);
       if (!err) {
         this.props.addUser(values).then(res => {
-          console.log("FirstPage -> res", res);
           this.props.change();
           localStorage.setItem("addUser", "yes");
           localStorage.setItem("phone", values.phone);

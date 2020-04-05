@@ -4,7 +4,7 @@ import { fetchUrl } from "../js/fetchUrl";
 
 export const getMembers = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "get",
       `/trust-member`,
@@ -21,7 +21,7 @@ export const getMembers = id => dispatch =>
 
 export const addMembers = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", data);
+    // // console.log("TCL: data", data);
     fetchUrl("post", `/trust-member/add`, data)
       .then(res => {
         resolve(res);
@@ -33,7 +33,7 @@ export const addMembers = data => dispatch =>
 
 export const editMembers = (id, data) => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl("patch", `/trust-member/update/${id}`, data)
       .then(res => {
         resolve(res);
@@ -45,7 +45,7 @@ export const editMembers = (id, data) => dispatch =>
 
 export const deleteMembers = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl("delete", `/trust-member/delete/${id}`)
       .then(res => {
         resolve(res);
@@ -57,7 +57,7 @@ export const deleteMembers = id => dispatch =>
 
 export const filterMembers = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "get",
       `/trust-member/filter`,

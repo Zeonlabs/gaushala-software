@@ -4,7 +4,7 @@ import { fetchUrl } from "../js/fetchUrl";
 
 export const getCheque = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "get",
       `/cheque`,
@@ -21,7 +21,7 @@ export const getCheque = id => dispatch =>
 
 export const addCheque = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", data);
+    // console.log("TCL: data", data);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "get" : "post",
       `/cheque/add`,
@@ -37,7 +37,7 @@ export const addCheque = data => dispatch =>
 
 export const editCheque = (id, data) => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "patch",
       `/cheque/edit/${id}`,
@@ -53,7 +53,7 @@ export const editCheque = (id, data) => dispatch =>
 
 export const deleteCheque = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "delete",
       `/cheque/delete/${id}`
@@ -68,7 +68,7 @@ export const deleteCheque = id => dispatch =>
 
 export const filterCheque = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "get",
       `/cheque/filter`,

@@ -28,10 +28,6 @@ class Login extends Component {
 
   componentDidMount = () => {
     localStorage.getItem("addUser");
-    console.log(
-      "FirstPage -> componentDidMount -> localStorage.getItem()",
-      localStorage.getItem("addUser")
-    );
     if (localStorage.getItem("addUser") === null) {
       this.setState({
         firstPage: true
@@ -52,7 +48,6 @@ class Login extends Component {
       axios
         .post("http://localhost:8081/auth", pin)
         .then(res => {
-          console.log("Employees -> res", res);
           const location = {
             pathname: "/dashboard",
             state: { status: res.status }
@@ -64,7 +59,6 @@ class Login extends Component {
       // this.props
       //   .loginUser(pin)
       //   .then(res => {
-      //     console.log("Login -> handleSubmit -> res", res.ok);
       //     this.props.history.push("/dashboard");
       //   })
       //   .catch(e => message.error("invalid Pin !"));
@@ -106,8 +100,6 @@ class Login extends Component {
   };
 
   handleCancel = () => {
-    console.log("Clicked cancel button");
-
     this.setState({
       visible: false,
       visibleModal: false
@@ -115,14 +107,12 @@ class Login extends Component {
   };
 
   handelFirstPin = e => {
-    console.log("SettingPage -> e", e);
     this.setState({
       firstPin: e
     });
   };
 
   handelSecondPin = e => {
-    console.log("SettingPage -> e", e);
     this.setState({
       secondPin: e
     });

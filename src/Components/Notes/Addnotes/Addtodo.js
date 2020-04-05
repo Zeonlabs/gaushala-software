@@ -24,7 +24,6 @@ class NormalLoginForm extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
         if (this.props.type === "edit") {
           const id = this.props.data._id;
           this.props.editData(id, values);

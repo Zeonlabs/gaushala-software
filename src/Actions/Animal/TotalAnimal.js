@@ -1,10 +1,10 @@
 import { animal } from "../../js/actions";
 import { fetchUrl } from "../../js/fetchUrl";
-import apiList, { Animal } from "../../js/apiList";
+import { Animal } from "../../js/apiList";
 
 export const getFilterCostAnimal = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", data);
+    // console.log("TCL: data", data);
     fetchUrl(
       localStorage.getItem("reversePin") === "205"
         ? "Post"
@@ -23,7 +23,7 @@ export const getFilterCostAnimal = data => dispatch =>
 
 export const getCostAnimal = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205"
         ? "Post"
@@ -42,7 +42,7 @@ export const getCostAnimal = id => dispatch =>
 
 export const getTotalAnimal = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205"
         ? "Post"
@@ -61,7 +61,7 @@ export const getTotalAnimal = id => dispatch =>
 
 export const getFilterTotalAnimal = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205"
         ? "Post"
@@ -80,7 +80,7 @@ export const getFilterTotalAnimal = id => dispatch =>
 
 export const addCostAnimal = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", data);
+    // console.log("TCL: data", data);
     fetchUrl(Animal.animalCostPost.method, Animal.animalCostPost.url, data)
       .then(res => {
         resolve(res);
@@ -92,14 +92,14 @@ export const addCostAnimal = data => dispatch =>
 
 export const editCostAnimal = (id, data) => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       Animal.animalCostUpdate.method,
       `${Animal.animalCostUpdate.url}/${id}`,
       data
     )
       .then(res => {
-        console.log("res-> edit expense res ->", res);
+        // console.log("res-> edit expense res ->", res);
 
         resolve(res);
       })
@@ -110,13 +110,13 @@ export const editCostAnimal = (id, data) => dispatch =>
 
 export const deleteCostAnimal = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       Animal.animalCostDelete.method,
       `${Animal.animalCostDelete.url}/${id}`
     )
       .then(res => {
-        console.log("res-> edit income res ->", res);
+        // console.log("res-> edit income res ->", res);
         resolve(res);
       })
       .catch(e => {

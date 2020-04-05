@@ -99,7 +99,6 @@ class Income extends Component {
     };
     // const id = this.props.match.params.pid;
     this.props.getIncome(pagination).then(res => {
-      console.log("res in a income model =->", res);
       this.setState({
         data: res.docs
       });

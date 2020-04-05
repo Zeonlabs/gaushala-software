@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Button, Radio, Row, Col, Form, Input, Icon } from "antd";
+import { Modal } from "antd";
 import IncomeForms from "./IncomeForm";
 
 export default class FormModel extends Component {
@@ -13,13 +13,12 @@ export default class FormModel extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
       }
     });
   };
 
   render() {
-    const { showModal, handleOk, handleCancel, loading } = this.props;
+    const { showModal, handleOk, handleCancel } = this.props;
     return (
       <div>
         <Modal

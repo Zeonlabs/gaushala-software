@@ -30,7 +30,6 @@ class EditableCell extends Component {
   save = e => {
     const { record, handleSave } = this.props;
     this.form.validateFields((error, values) => {
-      // console.log("TCL: values", values)
       if (error && error[e.currentTarget.id]) {
         return;
       }
@@ -40,10 +39,8 @@ class EditableCell extends Component {
   };
 
   renderCell = form => {
-    // console.log("TCL: form", form)
-    // console.log("this is a log in a editRow -> ", this.props.inputType);
     this.form = form;
-    const { children, dataIndex, record, title } = this.props;
+    const { children, dataIndex, title } = this.props;
     const { editing } = this.state;
     return editing ? (
       <Form.Item style={{ margin: 0 }}>
@@ -157,7 +154,6 @@ class Tables extends Component {
   }
 
   componentDidMount = () => {
-    console.log("this is  alog in componentDidMount -> ", this.props);
     // const { money } = this.props.data;
 
     if (this.props.type) {
@@ -170,7 +166,6 @@ class Tables extends Component {
   componentDidUpdate = prevProps => {
     // const { money } = this.props.data;
     if (prevProps.data !== this.props.data) {
-      console.log("this is  alog in a add income table -> ", this.props.data);
       // if (!this.state.update) {
       this.setState({
         dataSource: this.props.data,
@@ -224,10 +219,7 @@ class Tables extends Component {
       ...row
     });
     const totalAmount = newData.map(val => parseInt(val.amount, 10));
-    console.log("TCL: totalAmount", totalAmount);
     const finalTotal = totalAmount.reduce(this.sumArray);
-    console.log("TCL: finalTotal", finalTotal);
-    console.log("TCL: Tables -> newData", newData);
     this.props.submit(newData);
     this.setState({
       dataSource: newData,
@@ -252,7 +244,6 @@ class Tables extends Component {
         ...col,
         onCell: record => {
           const checkInput = index => {
-            // console.log("TCL: render -> index", index);
             switch (index) {
               case "amount":
                 return "number";

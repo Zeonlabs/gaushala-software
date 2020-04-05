@@ -1,25 +1,9 @@
 import React, { Component } from "react";
 import $ from "jquery";
-import {
-  Icon,
-  InputNumber,
-  Input,
-  Spin,
-  message,
-  Button,
-  Row,
-  Col
-} from "antd";
+import { Icon, Spin, message, Button, Row, Col } from "antd";
 import { connect } from "react-redux";
 import OTPInput, { ResendOTP } from "../../Static/Widgets/lib/index";
 import { getOtp, valiDateOtp } from "../../Actions/SetUpUser";
-// import Cards from "../Common/Card";
-// import { setMobileNumber, setOtpPost } from "../../actions/global";
-// import { setLoginData } from "../../actions/localData";
-// import { CheckIcon, IndianIcon, WarningIcon } from "../Common/Iconsvg";
-// import { DisableButtons } from "../Common/Buttons";
-// import TopHeaders from "../Common/TopHeaders";
-// import Buttons from '../Common/Buttons';
 
 const spinIcon = (
   <Icon type="loading-3-quarters" style={{ fontSize: 32 }} spin />
@@ -54,19 +38,16 @@ class OtpScreen extends Component {
   //       this.setState({
   //         className : "send-otp-dictivate",
   //         disabled : true,
-  //       },() => console.log("this is a handelChange state->",this.state.className));
   //     }
   //     else{
   //     this.setState({
   //       inputNumber : e.target.value,
   //       className : "send-otp",
   //       disabled : false,
-  //     },() => console.log("this is a handelChange state->",this.state.inputNumber));
   //   }
   // }
 
   inputChange = e => {
-    // console.log('this is a log on a input change ;->', e);
     this.setState({ otp: e }, () => {
       if (this.state.otp.length === 4) {
         this.setState({
@@ -99,9 +80,9 @@ class OtpScreen extends Component {
   };
 
   handelResendClick = async () => {
-    const data = {
-      mobile_number: this.state.mobile
-    };
+    // const data = {
+    //   mobile_number: this.state.mobile
+    // };
     this.setState({
       resendClick: true
     });
@@ -116,7 +97,6 @@ class OtpScreen extends Component {
         });
       })
       .catch(e => {
-        // console.log(e);
         this.setState({
           resendClick: false
         });
@@ -150,7 +130,6 @@ class OtpScreen extends Component {
   );
 
   renderResendOtp = buttonProps => (
-    // console.log('this is a log in a renderResendOtp function :->', buttonProps);
     <button
       className={
         this.state.resendClick
@@ -171,19 +150,10 @@ class OtpScreen extends Component {
     //   verify: true
     // });
     if (this.state.otp.length === 4) {
-      // console.log('this is a log in a handel otp next button -------', this.state.otp);
       const data = parseInt(this.state.otp);
-      // console.log(
-      //   "data-------------=========================---------------------",
-      //   data
-      // );
       this.props
         .valiDateOtp(data)
         .then(res => {
-          // console.log(
-          //   "Otp Match--------------------........................>>>>>>>>>>>>>>>>>>>>>",
-          //   res
-          // );
           // this.props.next();
           this.setState({
             verify: false
@@ -203,9 +173,7 @@ class OtpScreen extends Component {
 
   renderTime = () => React.Fragment;
 
-  handelButtonChange = () => {
-    // console.log('123');
-  };
+  handelButtonChange = () => {};
 
   render() {
     return (

@@ -33,7 +33,6 @@ class FilterDrawers extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // console.log("Received values of form: ", values);
         if (this.props.statusCode === "205") {
           this.props.onClose();
           this.props.form.resetFields();
@@ -42,7 +41,6 @@ class FilterDrawers extends Component {
           Object.keys(values).forEach(
             key => values[key] === undefined && delete values[key]
           );
-          // console.log("Received values After trime: ", values);
           const data = {
             dateFrom: values.daterange ? this.state.start_date : undefined,
             dateTo: values.daterange ? this.state.end_date : undefined,
@@ -60,8 +58,6 @@ class FilterDrawers extends Component {
   };
 
   dateChange = (value, dateString) => {
-    console.log("Selected Time: ", value);
-    console.log("Formatted Selected Time: ", dateString);
     const startDate = dateString[0];
     const updatedStartDate = startDate.replace(/\//g, "-");
     const endDate = dateString[1];

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PageWrapper from "../Common/PageWrapper/PageWrapper";
 import "./Employees.scss";
 // import moment from "moment";
-import { Icon, Button, Row, Col, message } from "antd";
+import { Icon, Button, Row, Col } from "antd";
 import {
   getEmployee,
   getEmployeeDocs,
@@ -66,7 +66,6 @@ export class Employees extends Component {
       this.props
         .getEmployee(pagination)
         .then(res => {
-          console.log("Employees -> componentDidMount -> res", res);
           this.setState({
             data: res.docs,
             loading: false
@@ -114,7 +113,6 @@ export class Employees extends Component {
 
   handelDataAdd = data => {
     this.loadingTrue();
-    console.log("Employees -> handelDataAdd -> data", data);
     if (localStorage.getItem("reversePin") === "205") {
       this.loadingFalse();
       this.handelEmployeePopup();
@@ -122,9 +120,7 @@ export class Employees extends Component {
       axios
         .post("http://localhost:8081/employee/add", data)
         .then(res => {
-          console.log("Employees -> res", res);
           this.props.getEmployee(this.state.pagination).then(res => {
-            console.log("res in a income model =->", res);
             this.setState({
               data: res.docs
             });
@@ -138,14 +134,12 @@ export class Employees extends Component {
 
   handelDelete = record => {
     this.loadingTrue();
-    console.log("Income -> handleDelete -> key, record", record);
     this.props
       .deleteEmployee(record._id)
       .then(res => {
         this.props
           .getEmployee(this.state.pagination)
           .then(res => {
-            console.log("res in a income model =->", res);
             this.setState({
               data: res.docs
             });
@@ -177,7 +171,6 @@ export class Employees extends Component {
         this.props
           .getEmployee(this.state.pagination)
           .then(res => {
-            console.log("Employees -> componentDidMount -> res", res);
             this.setState({
               data: res.docs
             });
@@ -189,14 +182,12 @@ export class Employees extends Component {
 
   handelFilter = value => {
     this.loadingTrue();
-    console.log("Employees -> handelFilter -> value", value);
     const data = {
       type: value === "No" ? "" : value
     };
     this.props
       .getEmployeeFilter(data)
       .then(res => {
-        console.log("Employees -> res", res);
         this.setState({
           data: res
         });
@@ -207,7 +198,6 @@ export class Employees extends Component {
 
   handelEditSubmit = (id, data) => {
     this.loadingTrue();
-    console.log("Employees -> handelEditSubmit -> data", data);
     this.props
       .editEmployee(id, data)
       .then(res => {

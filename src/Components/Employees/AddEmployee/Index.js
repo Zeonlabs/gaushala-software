@@ -31,10 +31,8 @@ class Index extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      console.log("Index -> values", values);
       if (!err) {
         if (this.props.type === "edit") {
-          console.log("Index -> this.props.type", this.props.type);
           this.props.handelEditData(this.props.data._id, values);
         } else {
           const formData = new FormData();
@@ -43,9 +41,7 @@ class Index extends Component {
           formData.append("type", values.type);
           formData.append("phone", values.phone);
           formData.append("address", values.address);
-          console.log("Index -> formData", formData);
-          const filedata = Object.assign({}, values, formData);
-          console.log("Received values of form: ", filedata);
+          // const filedata = Object.assign({}, values, formData);
           this.props.submit(formData);
         }
         this.props.form.resetFields();
@@ -71,7 +67,6 @@ class Index extends Component {
     return true;
     // const formData = new FormData();
     // formData["import_file"] = file;
-    // console.log("log in a file upload", formData);
   };
 
   handleChange = info => {
@@ -95,9 +90,7 @@ class Index extends Component {
 
   render() {
     if (this.props.type === "edit") {
-      console.warn("this is  alog in a edit employee list ->", this.props.data);
     } else {
-      console.log("this is  alog in a edit employee list ->", this.props.data);
     }
     const props2 = {
       action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",

@@ -1,14 +1,6 @@
 import React, { Component } from "react";
 import PageWrapper from "../Common/PageWrapper/PageWrapper";
-import {
-  Table,
-  Button,
-  Icon,
-  Tooltip,
-  Popconfirm,
-  Divider,
-  message
-} from "antd";
+import { Table, Button, Icon, Popconfirm, Divider, message } from "antd";
 import "./Income.scss";
 import "../Common/Forms/IncomeModels.styles.scss";
 import FilterDrawer from "./FilterDrawer";
@@ -19,7 +11,6 @@ import {
   editIncome,
   deleteIncome
 } from "../../Actions/Exapmple";
-import { EditOutlined } from "@ant-design/icons";
 import moment from "moment";
 import IncomeMobel from "../Common/Forms/IncomeMobel";
 import { convertNumberToType } from "../../js/Helper";
@@ -37,10 +28,6 @@ import { IncomeColumn } from "../PrintTemplate/Report/Columns/Income";
 //     address: `London Park no. ${i}`
 //   });
 // }
-let pagination = {
-  page: 1,
-  limit: 20
-};
 
 class Income extends Component {
   constructor(props) {
@@ -112,9 +99,7 @@ class Income extends Component {
         dataIndex: "type",
         key: "6",
         width: 250,
-        render: (text, record) =>
-          // console.log("Income -> constructor -> record", text, record)
-          convertNumberToType(text, "income")
+        render: (text, record) => convertNumberToType(text, "income")
         // text.type === "cheque" ? (
         //   <span>{text.cheque_no}</span>
         // ) : (
@@ -127,7 +112,6 @@ class Income extends Component {
         key: "7",
         width: 130,
         render: (text, record) =>
-          // console.log("Income -> constructor -> record", text, record)
           text.type === "cheque" ? <p>{text.cheque_no}</p> : <p>raokD</p>
       },
       {
@@ -181,7 +165,6 @@ class Income extends Component {
   }
 
   handelEdit = (text, record) => {
-    // console.log("this is a log in a handelEdit ->", text, record);
     this.setState({
       editData: record,
       income: true
@@ -193,10 +176,10 @@ class Income extends Component {
       page: 1,
       limit: 20
     };
-    console.log(
-      "Income -> componentDidMount -> this.props.incomeList",
-      this.props.incomeList
-    );
+    // console.log(
+    //   "Income -> componentDidMount -> this.props.incomeList",
+    //   this.props.incomeList
+    // );
     // const id = this.props.match.params.pid;
     if (this.props.incomeList.length > 0) {
       this.setState({
@@ -207,7 +190,6 @@ class Income extends Component {
       this.props
         .getIncome(pagination)
         .then(res => {
-          // console.log("res in a income model =->", res);
           this.setState({
             data: res.docs,
             loading: false
@@ -260,10 +242,6 @@ class Income extends Component {
   };
 
   paginate = page => {
-    pagination = {
-      page,
-      limit: 20
-    };
     this.loadingTrue();
     this.setState(
       {
@@ -274,7 +252,6 @@ class Income extends Component {
       },
       () =>
         this.props.getIncome(this.state.pagination).then(res => {
-          console.log("res in a income model =->", res);
           this.loadingFalse();
           this.setState({
             data: res.docs
@@ -286,12 +263,10 @@ class Income extends Component {
 
   handleDelete = (key, record) => {
     this.loadingTrue();
-    console.log("Income -> handleDelete -> key, record", key, record);
     this.props.deleteIncome(record._id).then(res => {
       this.props
         .getIncome(this.state.pagination)
         .then(res => {
-          console.log("res in a income model =->", res);
           this.setState({
             data: res.docs
           });
@@ -305,14 +280,12 @@ class Income extends Component {
 
   handelFilterGet = data => {
     this.loadingTrue();
-    console.log("Income -> handelFilterGet -> data", data);
     if (localStorage.getItem("reversePin") === "205") {
       // this.loadingFalse();
     } else {
       this.props
         .getFilterIncome(data)
         .then(res => {
-          console.log("res in a income model =->", res);
           this.setState({
             data: res
           });
@@ -334,7 +307,6 @@ class Income extends Component {
       // this.props.toggleModel();
       this.handelClosePopUp();
       this.props.getIncome(this.state.pagination).then(res => {
-        console.log("res in a income model =->", res);
         this.setState({
           data: res.docs
         });

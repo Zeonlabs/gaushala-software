@@ -3,27 +3,22 @@ import { connect } from "react-redux";
 import PageWrapper from "../Common/PageWrapper/PageWrapper";
 import "./SettingPage.scss";
 import {
-  Modal,
   Form,
   Input,
-  Select,
   Row,
   Col,
   Icon,
   Divider,
-  Tag,
   Button,
   Layout,
   InputNumber,
   message
 } from "antd";
-import OtpScreen from "./OtpScreen";
 import { addUser, editUser, getOtp, resetPin } from "../../Actions/SetUpUser";
 import { getAnimalChart } from "../../Actions/ChartActions";
 import ForgotPasswordModal from "./ForgotPasswordModal";
 
-const { Option } = Select;
-const { Header, Content, Footer, Sider } = Layout;
+const { Footer } = Layout;
 
 export class SettingPage extends Component {
   constructor(props) {
@@ -47,17 +42,12 @@ export class SettingPage extends Component {
   componentDidMount = () => {
     if (this.props.totalAnimalCount === null) {
       this.props.getAnimalChart().then(res => {
-        console.log("SettingPage -> componentDidMount -> res", res);
         this.setState({
           username: res.name,
           mobilenumber: res.phone
         });
       });
     } else {
-      console.log(
-        "SettingPage -> componentDidMount -> this.props.totalAnimalCount",
-        this.props.totalAnimalCount
-      );
       this.setState({
         username: this.props.totalAnimalCount.name,
         mobilenumber: this.props.totalAnimalCount.phone
@@ -117,8 +107,6 @@ export class SettingPage extends Component {
   };
 
   handleCancel = () => {
-    console.log("Clicked cancel button");
-
     this.setState({
       visible: false,
       visibleModal: false
@@ -139,38 +127,30 @@ export class SettingPage extends Component {
   // };
 
   onChangeUserName = e => {
-    console.log(
-      "SettingPage -> onChangeUserName -> e.target.value",
-      e.target.value
-    );
     this.setState({
       username: e.target.value
     });
   };
 
   onChangeMobileNumber = e => {
-    console.log("SettingPage -> onChangeUserName -> e.target.value", e);
     this.setState({
       mobilenumber: e
     });
   };
 
   onChangePin = e => {
-    console.log("SettingPage -> onChangeUserName -> e.target.value", e);
     this.setState({
       pin: e
     });
   };
 
   handelFirstPin = e => {
-    console.log("SettingPage -> e", e);
     this.setState({
       firstPin: e
     });
   };
 
   handelSecondPin = e => {
-    console.log("SettingPage -> e", e);
     this.setState({
       secondPin: e
     });
@@ -195,10 +175,6 @@ export class SettingPage extends Component {
 
   render() {
     const { visible, confirmLoading, visibleModal, mobilenumber } = this.state;
-    console.log(
-      "SettingPage -> render ->  visible, confirmLoading ",
-      this.props.totalAnimalCount
-    );
 
     return (
       <PageWrapper title="saoiTMga">

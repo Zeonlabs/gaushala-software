@@ -32,13 +32,10 @@ class FilterDrawers extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
-        console.log("Received values of form: ", values);
         this.props.onClose();
         Object.keys(values).forEach(
           key => values[key] === undefined && delete values[key]
         );
-        console.log("Received values After trime: ", values);
         const data = {
           dateFrom: values.daterange ? this.state.start_date : undefined,
           dateTo: values.daterange ? this.state.end_date : undefined,
@@ -55,8 +52,6 @@ class FilterDrawers extends Component {
   };
 
   dateChange = (value, dateString) => {
-    console.log("Selected Time: ", value);
-    console.log("Formatted Selected Time: ", dateString);
     const startDate = dateString[0];
     const updatedStartDate = startDate.replace(/\//g, "-");
     const endDate = dateString[1];
@@ -118,7 +113,9 @@ class FilterDrawers extends Component {
                       <Option value="Gauna Kaca-">Gauna Kaca-</Option>
                       <Option value="baaMGakama Kaca-">baaMGakama Kaca-</Option>
                       <Option value="naIrNa Kaca-">naIrNa Kaca-</Option>
-                      <Option value="Dao. e dvaa Kaca-">Dao. e dvaa Kaca-</Option>
+                      <Option value="Dao. e dvaa Kaca-">
+                        Dao. e dvaa Kaca-
+                      </Option>
                       <Option value="vaahna Kaca-">vaahna Kaca-</Option>
                       <Option value="vaaDI Kaca-">vaaDI Kaca-</Option>
                       <Option value="pa`saMga Kaca-">pa`saMga Kaca-</Option>

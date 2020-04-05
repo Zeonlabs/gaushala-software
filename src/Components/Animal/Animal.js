@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-import MenuBar from "../Common/MenuBar";
+// import MenuBar from "../Common/MenuBar";
 import { Icon, Card, Row, Col } from "antd";
 import PageWrapper from "../Common/PageWrapper/PageWrapper";
-import Cards from "./Cards";
+// import Cards from "./Cards";
 import "./Animal.scss";
 import CreditAnimal from "./LIst/CreditAnimal";
 import DebitAnimal from "./LIst/DebitAnimal";
@@ -15,7 +15,7 @@ import DeadAnimals from "./PopupForm/DeadAnimal";
 import ResidentalAnimals from "./PopupForm/ResidentalAnimal";
 // import TotalAnimals from "./PopupForm/TotalAnimal";
 
-const { Meta } = Card;
+// const { Meta } = Card;
 class Animal extends Component {
   constructor(props) {
     super(props);
@@ -32,7 +32,7 @@ class Animal extends Component {
   }
 
   onClick = e => {
-    console.log("TCL: Animal -> slug", e);
+    // console.log("TCL: Animal -> slug", e);
     switch (e) {
       case "creadit_animal":
         this.setState({
@@ -70,7 +70,7 @@ class Animal extends Component {
   };
 
   handelPopup = e => {
-    console.log("TCL: Animalsadasd -> slug", e);
+    // console.log("TCL: Animalsadasd -> slug", e);
     switch (e) {
       case "creadit_animal":
         this.creaditAnimalModel();
@@ -98,7 +98,7 @@ class Animal extends Component {
   };
 
   backClick = () => {
-    console.log("this is a log in a main animal function ->");
+    // console.log("this is a log in a main animal function ->");
     this.setState({
       slug: ""
     });
@@ -126,31 +126,25 @@ class Animal extends Component {
     });
 
   handelListPage = e => {
-    console.log("TCL: Animal -> slsadasdsug ->", e);
+    // console.log("TCL: Animal -> slsadasdsug ->", e);
     switch (this.state.slug) {
       case "creadit_animal":
         return <CreditAnimal back={this.backClick} />;
-        break;
 
       case "dead_animal":
         return <DeadAnimal back={this.backClick} />;
-        break;
 
       case "debit_animal":
         return <DebitAnimal back={this.backClick} />;
-        break;
 
       case "total_animal":
         return <TotalAnimal back={this.backClick} />;
-        break;
 
       case "resident_cost":
         return <ResidentalAnimal back={this.backClick} />;
-        break;
 
       default:
         return "";
-        break;
     }
   };
 

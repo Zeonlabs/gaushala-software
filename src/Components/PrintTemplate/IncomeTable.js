@@ -24,8 +24,6 @@ const columns = [
 ];
 
 const IncomeTable = props => {
-  console.log("props", props);
-
   return (
     <>
       <Table
@@ -46,7 +44,10 @@ const IncomeTable = props => {
           </span>
         </h4>
 
-        <h4 className="gujarati-font text-center ">{props.total}<span className="english-font-input font-size-20">/-</span></h4>
+        <h4 className="gujarati-font text-center ">
+          {props.total}
+          <span className="english-font-input font-size-20">/-</span>
+        </h4>
       </div>
     </>
   );

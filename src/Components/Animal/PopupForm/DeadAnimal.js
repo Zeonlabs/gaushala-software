@@ -1,12 +1,11 @@
 import React, { Component } from "react";
-import { Modal, Form, Input, DatePicker, Select, Button } from "antd";
+import { Modal, Form, Input, DatePicker, Button } from "antd";
 import "../../Common/Forms/IncomeModels.styles.scss";
 import moment from "moment";
 import { addDeadAnimal } from "../../../Actions/Animal/DeadAnimal";
-import NumericInput from "../../Common/Forms/InputNumber";
 import { connect } from "react-redux";
 import Index from "../Table";
-import { animalCode, totalOfArray } from "../../../js/Helper";
+import { animalCode } from "../../../js/Helper";
 
 class DeadAnimal extends Component {
   constructor(props) {
@@ -26,7 +25,6 @@ class DeadAnimal extends Component {
   componentDidUpdate = prevProps => {
     if (prevProps !== this.props) {
       const { data } = this.props;
-      console.log("this is  aedit income modal ->", this.props);
       if (this.props.type) {
         this.setState({
           data: data
@@ -49,7 +47,6 @@ class DeadAnimal extends Component {
   };
 
   deadanimaldata = (values, finalTotal) => {
-    console.log("incomeAnimal -> values, finalTotal", values, finalTotal);
     const date = moment(values.date).format("YYYY-MM-DD");
     const data = {
       date,
@@ -57,7 +54,6 @@ class DeadAnimal extends Component {
       total: finalTotal,
       animal: this.state.tableData
     };
-    console.log("TCL: data", data);
     if (localStorage.getItem("reversePin") === "205") {
       // this.loadingFalse();
       this.props.toggleModel();
@@ -78,12 +74,10 @@ class DeadAnimal extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      console.log("TCL: values", values);
       const totalAmount = this.state.tableData.map(val =>
         parseInt(val.count, 10)
       );
       const finalTotal = totalAmount.reduce(this.sumArray);
-      // console.log("TCL: amount", amount);
       if (!err) {
         this.deadanimaldata(values, finalTotal);
       }
@@ -91,7 +85,6 @@ class DeadAnimal extends Component {
   };
 
   onTableSubmit = data => {
-    console.log("TCL: onTableSubmit -> data", data);
     const tableData = animalCode(data);
     this.setState({
       tableData,
@@ -100,7 +93,6 @@ class DeadAnimal extends Component {
   };
 
   onChangeType = e => {
-    console.log("radio checked", e.target.value);
     this.setState({
       type: e.target.value
     });
@@ -108,27 +100,19 @@ class DeadAnimal extends Component {
 
   onChangeSawingType = e => {};
 
-  onChanges = value => {
-    console.log(`selected ${value}`);
-  };
+  onChanges = value => {};
 
-  onBlur = () => {
-    console.log("blur");
-  };
+  onBlur = () => {};
 
-  onFocus = () => {
-    console.log("focus");
-  };
+  onFocus = () => {};
 
-  onSearch = val => {
-    console.log("search:", val);
-  };
+  onSearch = val => {};
   handleReset = () => {
     this.props.form.resetFields();
     this.props.toggleModel();
   };
   render() {
-    const { type, data, total } = this.props;
+    const { type, data } = this.props;
     const { getFieldDecorator } = this.props.form;
     return (
       <div className="income-model-wrapper">

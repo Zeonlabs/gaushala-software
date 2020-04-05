@@ -4,7 +4,7 @@ import { fetchUrl } from "../js/fetchUrl";
 
 export const getNotes = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "get",
       `/note`,
@@ -21,7 +21,7 @@ export const getNotes = id => dispatch =>
 
 export const addNotes = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", data);
+    // console.log("TCL/: data", data);
     fetchUrl("post", `/note/add`, data)
       .then(res => {
         resolve(res);
@@ -33,7 +33,7 @@ export const addNotes = data => dispatch =>
 
 export const editNotes = (id, data) => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl("patch", `/note/update/${id}`, data)
       .then(res => {
         resolve(res);
@@ -45,7 +45,7 @@ export const editNotes = (id, data) => dispatch =>
 
 export const deleteNotes = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl("delete", `/note/delete/${id}`)
       .then(res => {
         resolve(res);

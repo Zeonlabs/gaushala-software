@@ -24,12 +24,10 @@ class FilterData extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
         this.props.onClose();
         Object.keys(values).forEach(
           key => values[key] === undefined && delete values[key]
         );
-        console.log("Received values After trime: ", values);
         const data = {
           dateFrom: values.daterange ? this.state.start_date : undefined,
           dateTo: values.daterange ? this.state.end_date : undefined,
@@ -51,8 +49,6 @@ class FilterData extends Component {
   };
 
   dateChange = (value, dateString) => {
-    console.log("Selected Time: ", value);
-    console.log("Formatted Selected Time: ", dateString);
     const startDate = dateString[0];
     const updatedStartDate = startDate.replace(/\//g, "-");
     const endDate = dateString[1];
@@ -64,8 +60,6 @@ class FilterData extends Component {
   };
 
   // onChange = (dates, dateStrings) => {
-  //   console.log("From: ", dates[0], ", to: ", dates[1]);
-  //   console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
   // };
 
   onClose = () => {
@@ -83,7 +77,7 @@ class FilterData extends Component {
         onClose={this.onClose}
         visible={this.props.visible}
         getContainer={false}
-        width={500} 
+        width={500}
       >
         <div className="income-model-wrapper">
           <Row>
@@ -135,11 +129,9 @@ class FilterData extends Component {
                 <Col span={24}>
                   <Form.Item
                     className="ant-col"
-                    label="naama &quot; caok svaIkarnaar &apos; :"
+                    label="naama &quot; caok svaIkarnaar ' :"
                   >
-                    {getFieldDecorator("name")(
-                      <Input placeholder="naama" />
-                    )}
+                    {getFieldDecorator("name")(<Input placeholder="naama" />)}
                   </Form.Item>
                 </Col>
 
@@ -197,11 +189,9 @@ class FilterData extends Component {
                         placeholder="baoMnk nau naama"
                       >
                         <Option value="Aosa.baI.Aa[ baoMnk">
-                        Aosa.baI.Aa[ baoMnk
+                          Aosa.baI.Aa[ baoMnk
                         </Option>
-                        <Option value="Anya">
-                          Anya
-                        </Option>
+                        <Option value="Anya">Anya</Option>
                       </Select>
                     )}
                   </Form.Item>

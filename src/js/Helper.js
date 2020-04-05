@@ -1,5 +1,4 @@
 export const animalCode = formData => {
-  console.log("animalCode -> formData", formData);
   const Array = [
     {
       type: 5,

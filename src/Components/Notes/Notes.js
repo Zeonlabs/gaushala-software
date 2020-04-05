@@ -46,7 +46,6 @@ export class Notes extends Component {
       });
     } else {
       this.props.getNotes(pagination).then(res => {
-        console.log("Employees -> componentDidMount -> res", res);
         this.setState({
           data: res.docs
         });
@@ -55,7 +54,6 @@ export class Notes extends Component {
   };
 
   handelEdit = record => {
-    console.log("Notes -> record", record);
     this.setState({
       todovisible: !this.state.todovisible,
       editData: record,
@@ -64,7 +62,6 @@ export class Notes extends Component {
   };
 
   handelDataAdd = data => {
-    console.log("Employees -> handelDataAdd -> data", data);
     if (localStorage.getItem("reversePin") === "205") {
       this.handelAddTodos();
     } else {
@@ -80,7 +77,6 @@ export class Notes extends Component {
   };
 
   handelAddEdit = (id, data) => {
-    console.log("TrustMembers -> handelAddEdit -> data", data);
     this.props.editNotes(id, data).then(res => {
       this.props.getNotes(this.state.pagination).then(res => {
         this.setState({
@@ -92,12 +88,10 @@ export class Notes extends Component {
   };
 
   handelDelete = record => {
-    console.log("Income -> handleDelete -> key, record", record);
     this.props.deleteNotes(record).then(res => {
       this.props
         .getNotes(this.state.pagination)
         .then(res => {
-          console.log("res in a income model =->", res);
           this.setState({
             data: res.docs
           });

@@ -1,9 +1,6 @@
 import React, { Component } from "react";
-import { Card, Icon, Avatar } from "antd";
 import "./Notes.scss";
 import CardNotes from "./CardNotes.js";
-
-const { Meta } = Card;
 
 class ListingTodo extends Component {
   constructor(props) {
@@ -13,7 +10,6 @@ class ListingTodo extends Component {
   }
 
   render() {
-    // console.log("note listing log -> ", this.props.data);
     return (
       <div className="card-note">
         {this.props.data.map(value => (

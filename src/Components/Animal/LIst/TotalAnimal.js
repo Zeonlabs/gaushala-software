@@ -1,15 +1,5 @@
 import React, { Component } from "react";
-import {
-  Form,
-  DatePicker,
-  Icon,
-  Button,
-  Row,
-  Col,
-  Table,
-  Divider,
-  Input
-} from "antd";
+import { Form, DatePicker, Icon, Button, Row, Col, Table } from "antd";
 import moment from "moment";
 import {
   getTotalAnimal,
@@ -117,7 +107,6 @@ class TotalAnimal extends Component {
     this.props
       .getTotalAnimal(this.state.pagination)
       .then(res => {
-        console.log("this is a log in a  creadit animal api ->", res);
         this.setState({
           data: res.docs,
           loading: false
@@ -145,8 +134,6 @@ class TotalAnimal extends Component {
 
   onChange = (dates, dateStrings) => {
     this.loadingTrue();
-    console.log("From: ", dates[0], ", to: ", dates[1]);
-    console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
     let value = {};
     if (dates.length > 1) {
       value = {
@@ -159,7 +146,6 @@ class TotalAnimal extends Component {
     this.props
       .getFilterTotalAnimal(value)
       .then(res => {
-        console.log("CreditAnimal -> onChange -> res", res);
         this.setState({
           data: res
         });
@@ -169,7 +155,6 @@ class TotalAnimal extends Component {
   };
 
   handelback = () => {
-    console.log("back", this.props);
     this.props.back();
   };
 
@@ -186,7 +171,6 @@ class TotalAnimal extends Component {
         this.props
           .getTotalAnimal(this.state.pagination)
           .then(res => {
-            console.log("this is a log in a  creadit animal api ->", res);
             this.setState({
               data: res.docs
             });
@@ -197,8 +181,6 @@ class TotalAnimal extends Component {
   };
 
   render() {
-    console.log("TCL: TotalAnimal -> constructor -> props", this.props);
-
     return (
       <div>
         <Row className="main-header-row" gutter={[16, 16]}>

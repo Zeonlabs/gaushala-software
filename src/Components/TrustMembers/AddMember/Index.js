@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { addMembers } from "../../../Actions/TrustMembers";
 import { Form, Input, Button, Row, Col, Select, Modal } from "antd";
 import { connect } from "react-redux";
-import NumericInput from "../../Common/Forms/InputNumber";
 const { Option } = Select;
 
 class Index extends Component {
@@ -16,7 +15,6 @@ class Index extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
         // this.props.handelEmployeePopup();
         // this.props.addMembers(values);
         const id = this.props.data._id;
@@ -38,7 +36,6 @@ class Index extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { type, data } = this.props;
-    console.info("Index -> render -> data", type);
     return (
       <div>
         <Modal

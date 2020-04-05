@@ -40,7 +40,9 @@ class ExpensePrintSlip extends React.Component {
 
           <div className="row">
             <div className="column-1 padding-top-0">
-              <h2 className="font-size-20">naaNaa laonaar nau naama : &nbsp;</h2>
+              <h2 className="font-size-20">
+                naaNaa laonaar nau naama : &nbsp;
+              </h2>
               {/* --------------------------Slip Address --------------------------- */}
               <h2 className="slip-num font-size-20">{this.props.name}</h2>
             </div>
@@ -89,9 +91,9 @@ class ExpensePrintSlip extends React.Component {
           </div>
 
           {/* -----------------------------------------------Content-------------------------------- */}
-          <div className="row padding-row">
+          {/* <div className="row padding-row">
             <h3></h3>
-          </div>
+          </div> */}
 
           <div className="row sign-row-expenses">
             <div className="column-50-sign">
@@ -105,7 +107,9 @@ class ExpensePrintSlip extends React.Component {
             <div className="column-50-sign">
               <hr className="hr-right-sign "></hr>
               {/* --------------------------Slip sign --------------------------- */}
-              <h2 className="slip-sign-text font-size-20">naaNaa laonaar naI sahI</h2>
+              <h2 className="slip-sign-text font-size-20">
+                naaNaa laonaar naI sahI
+              </h2>
             </div>
           </div>
         </div>

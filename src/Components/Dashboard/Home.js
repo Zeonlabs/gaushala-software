@@ -70,10 +70,6 @@ class Home extends Component {
   formatValue = value => value.toFixed(0);
 
   render() {
-    // console.log(
-    //   ";;;;;;;;;;;[[[[[[[[[[[[[[[[[[[[]]]]]]]]]]]]]]]]]]]sddddddddddddd",
-    //   this.props.totalAnimalCount
-    // );
     return (
       <PageWrapper>
         <div className="dashboard">

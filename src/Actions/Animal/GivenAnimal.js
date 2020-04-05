@@ -1,10 +1,10 @@
 import { animal } from "../../js/actions";
 import { fetchUrl } from "../../js/fetchUrl";
-import apiList, { Animal } from "../../js/apiList";
+import { Animal } from "../../js/apiList";
 
 export const getFilterGivenAnimal = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", data);
+    // console.log("TCL: data", data);
     fetchUrl(
       localStorage.getItem("reversePin") === "205"
         ? "Post"
@@ -23,7 +23,7 @@ export const getFilterGivenAnimal = data => dispatch =>
 
 export const getGivenAnimal = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205"
         ? "Post"
@@ -42,7 +42,7 @@ export const getGivenAnimal = id => dispatch =>
 
 export const addGivenAnimal = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", data);
+    // console.log("TCL: data", data);
     fetchUrl(Animal.givenAnimalPost.method, Animal.givenAnimalPost.url, data)
       .then(res => {
         resolve(res);
@@ -54,14 +54,14 @@ export const addGivenAnimal = data => dispatch =>
 
 export const editGivenAnimal = (id, data) => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       Animal.givenAnimalUpdate.method,
       `${Animal.givenAnimalUpdate.url}/${id}`,
       data
     )
       .then(res => {
-        console.log("res-> edit expense res ->", res);
+        // console.log("res-> edit expense res ->", res);
 
         resolve(res);
       })
@@ -72,13 +72,13 @@ export const editGivenAnimal = (id, data) => dispatch =>
 
 export const deleteGivenAnimal = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       Animal.givenAnimalDelete.method,
       `${Animal.givenAnimalDelete.url}/${id}`
     )
       .then(res => {
-        console.log("res-> edit income res ->", res);
+        // console.log("res-> edit income res ->", res);
         resolve(res);
       })
       .catch(e => {

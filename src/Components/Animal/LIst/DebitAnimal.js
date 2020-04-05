@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import {
-  Form,
   DatePicker,
   Icon,
   Button,
@@ -9,8 +8,7 @@ import {
   Table,
   Divider,
   Input,
-  Popconfirm,
-  message
+  Popconfirm
 } from "antd";
 import moment from "moment";
 import { connect } from "react-redux";
@@ -24,7 +22,6 @@ import { totalOfArray } from "../../../js/Helper";
 import DebitAnimals from "../PopupForm/DebitAnimal";
 import ReactToPrint from "react-to-print";
 import ReportPrint from "../../PrintTemplate/Report";
-import { DeadAnimalColumn } from "../../PrintTemplate/Report/Columns/DeadAnimalColumn";
 import { GivenAnimalColumn } from "../../PrintTemplate/Report/Columns/GivenAnimalColumn";
 
 const { RangePicker } = DatePicker;
@@ -192,7 +189,6 @@ class DebitAnimal extends Component {
     this.props
       .getGivenAnimal(this.state.pagination)
       .then(res => {
-        console.log("this is a log in a  creadit animal api ->", res);
         this.setState({
           data: res.docs,
           loading: false
@@ -225,8 +221,6 @@ class DebitAnimal extends Component {
   };
 
   onChange = (dates, dateStrings) => {
-    console.log("From: ", dates[0], ", to: ", dates[1]);
-    console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
     let value = {};
     if (dates.length > 1) {
       value = {
@@ -241,12 +235,10 @@ class DebitAnimal extends Component {
     });
   };
   handelback = () => {
-    console.log("back", this.props);
     this.props.back();
   };
 
   handelEdit = (text, record) => {
-    // console.log("this is a log in a handelEdit ->", text, record);
     const total = record.animal.map(val => parseInt(val.count, 10));
     this.setState({
       editData: record,
@@ -263,7 +255,6 @@ class DebitAnimal extends Component {
 
   handelSubmit = (id, data) => {
     this.loadingTrue();
-    console.log("CreditAnimal -> handelSubmit -> id, data", id, data);
     this.props
       .editGivenAnimal(id, data)
       .then(res => {
@@ -271,7 +262,6 @@ class DebitAnimal extends Component {
         this.props
           .getGivenAnimal(this.state.pagination)
           .then(res => {
-            console.log("res in a income model =->", res);
             this.setState({
               data: res.docs
             });
@@ -294,7 +284,6 @@ class DebitAnimal extends Component {
       this.props
         .getFilterGivenAnimal(data)
         .then(res => {
-          console.log("CreditAnimal -> onChange -> res", res);
           this.setState({
             data: res
           });
@@ -306,14 +295,12 @@ class DebitAnimal extends Component {
 
   handleDelete = (key, record) => {
     this.loadingTrue();
-    console.log("Income -> handleDelete -> key, record", key, record);
     this.props
       .deleteGivenAnimal(record._id)
       .then(res => {
         this.props
           .getGivenAnimal(this.state.pagination)
           .then(res => {
-            console.log("res in a income model =->", res);
             this.setState({
               data: res.docs
             });
@@ -337,7 +324,6 @@ class DebitAnimal extends Component {
         this.props
           .getGivenAnimal(this.state.pagination)
           .then(res => {
-            console.log("this is a log in a  creadit animal api ->", res);
             this.setState({
               data: res.docs
             });
@@ -348,8 +334,6 @@ class DebitAnimal extends Component {
   };
 
   render() {
-    console.log("TCL: DebitAnimal -> constructor -> props", this.props);
-
     return (
       <div>
         <Row className="main-header-row" gutter={[16, 16]}>

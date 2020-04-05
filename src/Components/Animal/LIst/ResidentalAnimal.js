@@ -8,9 +8,7 @@ import {
   Col,
   Table,
   Divider,
-  Input,
-  Popconfirm,
-  message
+  Popconfirm
 } from "antd";
 import moment from "moment";
 import {
@@ -21,7 +19,6 @@ import {
 } from "../../../Actions/Animal/TotalAnimal";
 import ResidentalAnimals from "../PopupForm/ResidentalAnimal";
 import { connect } from "react-redux";
-import { totalOfArray } from "../../../js/Helper";
 import ReactToPrint from "react-to-print";
 import ReportPrint from "../../PrintTemplate/Report";
 import { CostAnimalColumn } from "../../PrintTemplate/Report/Columns/CostAnimalColumn";
@@ -161,7 +158,6 @@ class ResidentalAnimal extends Component {
     this.props
       .getCostAnimal(this.state.pagination)
       .then(res => {
-        console.log("this is a log in a  creadit animal api ->", res);
         this.setState({
           data: res.docs,
           loading: false
@@ -200,7 +196,6 @@ class ResidentalAnimal extends Component {
         this.props
           .getCostAnimal(this.state.pagination)
           .then(res => {
-            console.log("this is a log in a  creadit animal api ->", res);
             this.setState({
               data: res.docs
             });
@@ -211,7 +206,6 @@ class ResidentalAnimal extends Component {
   };
 
   handelEdit = (text, record) => {
-    console.log("this is a log in a handelEdit ->", text, record);
     // const total = record.animal.map(val => parseInt(val.count, 10));
     this.setState({
       editData: record,
@@ -222,7 +216,6 @@ class ResidentalAnimal extends Component {
 
   handelSubmit = (id, data) => {
     this.loadingTrue();
-    console.log("CreditAnimal -> handelSubmit -> id, data", id, data);
     this.props
       .editCostAnimal(id, data)
       .then(res => {
@@ -230,7 +223,6 @@ class ResidentalAnimal extends Component {
         this.props
           .getCostAnimal(this.state.pagination)
           .then(res => {
-            console.log("res in a income model =->", res);
             this.setState({
               data: res.docs
             });
@@ -243,12 +235,10 @@ class ResidentalAnimal extends Component {
 
   handleDelete = (key, record) => {
     this.loadingTrue();
-    console.log("Income -> handleDelete -> key, record", key, record);
     this.props.deleteCostAnimal(record._id).then(res => {
       this.props
         .getCostAnimal(this.state.pagination)
         .then(res => {
-          console.log("res in a income model =->", res);
           this.setState({
             data: res.docs
           });
@@ -260,8 +250,6 @@ class ResidentalAnimal extends Component {
 
   onChange = (dates, dateStrings) => {
     this.loadingTrue();
-    console.log("From: ", dates[0], ", to: ", dates[1]);
-    console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
     let value = {};
     if (dates.length > 1) {
       value = {
@@ -274,7 +262,6 @@ class ResidentalAnimal extends Component {
     this.props
       .getFilterCostAnimal(value)
       .then(res => {
-        console.log("CreditAnimal -> onChange -> res", res);
         this.setState({
           data: res
         });
@@ -290,13 +277,10 @@ class ResidentalAnimal extends Component {
   };
 
   handelback = () => {
-    console.log("back", this.props);
     this.props.back();
   };
 
   render() {
-    console.log("TCL: DebitAnimal -> constructor -> props", this.props);
-
     return (
       <div>
         <Row className="main-header-row" gutter={[16, 16]}>

@@ -1,15 +1,6 @@
 import axios from "axios";
-import { message, notification } from "antd";
 import qs from "qs";
-import LocalStorage, {
-  Crypto,
-  getToken,
-  localStorageKey
-} from "./LocalStorage";
-import routes from "./Routes";
-
-const isOnline = require("is-online");
-
+import { message } from "antd";
 const baseUrl = "http://localhost:8081";
 
 const GET = "GET";
@@ -72,9 +63,7 @@ export const showErrorAsToast = (error, type) => {
             // message.error(errors[x][y]);
           });
         } else if (Array.isArray(errors[x])) {
-          errors[x].map(e => {
-            /* message.error(e) */
-          });
+          errors[x].map(e => message.error(e));
         }
       });
     }
@@ -101,7 +90,6 @@ export const fetchUrl = (
   contentType,
   shouldRefetch
 ) => {
-  console.log("type", type);
   setHeaders(contentType, authToken);
   if (!shouldRefetch) {
     if (type.toUpperCase() === "GET") {
@@ -178,7 +166,6 @@ export const fetchUrl = (
 //   // set auth token
 
 //   const token = Cookies.get("nekotfrsc");
-//   // console.log('token', token);
 //   axios.defaults.headers.common["X-CSRFToken"] = `${token || "hh"}`;
 
 //   if (contentType) {
@@ -227,7 +214,6 @@ export const fetchUrl = (
 //   contentType,
 //   shouldRefetch
 // ) => {
-//   console.log("type", type);
 //   setHeaders(contentType, authToken);
 //   if (!shouldRefetch) {
 //     if (type.toUpperCase() === "GET") {

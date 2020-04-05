@@ -1,10 +1,10 @@
 import { animal } from "../../js/actions";
 import { fetchUrl } from "../../js/fetchUrl";
-import apiList, { Animal } from "../../js/apiList";
+import { Animal } from "../../js/apiList";
 
 export const getFilterDeadAnimal = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", data);
+    // console.log("TCL: data", data);
     fetchUrl(
       localStorage.getItem("reversePin") === "205"
         ? "Post"
@@ -23,7 +23,7 @@ export const getFilterDeadAnimal = data => dispatch =>
 
 export const addDeadAnimal = data => dispatch =>
   new Promise((resolve, reject) => {
-    // console.log("TCL: data", data);
+    // // console.log("TCL: data", data);
     fetchUrl(
       localStorage.getItem("reversePin") === "205"
         ? "get"
@@ -41,7 +41,7 @@ export const addDeadAnimal = data => dispatch =>
 
 export const editDeadAnimal = (id, data) => dispatch =>
   new Promise((resolve, reject) => {
-    // console.log("TCL: data", id);
+    // // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205"
         ? "Post"
@@ -50,7 +50,7 @@ export const editDeadAnimal = (id, data) => dispatch =>
       data
     )
       .then(res => {
-        console.log("res-> edit expense res ->", res);
+        // console.log("res-> edit expense res ->", res);
 
         resolve(res);
       })
@@ -61,7 +61,7 @@ export const editDeadAnimal = (id, data) => dispatch =>
 
 export const deleteDeadAnimal = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205"
         ? "Post"
@@ -69,7 +69,7 @@ export const deleteDeadAnimal = id => dispatch =>
       `${Animal.deadAnimalDelete.url}/${id}`
     )
       .then(res => {
-        console.log("res-> edit income res ->", res);
+        // console.log("res-> edit income res ->", res);
         resolve(res);
       })
       .catch(e => {
@@ -79,7 +79,7 @@ export const deleteDeadAnimal = id => dispatch =>
 
 export const getDeadAnimal = id => dispatch =>
   new Promise((resolve, reject) => {
-    // console.log("TCL: data", id);
+    // // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205"
         ? "Post"
@@ -88,7 +88,7 @@ export const getDeadAnimal = id => dispatch =>
       id
     )
       .then(res => {
-        console.log("DeadAnimal -> res ->", res);
+        // console.log("DeadAnimal -> res ->", res);
         dispatch({ type: animal.deadAnmimalList, payload: res.docs });
         resolve(res);
       })

@@ -71,7 +71,6 @@ export const Expense = [
     key: "7",
     width: 130,
     render: (text, record) =>
-      // console.log("Income -> constructor -> record", text, record)
       text.type === "cheque" ? <p>{text.cheque_no}</p> : <p>raokD</p>
   },
   // {

@@ -4,7 +4,7 @@ import { sumObjValuses } from "../js/Helper";
 
 export const getLinearChart = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", data);
+    // console.log("TCL: data", data);
     localStorage.setItem("reversePin", data);
     fetchUrl(data === 205 ? "Post" : "get", `/inex/analytics`)
       .then(res => {
@@ -29,7 +29,7 @@ export const getAnimalChart = data => dispatch =>
           ...res,
           animal_total: total_count
         };
-        console.log("total_count", total_count);
+        // console.log("total_count", total_count);
         dispatch({ type: animal.totalAnimalCount, payload: resObj });
         resolve(res);
       })

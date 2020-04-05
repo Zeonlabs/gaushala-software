@@ -1,7 +1,7 @@
 import { convertNumberToType } from "../../../../js/Helper";
 import moment from "moment";
 import React from "react";
-import"../index.scss"
+import "../index.scss";
 
 export const IncomeColumn = [
   {
@@ -9,7 +9,7 @@ export const IncomeColumn = [
     width: 200,
     dataIndex: "date",
     key: "1",
-    className:"english-font-input",
+    className: "income-table-td-height table-font-english english-font-input",
     // fixed: "left",
     render: (text, record) => {
       return (
@@ -17,8 +17,8 @@ export const IncomeColumn = [
           {moment(text).format("YYYY-MM-DD")}
         </div>
       );
-    },
-    className: "income-table-td-height table-font-english english-font-input"
+    }
+    // className: "income-table-td-height table-font-english english-font-input"
   },
   {
     title: "pahaoMca naM.",
@@ -39,7 +39,7 @@ export const IncomeColumn = [
     dataIndex: "address",
     key: "address",
     // width: 300,
-    className: 'address'
+    className: "address"
   },
   {
     title: "rkma",
@@ -60,9 +60,7 @@ export const IncomeColumn = [
     dataIndex: "type",
     key: "6",
     width: 250,
-    render: (text, record) =>
-      // console.log("Income -> constructor -> record", text, record)
-      convertNumberToType(text, "income")
+    render: (text, record) => convertNumberToType(text, "income")
     // text.type === "cheque" ? (
     //   <span>{text.cheque_no}</span>
     // ) : (
@@ -75,7 +73,6 @@ export const IncomeColumn = [
     key: "7",
     width: 100,
     render: (text, record) =>
-      // console.log("Income -> constructor -> record", text, record)
       text.type === "cheque" ? <p>{text.cheque_no}</p> : <p>raokD</p>
   },
   {

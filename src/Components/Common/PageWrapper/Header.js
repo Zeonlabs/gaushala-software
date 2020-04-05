@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Layout, Icon, Button } from "antd";
 import IncomeMobel from "../Forms/IncomeMobel";
 // import "./Sider.scss";
-import './Header.scss'
+import "./Header.scss";
 
 const Header = ({ toggleSider, collapsed, header, title }) => {
   const [state, setState] = useState({
@@ -34,7 +34,7 @@ const Header = ({ toggleSider, collapsed, header, title }) => {
           color="#000000"
         />
         <div>
-        <h1 className="header-title">{title}</h1>
+          <h1 className="header-title">{title}</h1>
         </div>
         {/* {header ? (
           <div>
@@ -65,7 +65,6 @@ const Header = ({ toggleSider, collapsed, header, title }) => {
           -------------------------------------------------------------------  */}
           <Button
             className="button-text-size"
-            type="primary"
             type="danger"
             icon="minus"
             size="large"

@@ -24,12 +24,12 @@ class NumericInput extends Component {
   };
 
   render() {
-    const { value } = this.props;
-    const title = value ? (
-      <span className="numeric-input-title gujarati-font">{value !== "-" ? value : "-"}</span>
-    ) : (
-      "maaobaa[la naMbar ]maorao"
-    );
+    // const { value } = this.props;
+    // const title = value ? (
+    //   <span className="numeric-input-title gujarati-font">{value !== "-" ? value : "-"}</span>
+    // ) : (
+    //   "maaobaa[la naMbar ]maorao"
+    // );
     return (
       <Input
         {...this.props}

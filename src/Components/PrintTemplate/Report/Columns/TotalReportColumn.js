@@ -2,7 +2,7 @@
 import moment from "moment";
 import React from "react";
 
-let count = 0;
+// let count = 0;
 
 export const TotalReportColumn = [
   {
@@ -11,11 +11,7 @@ export const TotalReportColumn = [
     key: "1",
     width: 150,
     className: "",
-    render: (text, record) => {
-      const total = count + 1;
-      count = total;
-      return <p>{total}</p>;
-    }
+    render: (text, record) => <p>{}</p>
   },
   {
     title: "taarIKa",

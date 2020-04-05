@@ -1,17 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import {
-  Form,
-  Input,
-  Button,
-  Row,
-  Col,
-  Drawer,
-  Select,
-  DatePicker,
-  Modal,
-  Icon
-} from "antd";
+import { Button, Row, Modal, Icon } from "antd";
 import { getEmployeeDocs } from "../../Actions/Employee";
 import "../Cheques/SideDrawer.scss";
 import { employeeList } from "../../js/apiList";
@@ -32,11 +21,6 @@ class ProfileView extends Component {
   componentDidUpdate = prevProps => {
     if (prevProps.visible !== this.props.visible)
       this.props.getEmployeeDocs(this.props.data._id).then(res => {
-        console.log(
-          "ProfileView -> componentDidMount -> getEmployeeDocs",
-          getEmployeeDocs
-        );
-        console.log("this is  a log in a get documents", res);
         this.setState({
           userDocs: res
         });
@@ -44,12 +28,7 @@ class ProfileView extends Component {
   };
 
   render() {
-    const { visible, onClose, data } = this.props;
-    console.log("ProfileView -> render -> data", data);
-    console.log(
-      "ProfileView -> render -> {`${baseUrl}/${employeeList.employeeGetDocs.url}/${this.props.data._id}`}",
-      `${baseUrl}${employeeList.employeeGetDocs.url}/${this.props.data._id}`
-    );
+    const { visible, onClose } = this.props;
     return (
       <Modal
         centered
@@ -95,17 +74,6 @@ class ProfileView extends Component {
           className="profile-view-image"
           src={`${baseUrl}${employeeList.employeeGetDocs.url}/${this.props.data._id}`}
         />
-        {/* </div> */}
-        {/* <img
-          className="profile-view-image"
-          src={`${baseUrl}${employeeList.employeeGetDocs.url}/${this.props.data._id}`}
-          alt="userDoc"
-        /> */}
-        {/* <p className="employee-name">{data.name}</p>
-        <p>{data.phone}</p>
-        <p>{data.address}</p>
-        <p>{data.type}</p> */}
-        {/* <img src={"data:image/jpeg;base64," + btoa(this.state.userDocs)} /> */}
       </Modal>
     );
   }

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Modal, Form, Input, DatePicker, Select, Button, Row, Col } from "antd";
+import { Modal, Form, Input, DatePicker, Button, Row, Col } from "antd";
 import "../../Common/Forms/IncomeModels.styles.scss";
 import moment from "moment";
 import { addIncomeAnimal } from "../../../Actions/Animal/IncomeAnimal";
@@ -21,14 +21,11 @@ class CreaditAnimal extends Component {
     };
   }
 
-  componentDidMount = () => {
-    // console.log("CreaditAnimal -> componentDidMount -> this.props", this.props);
-  };
+  componentDidMount = () => {};
 
   componentDidUpdate = prevProps => {
     if (prevProps !== this.props) {
       const { data } = this.props;
-      console.log("this is  aedit income modal ->", this.props);
       if (this.props.type) {
         this.setState({
           data: data
@@ -51,7 +48,6 @@ class CreaditAnimal extends Component {
   };
 
   incomeAnimal = (values, finalTotal) => {
-    console.log("incomeAnimal -> values, finalTotal", values, finalTotal);
     const date = moment(values.date).format("YYYY-MM-DD");
     const data = {
       date,
@@ -61,7 +57,6 @@ class CreaditAnimal extends Component {
       total: finalTotal,
       animal: this.state.tableData
     };
-    // console.log("TCL: data", data);
     if (localStorage.getItem("reversePin") === "205") {
       // this.loadingFalse();
       this.props.toggleModel();
@@ -82,16 +77,10 @@ class CreaditAnimal extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      console.log("TCL: values", values);
-      // console.log("TCL: itemData", itemData);
-
       const totalAmount = this.state.tableData.map(val =>
         parseInt(val.count, 10)
       );
-      console.log("TCL: totalAmount", totalAmount);
       const finalTotal = totalAmount.reduce(this.sumArray);
-      console.log("TCL: finalTotal", finalTotal);
-      // console.log("TCL: amount", amount);
       if (!err) {
         this.incomeAnimal(values, finalTotal);
       }
@@ -99,9 +88,7 @@ class CreaditAnimal extends Component {
   };
 
   onTableSubmit = data => {
-    console.log("TCL: onTableSubmit -> data", data);
     const tableData = animalCode(data);
-    console.log("tableData", tableData);
     this.setState({
       tableData,
       tableStatus: true
@@ -109,7 +96,6 @@ class CreaditAnimal extends Component {
   };
 
   onChangeType = e => {
-    console.log("radio checked", e.target.value);
     this.setState({
       type: e.target.value
     });
@@ -117,25 +103,16 @@ class CreaditAnimal extends Component {
 
   onChangeSawingType = e => {};
 
-  onChanges = value => {
-    console.log(`selected ${value}`);
-  };
+  onChanges = value => {};
 
-  onBlur = () => {
-    console.log("blur");
-  };
+  onBlur = () => {};
 
-  onFocus = () => {
-    console.log("focus");
-  };
+  onFocus = () => {};
 
-  onSearch = val => {
-    console.log("search:", val);
-  };
+  onSearch = val => {};
   handleReset = () => {
     this.props.form.resetFields();
     this.props.toggleModel();
-    console.log("CreaditAnimal -> handleReset -> this.props..toggleModel()");
   };
   render() {
     const { type, data } = this.props;

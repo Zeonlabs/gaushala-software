@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { Button, Select, Icon } from "antd";
+import { Button, Select } from "antd";
 import ReactToPrint from "react-to-print";
 import ReportPrint from "../PrintTemplate/Report";
 import { EmployeeColumn } from "../PrintTemplate/Report/Columns/EmployeeColumn";

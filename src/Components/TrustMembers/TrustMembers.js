@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { Icon, Button, message } from "antd";
+import { Icon, Button } from "antd";
 import PageWrapper from "../Common/PageWrapper/PageWrapper";
 import "./TrustMenbers.scss";
 import Index from "./AddMember/Index";
@@ -18,8 +18,6 @@ import ReportPrint from "../PrintTemplate/Report";
 import { TrustyColumns } from "../PrintTemplate/Report/Columns/TrustyColumn";
 
 // function onChange(dates, dateStrings) {
-//   console.log("From: ", dates[0], ", to: ", dates[1]);
-//   console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
 // }
 export class TrustMembers extends Component {
   constructor(props) {
@@ -53,7 +51,6 @@ export class TrustMembers extends Component {
       this.props
         .getMembers(pagination)
         .then(res => {
-          console.log("Employees -> componentDidMount -> res", res);
           this.setState({
             data: res.docs,
             loading: false
@@ -96,7 +93,6 @@ export class TrustMembers extends Component {
 
   handelDataAdd = data => {
     this.loadingTrue();
-    console.log("Employees -> handelDataAdd -> data", data);
     if (localStorage.getItem("reversePin") === "205") {
       this.loadingFalse();
       this.handelShowPopup();
@@ -118,7 +114,6 @@ export class TrustMembers extends Component {
 
   handelAddEdit = (id, data) => {
     this.loadingTrue();
-    console.log("TrustMembers -> handelAddEdit -> data", data);
     this.props.editMembers(id, data).then(res => {
       this.props
         .getMembers(this.state.pagination)
@@ -135,14 +130,12 @@ export class TrustMembers extends Component {
 
   handelDelete = record => {
     this.loadingTrue();
-    console.log("Income -> handleDelete -> key, record", record);
     this.props
       .deleteMembers(record._id)
       .then(res => {
         this.props
           .getMembers(this.state.pagination)
           .then(res => {
-            console.log("res in a income model =->", res);
             this.setState({
               data: res.docs
             });
@@ -155,14 +148,12 @@ export class TrustMembers extends Component {
 
   handelFilter = value => {
     this.loadingTrue();
-    console.log("Employees -> handelFilter -> value", value);
     const data = {
       position: value === "All" ? "" : value
     };
     this.props
       .filterMembers(data)
       .then(res => {
-        console.log("Employees -> res", res);
         this.setState({
           data: res
         });
@@ -184,7 +175,6 @@ export class TrustMembers extends Component {
         this.props
           .getMembers(this.state.pagination)
           .then(res => {
-            console.log("Employees -> componentDidMount -> res", res);
             this.setState({
               data: res.docs
             });

@@ -14,7 +14,6 @@ class Index extends Component {
   }
 
   handelNumber = e => {
-    console.log("TCL: Index -> handelNumber -> e", e.target.value);
     this.setState({
       number: parseInt(e.target.value, 10)
     });
@@ -34,7 +33,6 @@ class Index extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
         // this.props.handelEmployeePopup();
         const data = {
           date: moment(values.date).format("YYYY-MM-DD"),
@@ -109,10 +107,8 @@ class Index extends Component {
                     >
                       <Option value="Aosa.baI.Aa[ baoMnk">
                         Aosa.baI.Aa[ baoMnk
-                        </Option>
-                        <Option value="Anya">
-                          Anya
-                        </Option>
+                      </Option>
+                      <Option value="Anya">Anya</Option>
                     </Select>
                   )}
                 </Form.Item>
@@ -140,7 +136,7 @@ class Index extends Component {
                 {/* ----------------------------cheque Name----------------------------------- */}
                 <Form.Item
                   className="ant-col"
-                  label="naama &quot; caok svaIkarnaar &apos; :"
+                  label="naama &quot; caok svaIkarnaar ' :"
                 >
                   {getFieldDecorator("name", {
                     rules: [{ required: true }],

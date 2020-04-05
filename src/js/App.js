@@ -1,7 +1,7 @@
 import React from "react";
-import { connect } from "react-redux";
-import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
-import { getToken } from "./LocalStorage";
+// import { connect } from "react-redux";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
+// import { getToken } from "./LocalStorage";
 import routes from "./Routes";
 // import { renderRoutes } from "react-router-config";
 // import ScrollToTop from './ScrollTop';
@@ -10,7 +10,7 @@ import routes from "./Routes";
 // import AppD from "../app";
 // import Home from "../containers/Home/Home";
 import Home from "../Components/Dashboard/Home";
-import CharityIncome from "../Components/CharityIncome/CharityIncome";
+// import CharityIncome from "../Components/CharityIncome/CharityIncome";
 import Expences from "../Components/Expences/Expences";
 import Cheques from "../Components/Cheques/Cheques";
 import Animal from "../Components/Animal/Animal";
@@ -24,31 +24,31 @@ import Login from "../Components/Login/LoginPage";
 //   getCities,
 // } from '../actions/global';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      getToken() ? (
-        <Component {...props} />
-      ) : (
-        <Redirect to={{ pathname: "/" }} />
-      )
-    }
-  />
-);
+// const PrivateRoute = ({ component: Component, ...rest }) => (
+//   <Route
+//     {...rest}
+//     render={props =>
+//       getToken() ? (
+//         <Component {...props} />
+//       ) : (
+//         <Redirect to={{ pathname: "/" }} />
+//       )
+//     }
+//   />
+// );
 
-const LoginRoute = ({ component: LoginComponent, ...rest }) => (
-  <Route
-    {...rest}
-    render={props =>
-      getToken() ? (
-        <Redirect to={{ pathname: "/home" }} />
-      ) : (
-        <LoginComponent {...props} />
-      )
-    }
-  />
-);
+// const LoginRoute = ({ component: LoginComponent, ...rest }) => (
+//   <Route
+//     {...rest}
+//     render={props =>
+//       getToken() ? (
+//         <Redirect to={{ pathname: "/home" }} />
+//       ) : (
+//         <LoginComponent {...props} />
+//       )
+//     }
+//   />
+// );
 
 function App() {
   return (

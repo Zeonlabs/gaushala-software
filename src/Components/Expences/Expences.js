@@ -118,7 +118,6 @@ class Income extends Component {
         key: "7",
         width: 130,
         render: (text, record) =>
-          // console.log("Income -> constructor -> record", text, record)
           text.type === "cheque" ? <p>{text.cheque_no}</p> : <p>raokD</p>
       },
       // {
@@ -174,7 +173,6 @@ class Income extends Component {
   }
 
   handelEdit = (text, record) => {
-    console.log("this is a log in a handelEdit ->", text, record);
     this.setState({
       editData: record,
       expense: true
@@ -182,12 +180,10 @@ class Income extends Component {
   };
 
   handleDelete = (key, record) => {
-    console.log("Income -> handleDelete -> key, record", key, record);
     this.props.deleteExpense(record._id).then(res => {
       this.props
         .getExpense(this.state.pagination)
         .then(res => {
-          console.log("res in a income model =->", res);
           this.setState({
             data: res.docs
           });
@@ -213,7 +209,6 @@ class Income extends Component {
       this.props
         .getExpense(pagination)
         .then(res => {
-          // console.log("res in a income model =->", res);
           this.setState({
             data: res.docs,
             loading: false
@@ -240,10 +235,6 @@ class Income extends Component {
   };
 
   componentDidUpdate = prevPorps => {
-    console.log(
-      "res in a income model this.prevProps.expenseList =->",
-      this.props.expenseList
-    );
     if (prevPorps.expenseList !== this.props.expenseList) {
       this.setState({
         data: this.props.expenseList
@@ -271,7 +262,6 @@ class Income extends Component {
         this.props
           .getExpense(this.state.pagination)
           .then(res => {
-            console.log("res in a income model =->", res);
             this.setState({
               data: res.docs
             });
@@ -288,11 +278,9 @@ class Income extends Component {
     if (localStorage.getItem("reversePin") === "205") {
       this.loadingFalse();
     } else {
-      // console.log("Income -> handelFilterGet -> data", data);
       this.props
         .getFilterExpense(data)
         .then(res => {
-          console.log("res in a income model =->", res);
           this.loadingFalse();
           this.setState({
             data: res
@@ -313,12 +301,10 @@ class Income extends Component {
 
   handelSubmit = (id, data) => {
     this.loadingTrue();
-    console.log("Income -> handelSubmit -> data", data);
     this.props.editExpense(id, data).then(res => {
       // this.props.toggleModel();
 
       this.props.getExpense(this.state.pagination).then(res => {
-        console.log("res in a income model =->", res);
         this.handelClosePopUp();
         this.loadingFalse();
         this.setState({

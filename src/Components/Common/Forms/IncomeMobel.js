@@ -29,7 +29,6 @@ import ReactToPrint from "react-to-print";
 import { convertNumberToType, convertTypeToNumber } from "../../../js/Helper";
 import IncomePrintSlip from "../../PrintTemplate";
 import ExpensePrintSlip from "../../PrintTemplate/ExpensePrint";
-import { Expense } from "../../PrintTemplate/Report/Columns/Expese";
 
 const { Option } = Select;
 
@@ -52,12 +51,7 @@ class IncomeMobels extends Component {
 
   componentDidUpdate = prevProps => {
     if (prevProps !== this.props) {
-      console.log(
-        "this is  aedit income modal --------------------------->",
-        this.props
-      );
       if (this.props.modalType) {
-        // console.log("this is  aedit this.props.modalType ->", this.props);
         this.setState({
           value: this.props.data.phone
         });
@@ -85,10 +79,6 @@ class IncomeMobels extends Component {
   };
 
   incomeData = (values, finalTotal, itemData) => {
-    console.log(
-      "IncomeMobels -> incomeData -> convertTypeToNumber(values.type)",
-      values
-    );
     const date = moment(values.date).format("YYYY-MM-DD");
     const messageDate = moment(values.date).format("DD-MM-YYYY");
     const message = `સિતારામ ગૌશાળા ટ્સ્ટ ગામઃવિરડી, તા:ગારીયાધાર, જી: ભાવનગર,૨જી.નં :ઈ-3256- ભાવનગર આપ શ્રી દ્રારા તા:${messageDate} ના રોજ ₹ ${finalTotal}/- દાન પેટે પ્રાપ્ત થયેલ છે. સહકાર ખુબ આભાર.`;
@@ -110,7 +100,6 @@ class IncomeMobels extends Component {
       ref_name: values.ref_name,
       note: values.note
     };
-    console.log("TCL: data", data);
     if (localStorage.getItem("reversePin") === "205") {
       this.props.form.resetFields();
       this.setState({
@@ -122,7 +111,6 @@ class IncomeMobels extends Component {
     } else {
       if (this.props.modalType === "edit") {
         const id = this.props.data._id;
-        console.log("incomeData -> id", id);
         this.props.submit(id, data);
         if (values.sms === "yes") {
           const data = {
@@ -178,7 +166,6 @@ class IncomeMobels extends Component {
       ref_name: values.ref_name,
       note: values.note
     };
-    console.log("TCL: data", data);
     if (localStorage.getItem("reversePin") === "205") {
       this.props.form.resetFields();
       this.setState({
@@ -190,7 +177,6 @@ class IncomeMobels extends Component {
     } else {
       if (this.props.modalType === "edit") {
         const id = this.props.data._id;
-        console.log("incomeData -> id", id);
         this.props.submit(id, data);
         // this.props.editExpense(id, data).then(res => this.props.toggleModel());
       } else {
@@ -213,10 +199,8 @@ class IncomeMobels extends Component {
   };
 
   handleSubmit = e => {
-    console.log("TCL: e", e);
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      console.log("TCL: values", values, this.state.tableData);
       let itemData = [];
       let amount = "";
       let totalAmount = "";
@@ -228,7 +212,6 @@ class IncomeMobels extends Component {
               amount: parseInt(val.amount, 10)
             })
           );
-          // console.log("TCL: itemData", itemData);
           totalAmount = this.props.data.item.map(val =>
             parseInt(val.amount, 10)
           );
@@ -239,7 +222,6 @@ class IncomeMobels extends Component {
               amount: parseInt(val.amount, 10)
             })
           );
-          // console.log("TCL: itemData", itemData);
           totalAmount = this.state.tableData.map(val =>
             parseInt(val.amount, 10)
           );
@@ -251,19 +233,15 @@ class IncomeMobels extends Component {
             amount: parseInt(val.amount, 10)
           })
         );
-        // console.log("TCL: itemData", itemData);
         totalAmount = this.state.tableData.map(val => parseInt(val.amount, 10));
       }
-      console.log("TCL: totalAmount", totalAmount);
       const finalTotal = totalAmount.reduce(this.sumArray);
-      console.log("TCL: finalTotal", finalTotal);
       this.setState({
         finalTotal,
         data: values,
         itemData
       });
 
-      // console.log("TCL: amount", amount);
       if (!err) {
         if (this.props.type === "expense") {
           this.expenseData(values, finalTotal, itemData);
@@ -275,7 +253,6 @@ class IncomeMobels extends Component {
   };
 
   onTableSubmit = data => {
-    console.log("TCL: onTableSubmit -> data", data);
     this.setState({
       tableData: data,
       tableStatus: true
@@ -283,32 +260,21 @@ class IncomeMobels extends Component {
     });
   };
 
-  printIncomeSlip = () => {
-    console.warn("IncomeMobels -> values, finalTotal, itemData");
-  };
+  printIncomeSlip = () => {};
   onChangeType = e => {
-    console.log("radio checked", e.target.value);
     this.setState({
       type: e.target.value,
       typeStatus: "cash"
     });
   };
 
-  onChanges = value => {
-    console.log(`selected ${value}`);
-  };
+  onChanges = value => {};
 
-  onBlur = () => {
-    console.log("blur");
-  };
+  onBlur = () => {};
 
-  onFocus = () => {
-    console.log("focus");
-  };
+  onFocus = () => {};
 
-  onSearch = val => {
-    console.log("search:", val);
-  };
+  onSearch = val => {};
   handleReset = () => {
     this.props.form.resetFields();
     this.props.toggleModel();
@@ -321,20 +287,10 @@ class IncomeMobels extends Component {
     });
   };
 
-  // handelPrintButton = () => {
-  //   this.setState({
-  //     printStatus: true
-  //   });
-  //   // console.log(
-  //   //   "shjgfsadhsagfdasnjcn hasdgasudh auhduihas uduiahu dhuahdu  a udh sah dui"
-  //   // );
-  // };
-
   render() {
     // const { type } = this.props;
     const { type, modalType, data } = this.props;
     // const { slip_no } = data;
-    console.log("render -> this.props", this.props);
     const { getFieldDecorator } = this.props.form;
     return (
       <div className="income-model-wrapper">

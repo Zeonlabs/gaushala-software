@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Form, Icon, InputNumber, Button, Checkbox } from "antd";
+import { Form, InputNumber } from "antd";
 import "./IndexTable.scss";
 
 class Index extends Component {
@@ -19,7 +19,6 @@ class Index extends Component {
   sumValuses = obj => Object.values(obj).reduce((a, b) => a + b);
 
   componentDidMount() {
-    console.log("this is a log in a index table for animal ->", this.props);
     if (this.props.tableType) {
       this.setState({
         total: this.props.total
@@ -46,9 +45,7 @@ class Index extends Component {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log("Received values of form: ", values);
         const total = parseInt(this.sumValuses(values), 10);
-        console.log("TCL: Index -> total", total);
         this.props.submit(values);
         this.setState({
           total,
@@ -61,7 +58,6 @@ class Index extends Component {
   render() {
     const { getFieldDecorator } = this.props.form;
     const { type, tableType, data } = this.props;
-    console.log("Index -> render -> data", data);
     return (
       <div className="animal-table-wrapper">
         <Form onChange={this.handleSubmit} className="login-form">
@@ -187,9 +183,7 @@ class Index extends Component {
             <tfoot>
               <tr>
                 <td className="total-box table-animal-popup-td">TaoTla</td>
-                <td className="total-box  ">
-                  {this.state.total}
-                </td>
+                <td className="total-box  ">{this.state.total}</td>
               </tr>
             </tfoot>
           </table>

@@ -2,7 +2,7 @@
 import moment from "moment";
 import React from "react";
 
-let count = 0;
+// let count = 0;
 
 export const CreaditAnimalColumn = [
   {
@@ -11,19 +11,7 @@ export const CreaditAnimalColumn = [
     key: "1",
     width: 150,
     className: "",
-    render: (text, record) => {
-      const total = count + 1;
-      count = total;
-      return <p>{total}</p>;
-    }
-
-    // console.log(
-    //   "------------------------------------------------------------------------record----------------------------------------------------------",
-    //   record
-    // )
-    // this.state.data.length >= 1 ? (
-    //   <div>{this.prop.data.findIndex(x => x._id === text) + 1}</div>
-    // ) : null
+    render: (text, record) => <p>{}</p>
   },
   {
     title: "taarIKa",

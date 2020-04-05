@@ -8,8 +8,8 @@ import {
   Col,
   Table,
   Divider,
-  Popconfirm,
-  message
+  Popconfirm
+  // message
 } from "antd";
 import moment from "moment";
 import { connect } from "react-redux";
@@ -166,7 +166,6 @@ class DeadAnimal extends Component {
     this.props
       .getDeadAnimal(this.state.pagination)
       .then(res => {
-        console.log("this is a log in a  creadit animal api ->", res);
         this.setState({
           data: res.docs,
           loading: false
@@ -194,12 +193,10 @@ class DeadAnimal extends Component {
 
   handleDelete = (key, record) => {
     this.loadingTrue();
-    console.log("Income -> handleDelete -> key, record", key, record);
     this.props.deleteDeadAnimal(record._id).then(res => {
       this.props
         .getDeadAnimal(this.state.pagination)
         .then(res => {
-          console.log("res in a income model =->", res);
           this.setState({
             data: res.docs
           });
@@ -212,7 +209,6 @@ class DeadAnimal extends Component {
   };
 
   handelEdit = (text, record) => {
-    // console.log("this is a log in a handelEdit ->", text, record);
     const total = record.animal.map(val => parseInt(val.count, 10));
     this.setState({
       editData: record,
@@ -223,8 +219,6 @@ class DeadAnimal extends Component {
 
   onChange = (dates, dateStrings) => {
     this.loadingTrue();
-    console.log("From: ", dates[0], ", to: ", dates[1]);
-    console.log("From: ", dateStrings[0], ", to: ", dateStrings[1]);
     let value = {};
     if (localStorage.getItem("reversePin") === "205") {
       this.loadingFalse();
@@ -240,7 +234,6 @@ class DeadAnimal extends Component {
       this.props
         .getFilterDeadAnimal(value)
         .then(res => {
-          console.log("CreditAnimal -> onChange -> res", res);
           this.setState({
             data: res
           });
@@ -251,7 +244,6 @@ class DeadAnimal extends Component {
   };
 
   handelback = () => {
-    console.log("back", this.props);
     this.props.back();
   };
 
@@ -263,7 +255,6 @@ class DeadAnimal extends Component {
 
   handelSubmit = (id, data) => {
     this.loadingTrue();
-    console.log("CreditAnimal -> handelSubmit -> id, data", id, data);
     this.props
       .editDeadAnimal(id, data)
       .then(res => {
@@ -271,7 +262,6 @@ class DeadAnimal extends Component {
         this.props
           .getDeadAnimal(this.state.pagination)
           .then(res => {
-            console.log("res in a income model =->", res);
             this.setState({
               data: res.docs
             });
@@ -295,7 +285,6 @@ class DeadAnimal extends Component {
         this.props
           .getDeadAnimal(this.state.pagination)
           .then(res => {
-            console.log("this is a log in a  creadit animal api ->", res);
             this.setState({
               data: res.docs
             });
@@ -306,8 +295,6 @@ class DeadAnimal extends Component {
   };
 
   render() {
-    console.log("TCL: CreditAnimal -> constructor -> props", this.props);
-
     return (
       <div>
         <Row className="main-header-row" gutter={[16, 16]}>

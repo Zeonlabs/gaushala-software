@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Table, Divider, Tag, Icon, Popconfirm } from "antd";
+import { Table, Divider, Icon, Popconfirm } from "antd";
 
 class ListingTable extends Component {
   constructor(props) {

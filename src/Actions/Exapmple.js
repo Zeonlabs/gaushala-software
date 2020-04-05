@@ -1,6 +1,5 @@
 import { actionName, listing } from "../js/actions";
 import { fetchUrl } from "../js/fetchUrl";
-import apiList from "../js/apiList";
 
 const loadData = values => {
   // console.log("this is a data from the action values",values);
@@ -38,7 +37,7 @@ export const loadDatas = () => dispatch =>
 //   });
 export const addIncome = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", data);
+    // console.log("TCL: data", data);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "get" : "post",
       "/income/add",
@@ -54,7 +53,7 @@ export const addIncome = data => dispatch =>
 
 export const getExpense = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "get",
       `/expense`,
@@ -88,7 +87,7 @@ export const getIncome = id => dispatch =>
 
 export const getFilterIncome = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", data);
+    // console.log("TCL: data", data);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "get",
       `/income/filter`,
@@ -105,7 +104,7 @@ export const getFilterIncome = data => dispatch =>
 
 export const getFilterExpense = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", data);
+    // console.log("TCL: data", data);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "get",
       `/expense/filter`,
@@ -122,7 +121,7 @@ export const getFilterExpense = data => dispatch =>
 
 export const addExpense = data => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", data);
+    // console.log("TCL: data", data);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "get" : "post",
       "/expense/add",
@@ -138,14 +137,14 @@ export const addExpense = data => dispatch =>
 
 export const editExpense = (id, data) => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "PATCH",
       `/expense/edit/${id}`,
       data
     )
       .then(res => {
-        console.log("res-> edit expense res ->", res);
+        // console.log("res-> edit expense res ->", res);
 
         resolve(res);
       })
@@ -156,14 +155,14 @@ export const editExpense = (id, data) => dispatch =>
 
 export const editIncome = (id, data) => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "Patch",
       `/income/edit/${id}`,
       data
     )
       .then(res => {
-        console.log("res-> edit income res ->", res);
+        // console.log("res-> edit income res ->", res);
         // getIncome()
         resolve(res);
       })
@@ -174,13 +173,13 @@ export const editIncome = (id, data) => dispatch =>
 
 export const deleteIncome = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "DEleTE",
       `/income/delete/${id}`
     )
       .then(res => {
-        console.log("res-> edit income res ->", res);
+        // console.log("res-> edit income res ->", res);
         resolve(res);
       })
       .catch(e => {
@@ -190,13 +189,13 @@ export const deleteIncome = id => dispatch =>
 
 export const deleteExpense = id => dispatch =>
   new Promise((resolve, reject) => {
-    console.log("TCL: data", id);
+    // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "delete",
       `/expense/delete/${id}`
     )
       .then(res => {
-        console.log("res-> edit income res ->", res);
+        // console.log("res-> edit income res ->", res);
         resolve(res);
       })
       .catch(e => {
