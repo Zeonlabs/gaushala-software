@@ -33,6 +33,7 @@ export const getGivenAnimal = id => dispatch =>
     )
       .then(res => {
         dispatch({ type: animal.givenAnmimalList, payload: res.docs });
+        dispatch({ type: animal.givenAnimalTotal, payload: res.docs });
         resolve(res);
       })
       .catch(e => {

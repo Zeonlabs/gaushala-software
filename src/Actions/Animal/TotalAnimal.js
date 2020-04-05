@@ -33,6 +33,7 @@ export const getCostAnimal = id => dispatch =>
     )
       .then(res => {
         dispatch({ type: animal.costAnmimalList, payload: res.docs });
+        dispatch({ type: animal.costAnimalTotal, payload: res });
         resolve(res);
       })
       .catch(e => {
@@ -52,6 +53,7 @@ export const getTotalAnimal = id => dispatch =>
     )
       .then(res => {
         dispatch({ type: animal.totalAnmimalList, payload: res.docs });
+        dispatch({ type: animal.totalAnimalTotal, payload: res });
         resolve(res);
       })
       .catch(e => {

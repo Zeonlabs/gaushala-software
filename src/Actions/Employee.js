@@ -34,6 +34,7 @@ export const getEmployee = id => dispatch =>
       .then(res => {
         // console.log("DeadAnimal -> res ->", res);
         dispatch({ type: employee.employeesting, payload: res.docs });
+        dispatch({ type: employee.employeeCount, payload: res });
         resolve(res);
       })
       .catch(e => {

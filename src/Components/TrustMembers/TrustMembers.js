@@ -33,7 +33,9 @@ export class TrustMembers extends Component {
       },
       editData: "",
       income: false,
-      loading: true
+      loading: true,
+      total: 0,
+      filterPress: false
     };
   }
 
@@ -45,7 +47,12 @@ export class TrustMembers extends Component {
     if (this.props.trustMembers.length > 0) {
       this.setState({
         data: this.props.trustMembers,
-        loading: false
+        loading: false,
+        total: this.props.trustTotal.totalDocs,
+        pagination: {
+          page: this.props.trustTotal.page,
+          limit: this.props.trustTotal.limit
+        }
       });
     } else {
       this.props
@@ -53,7 +60,8 @@ export class TrustMembers extends Component {
         .then(res => {
           this.setState({
             data: res.docs,
-            loading: false
+            loading: false,
+            total: res.totalDocs
           });
         })
         .catch(e => {
@@ -102,7 +110,8 @@ export class TrustMembers extends Component {
           .getMembers(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              total: res.totalDocs
             });
             this.loadingFalse();
             this.handelShowPopup();
@@ -119,7 +128,8 @@ export class TrustMembers extends Component {
         .getMembers(this.state.pagination)
         .then(res => {
           this.setState({
-            data: res.docs
+            data: res.docs,
+            total: res.totalDocs
           });
           this.loadingFalse();
           this.handelShowPopup();
@@ -137,7 +147,8 @@ export class TrustMembers extends Component {
           .getMembers(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              total: res.totalDocs
             });
             this.loadingFalse();
           })
@@ -151,15 +162,28 @@ export class TrustMembers extends Component {
     const data = {
       position: value === "All" ? "" : value
     };
-    this.props
-      .filterMembers(data)
-      .then(res => {
-        this.setState({
-          data: res
-        });
-        this.loadingFalse();
-      })
-      .catch(e => this.loadingFalse());
+    value === "All"
+      ? this.props
+          .getMembers(this.state.pagination)
+          .then(res => {
+            this.setState({
+              data: res.docs,
+              total: res.totalDocs,
+              filterPress: false
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse())
+      : this.props
+          .filterMembers(data)
+          .then(res => {
+            this.setState({
+              data: res,
+              filterPress: true
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse());
   };
 
   paginate = page => {
@@ -176,7 +200,8 @@ export class TrustMembers extends Component {
           .getMembers(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              total: res.totalDocs
             });
             this.loadingFalse();
           })
@@ -256,6 +281,8 @@ export class TrustMembers extends Component {
               current={this.state.pagination.page}
               pageSize={this.state.pagination.limit}
               loading={this.state.loading}
+              total={this.state.total}
+              filterPress={this.state.filterPress}
             />
           </div>
         </div>

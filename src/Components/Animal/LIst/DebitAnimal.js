@@ -41,7 +41,9 @@ class DebitAnimal extends Component {
       total: 0,
       tagText: "",
       date: {},
-      loading: true
+      loading: true,
+      totalPage: 0,
+      filterPress: false
     };
     this.columns = [
       {
@@ -191,7 +193,8 @@ class DebitAnimal extends Component {
       .then(res => {
         this.setState({
           data: res.docs,
-          loading: false
+          loading: false,
+          totalPage: res.totalDocs
         });
       })
       .catch(e => {
@@ -263,7 +266,8 @@ class DebitAnimal extends Component {
           .getGivenAnimal(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              totalPage: res.totalDocs
             });
             this.loadingFalse();
           })
@@ -278,18 +282,42 @@ class DebitAnimal extends Component {
       ...this.state.date,
       tag: this.state.tagText
     };
+
     if (localStorage.getItem("reversePin") === "205") {
       this.loadingFalse();
     } else {
-      this.props
-        .getFilterGivenAnimal(data)
-        .then(res => {
-          this.setState({
-            data: res
-          });
-          this.loadingFalse();
-        })
-        .catch(e => this.loadingFalse());
+      console.log(
+        "DebitAnimal -> filterData -> data",
+        this.state.date,
+        this.state.tagText
+      );
+      if (
+        Object.keys(this.state.date).length === 0 &&
+        this.state.tagText === ""
+      ) {
+        this.props
+          .getGivenAnimal(this.state.pagination)
+          .then(res => {
+            this.setState({
+              data: res.docs,
+              filterPress: false,
+              totalPage: res.totalDocs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse());
+      } else {
+        this.props
+          .getFilterGivenAnimal(data)
+          .then(res => {
+            this.setState({
+              data: res,
+              filterPress: true
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse());
+      }
     }
   };
 
@@ -302,7 +330,8 @@ class DebitAnimal extends Component {
           .getGivenAnimal(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              totalPage: res.totalDocs
             });
             this.loadingFalse();
           })
@@ -325,7 +354,8 @@ class DebitAnimal extends Component {
           .getGivenAnimal(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              totalPage: res.totalDocs
             });
             this.loadingFalse();
           })
@@ -426,12 +456,16 @@ class DebitAnimal extends Component {
             className="animal-table"
             loading={this.state.loading}
             columns={this.columns}
-            pagination={{
-              onChange: this.paginate,
-              current: this.state.pagination.page,
-              total: 20,
-              pageSize: this.state.pagination.limit
-            }}
+            pagination={
+              this.state.filterPress
+                ? false
+                : {
+                    onChange: this.paginate,
+                    current: this.state.pagination.page,
+                    total: this.state.totalPage,
+                    pageSize: this.state.pagination.limit
+                  }
+            }
             dataSource={this.state.data}
             bordered
           />

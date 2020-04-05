@@ -61,6 +61,7 @@ export const getExpense = id => dispatch =>
     )
       .then(res => {
         dispatch({ type: listing.expenseListing, payload: res.docs });
+        dispatch({ type: listing.expenseTotal, payload: res });
         resolve(res);
       })
       .catch(e => {
@@ -77,7 +78,9 @@ export const getIncome = id => dispatch =>
       id
     )
       .then(res => {
+        // console.log("res", res);
         dispatch({ type: listing.incomeListing, payload: res.docs });
+        dispatch({ type: listing.incomeTotal, payload: res });
         resolve(res);
       })
       .catch(e => {
@@ -94,7 +97,7 @@ export const getFilterIncome = data => dispatch =>
       data
     )
       .then(res => {
-        // dispatch({ type: listing.incomeListing, payload: res });
+        dispatch({ type: listing.incomeListing, payload: res });
         resolve(res);
       })
       .catch(e => {
@@ -111,7 +114,7 @@ export const getFilterExpense = data => dispatch =>
       data
     )
       .then(res => {
-        // dispatch({ type: listing.incomeListing, payload: res.docs });
+        dispatch({ type: listing.expenseListing, payload: res.docs });
         resolve(res);
       })
       .catch(e => {

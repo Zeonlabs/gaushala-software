@@ -12,6 +12,7 @@ export const getCheque = id => dispatch =>
     )
       .then(res => {
         dispatch({ type: listing.chequeListing, payload: res.docs });
+        dispatch({ type: listing.chequeTotal, payload: res });
         resolve(res);
       })
       .catch(e => {
@@ -75,6 +76,7 @@ export const filterCheque = id => dispatch =>
       id
     )
       .then(res => {
+        dispatch({ type: listing.chequeListing, payload: res.docs });
         resolve(res);
       })
       .catch(e => {

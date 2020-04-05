@@ -31,7 +31,9 @@ export class Cheques extends Component {
         limit: 20
       },
       editData: "",
-      income: false
+      income: false,
+      total: 0,
+      filterPress: false
     };
   }
 
@@ -56,7 +58,12 @@ export class Cheques extends Component {
     if (this.props.chequeList.length > 0) {
       this.setState({
         data: this.props.chequeList,
-        loading: false
+        loading: false,
+        total: this.props.chequeTotal.totalDocs,
+        pagination: {
+          page: this.props.chequeTotal.page,
+          limit: this.props.chequeTotal.limit
+        }
       });
     } else {
       this.props
@@ -64,7 +71,8 @@ export class Cheques extends Component {
         .then(res => {
           this.setState({
             data: res.docs,
-            loading: false
+            loading: false,
+            total: res.totalDocs
           });
         })
         .catch(e => {
@@ -113,7 +121,8 @@ export class Cheques extends Component {
           .getCheque(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              total: res.totalDocs
             });
             this.loadingFalse();
             this.handelShowPopup();
@@ -133,7 +142,8 @@ export class Cheques extends Component {
           .getCheque(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              total: res.totalDocs
               // income: false
             });
             this.loadingFalse();
@@ -151,7 +161,8 @@ export class Cheques extends Component {
         .getCheque(this.state.pagination)
         .then(res => {
           this.setState({
-            data: res.docs
+            data: res.docs,
+            total: res.totalDocs
           });
           this.loadingFalse();
         })
@@ -171,7 +182,8 @@ export class Cheques extends Component {
         .filterCheque(data)
         .then(res => {
           this.setState({
-            data: res
+            data: res,
+            filterPress: true
           });
           this.loadingFalse();
         })
@@ -183,8 +195,20 @@ export class Cheques extends Component {
   };
 
   handelResetFilter = () => {
-    const data = {};
-    this.handelFilter(data);
+    this.props
+      .getCheque(this.state.pagination)
+      .then(res => {
+        this.setState({
+          data: res.docs,
+          total: res.totalDocs,
+          filterPress: false
+        });
+        this.loadingFalse();
+      })
+      .catch(e => {
+        message.error(e);
+        this.loadingFalse();
+      });
   };
 
   paginate = page => {
@@ -201,7 +225,8 @@ export class Cheques extends Component {
           .getCheque(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              total: res.totalDocs
             });
             this.loadingFalse();
           })
@@ -305,6 +330,8 @@ export class Cheques extends Component {
             pagination={this.paginate}
             current={this.state.pagination.page}
             pageSize={this.state.pagination.limit}
+            total={this.state.total}
+            filterPress={this.state.filterPress}
           />
         </div>
       </PageWrapper>

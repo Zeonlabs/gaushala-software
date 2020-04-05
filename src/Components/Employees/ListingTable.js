@@ -127,12 +127,16 @@ class ListingTable extends Component {
         <Table
           columns={this.columns}
           loading={this.props.loading}
-          pagination={{
-            onChange: this.props.pagination,
-            current: this.props.current,
-            total: 20,
-            pageSize: this.props.pageSize
-          }}
+          pagination={
+            this.props.filterPress
+              ? false
+              : {
+                  onChange: this.props.pagination,
+                  current: this.props.current,
+                  total: this.props.total,
+                  pageSize: this.props.pageSize
+                }
+          }
           dataSource={this.props.data}
           // scroll={{ x: 240, y: 500 }}
         />

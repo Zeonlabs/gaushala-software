@@ -41,7 +41,9 @@ class Income extends Component {
       pagination: {
         page: 1,
         limit: 20
-      }
+      },
+      total: 0,
+      filterPress: false
     };
     this.columns = [
       {
@@ -176,23 +178,31 @@ class Income extends Component {
       page: 1,
       limit: 20
     };
-    // console.log(
-    //   "Income -> componentDidMount -> this.props.incomeList",
-    //   this.props.incomeList
-    // );
+
     // const id = this.props.match.params.pid;
     if (this.props.incomeList.length > 0) {
+      console.log(
+        "Income -> componentDidMount -> this.props.incomeList",
+        this.props.incomeTotal
+      );
       this.setState({
         data: this.props.incomeList,
-        loading: false
+        loading: false,
+        total: this.props.incomeTotal.totalDocs,
+        pagination: {
+          page: this.props.incomeTotal.page,
+          limit: this.props.incomeTotal.limit
+        }
       });
     } else {
       this.props
         .getIncome(pagination)
         .then(res => {
+          // console.log("Income -> componentDidMount -> res", res);
           this.setState({
             data: res.docs,
-            loading: false
+            loading: false,
+            total: res.totalDocs
           });
         })
         .catch(e => {
@@ -254,7 +264,8 @@ class Income extends Component {
         this.props.getIncome(this.state.pagination).then(res => {
           this.loadingFalse();
           this.setState({
-            data: res.docs
+            data: res.docs,
+            total: res.totalDocs
           });
         })
     );
@@ -268,7 +279,8 @@ class Income extends Component {
         .getIncome(this.state.pagination)
         .then(res => {
           this.setState({
-            data: res.docs
+            data: res.docs,
+            total: res.totalDocs
           });
           this.loadingFalse();
         })
@@ -281,13 +293,15 @@ class Income extends Component {
   handelFilterGet = data => {
     this.loadingTrue();
     if (localStorage.getItem("reversePin") === "205") {
-      // this.loadingFalse();
+      this.loadingFalse();
     } else {
       this.props
         .getFilterIncome(data)
         .then(res => {
           this.setState({
-            data: res
+            data: res,
+            filterPress: true
+            // total: res.totalDocs
           });
           this.loadingFalse();
         })
@@ -308,7 +322,8 @@ class Income extends Component {
       this.handelClosePopUp();
       this.props.getIncome(this.state.pagination).then(res => {
         this.setState({
-          data: res.docs
+          data: res.docs,
+          total: res.totalDocs
         });
         this.loadingFalse();
       });
@@ -316,8 +331,15 @@ class Income extends Component {
   };
 
   handelResetFilter = () => {
-    const data = [];
-    this.handelFilterGet(data);
+    this.loadingTrue();
+    this.props.getIncome(this.state.pagination).then(res => {
+      this.setState({
+        data: res.docs,
+        total: res.totalDocs,
+        filterPress: false
+      });
+      this.loadingFalse();
+    });
   };
 
   render() {
@@ -426,12 +448,16 @@ class Income extends Component {
             columns={columns}
             loading={this.state.loading}
             dataSource={this.state.data || []}
-            pagination={{
-              onChange: this.paginate,
-              current: this.state.pagination.page,
-              total: 20,
-              pageSize: this.state.pagination.limit
-            }}
+            pagination={
+              this.state.filterPress
+                ? false
+                : {
+                    onChange: this.paginate,
+                    current: this.state.pagination.page,
+                    total: this.state.total,
+                    pageSize: this.state.pagination.limit
+                  }
+            }
             bordered
             size="middle"
             scroll={{ x: "calc(700px + 40%)" }}

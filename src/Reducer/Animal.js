@@ -7,7 +7,13 @@ const animals = (
     getAnimalList: [] || null,
     costAnimalList: [] || null,
     totalAnimalList: [] || null,
-    employeeListing: [] || null
+    employeeListing: [] || null,
+    incomeAnimalTotal: 0,
+    deadAnimalTotal: 0,
+    getAnimalTotal: 0,
+    costAnimalTotal: 0,
+    totalAnimalTotal: 0,
+    employeeTotal: 0
   },
   action
 ) => {
@@ -42,6 +48,37 @@ const animals = (
         ...state,
         employeeListing: action.payload
       };
+    case animal.incomeAnimalTotal:
+      return {
+        ...state,
+        incomeAnimalTotal: action.payload
+      };
+    case animal.costAnimalTotal:
+      return {
+        ...state,
+        costAnimalTotal: action.payload
+      };
+    case animal.deadAnimalTotal:
+      return {
+        ...state,
+        deadAnimalTotal: action.payload
+      };
+    case animal.givenAnimalTotal:
+      return {
+        ...state,
+        getAnimalTotal: action.payload
+      };
+    case animal.totalAnimalTotal:
+      return {
+        ...state,
+        totalAnimalTotal: action.payload
+      };
+    case employee.employeeCount:
+      return {
+        ...state,
+        employeeTotal: action.payload
+      };
+
     default:
       return state;
   }

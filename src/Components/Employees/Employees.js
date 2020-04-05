@@ -38,7 +38,9 @@ export class Employees extends Component {
       },
       editData: "",
       income: false,
-      loading: true
+      loading: true,
+      total: 0,
+      filterPress: false
     };
 
     [8, 16, 24, 32, 40, 48].forEach((value, i) => {
@@ -60,7 +62,12 @@ export class Employees extends Component {
     if (this.props.employeeListing.length > 0) {
       this.setState({
         data: this.props.employeeListing,
-        loading: false
+        loading: false,
+        total: this.props.employeeTotal.totalDocs,
+        pagination: {
+          page: this.props.employeeTotal.page,
+          limit: this.props.employeeTotal.limit
+        }
       });
     } else {
       this.props
@@ -68,7 +75,8 @@ export class Employees extends Component {
         .then(res => {
           this.setState({
             data: res.docs,
-            loading: false
+            loading: false,
+            total: res.totalDocs
           });
         })
         .catch(e => {
@@ -122,7 +130,8 @@ export class Employees extends Component {
         .then(res => {
           this.props.getEmployee(this.state.pagination).then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              total: res.totalDocs
             });
             this.loadingFalse();
           });
@@ -141,7 +150,8 @@ export class Employees extends Component {
           .getEmployee(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              total: res.totalDocs
             });
             this.loadingFalse();
           })
@@ -172,7 +182,8 @@ export class Employees extends Component {
           .getEmployee(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              total: res.totalDocs
             });
             this.loadingFalse();
           })
@@ -185,15 +196,28 @@ export class Employees extends Component {
     const data = {
       type: value === "No" ? "" : value
     };
-    this.props
-      .getEmployeeFilter(data)
-      .then(res => {
-        this.setState({
-          data: res
-        });
-        this.loadingFalse();
-      })
-      .catch(e => this.loadingFalse());
+    value === "No"
+      ? this.props
+          .getEmployee(this.state.pagination)
+          .then(res => {
+            this.setState({
+              data: res.docs,
+              total: res.totalDocs,
+              filterPress: false
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse())
+      : this.props
+          .getEmployeeFilter(data)
+          .then(res => {
+            this.setState({
+              data: res,
+              filterPress: true
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse());
   };
 
   handelEditSubmit = (id, data) => {
@@ -205,7 +229,8 @@ export class Employees extends Component {
           .getEmployee(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              total: res.totalDocs
             });
             this.loadingFalse();
             this.handelEmployeePopup();
@@ -267,6 +292,8 @@ export class Employees extends Component {
             current={this.state.pagination.page}
             pageSize={this.state.pagination.limit}
             loading={this.state.loading}
+            total={this.state.total}
+            filterPress={this.state.filterPress}
           />
         </div>
       </PageWrapper>

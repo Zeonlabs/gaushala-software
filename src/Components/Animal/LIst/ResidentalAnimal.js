@@ -39,7 +39,9 @@ class ResidentalAnimal extends Component {
       total: 0,
       tagText: "",
       date: {},
-      loading: true
+      loading: true,
+      totalPage: 0,
+      filterPress: false
     };
     this.columns = [
       {
@@ -160,7 +162,8 @@ class ResidentalAnimal extends Component {
       .then(res => {
         this.setState({
           data: res.docs,
-          loading: false
+          loading: false,
+          totalPage: res.totalDocs
         });
       })
       .catch(e => {
@@ -197,7 +200,8 @@ class ResidentalAnimal extends Component {
           .getCostAnimal(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              totalPage: res.totalDocs
             });
             this.loadingFalse();
           })
@@ -224,7 +228,8 @@ class ResidentalAnimal extends Component {
           .getCostAnimal(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              totalPage: res.totalDocs
             });
             this.loadingFalse();
           })
@@ -240,7 +245,8 @@ class ResidentalAnimal extends Component {
         .getCostAnimal(this.state.pagination)
         .then(res => {
           this.setState({
-            data: res.docs
+            data: res.docs,
+            totalPage: res.totalDocs
           });
           this.loadingFalse();
         })
@@ -259,15 +265,30 @@ class ResidentalAnimal extends Component {
     } else {
       value = {};
     }
-    this.props
-      .getFilterCostAnimal(value)
-      .then(res => {
-        this.setState({
-          data: res
-        });
-        this.loadingFalse();
-      })
-      .catch(e => this.loadingFalse());
+    if (dates.length <= 1) {
+      this.props
+        .getCostAnimal(this.state.pagination)
+        .then(res => {
+          this.setState({
+            data: res.docs,
+            totalPage: res.totalDocs,
+            filterPress: false
+          });
+          this.loadingFalse();
+        })
+        .catch(e => this.loadingFalse());
+    } else {
+      this.props
+        .getFilterCostAnimal(value)
+        .then(res => {
+          this.setState({
+            data: res,
+            filterPress: true
+          });
+          this.loadingFalse();
+        })
+        .catch(e => this.loadingFalse());
+    }
   };
 
   handelClosePopUp = () => {
@@ -375,12 +396,16 @@ class ResidentalAnimal extends Component {
             className="animal-table"
             columns={this.columns}
             loading={this.state.loading}
-            pagination={{
-              onChange: this.paginate,
-              current: this.state.pagination.page,
-              total: 20,
-              pageSize: this.state.pagination.limit
-            }}
+            pagination={
+              this.state.filterPress
+                ? false
+                : {
+                    onChange: this.paginate,
+                    current: this.state.pagination.page,
+                    total: this.state.totalPage,
+                    pageSize: this.state.pagination.limit
+                  }
+            }
             dataSource={this.state.data}
             bordered
           />

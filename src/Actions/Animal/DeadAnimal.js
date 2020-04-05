@@ -14,6 +14,7 @@ export const getFilterDeadAnimal = data => dispatch =>
     )
       .then(res => {
         dispatch({ type: animal.deadAnmimalList, payload: res.docs });
+
         resolve(res);
       })
       .catch(e => {
@@ -90,6 +91,7 @@ export const getDeadAnimal = id => dispatch =>
       .then(res => {
         // console.log("DeadAnimal -> res ->", res);
         dispatch({ type: animal.deadAnmimalList, payload: res.docs });
+        dispatch({ type: animal.deadAnimalTotal, payload: res });
         resolve(res);
       })
       .catch(e => {

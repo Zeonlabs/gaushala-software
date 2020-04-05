@@ -37,7 +37,9 @@ class CreditAnimal extends Component {
         limit: 20
       },
       editData: "",
-      income: false
+      income: false,
+      total: 0,
+      filterPress: false
     };
     this.columns = [
       {
@@ -191,15 +193,30 @@ class CreditAnimal extends Component {
     if (localStorage.getItem("reversePin") === "205") {
       this.loadingFalse();
     } else {
-      this.props
-        .getFilterIncomeAnimal(value)
-        .then(res => {
-          this.setState({
-            data: res
-          });
-          this.loadingFalse();
-        })
-        .catch(e => this.loadingFalse());
+      if (dates.length <= 1) {
+        this.props
+          .getIncomeAnimal(this.state.pagination)
+          .then(res => {
+            this.setState({
+              data: res.docs,
+              filterPress: false,
+              total: res.totalDocs
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse());
+      } else {
+        this.props
+          .getFilterIncomeAnimal(value)
+          .then(res => {
+            this.setState({
+              data: res,
+              filterPress: true
+            });
+            this.loadingFalse();
+          })
+          .catch(e => this.loadingFalse());
+      }
     }
   };
 
@@ -217,7 +234,8 @@ class CreditAnimal extends Component {
         .getIncomeAnimal(this.state.pagination)
         .then(res => {
           this.setState({
-            data: res.docs
+            data: res.docs,
+            total: res.totalDocs
           });
           this.loadingFalse();
         })
@@ -237,7 +255,8 @@ class CreditAnimal extends Component {
           .getIncomeAnimal(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              total: res.totalDocs
             });
             this.loadingFalse();
           })
@@ -260,7 +279,8 @@ class CreditAnimal extends Component {
           .getIncomeAnimal(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              total: res.totalDocs
             });
             this.loadingFalse();
           })
@@ -285,7 +305,8 @@ class CreditAnimal extends Component {
       .then(res => {
         this.setState({
           data: res.docs,
-          loading: false
+          loading: false,
+          total: res.totalDocs
         });
       })
       .catch(e => this.loadingFalse());
@@ -409,12 +430,16 @@ class CreditAnimal extends Component {
             className="animal-table"
             bordered
             loading={this.state.loading}
-            pagination={{
-              onChange: this.paginate,
-              current: this.state.pagination.page,
-              total: 20,
-              pageSize: this.state.pagination.limit
-            }}
+            pagination={
+              this.state.filterPress
+                ? false
+                : {
+                    onChange: this.paginate,
+                    current: this.state.pagination.page,
+                    total: this.state.total,
+                    pageSize: this.state.pagination.limit
+                  }
+            }
           />
         </div>
       </div>

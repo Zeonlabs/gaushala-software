@@ -47,7 +47,8 @@ class Income extends Component {
       pagination: {
         page: 1,
         limit: 20
-      }
+      },
+      filterPress: false
     };
     this.columns = [
       {
@@ -185,7 +186,8 @@ class Income extends Component {
         .getExpense(this.state.pagination)
         .then(res => {
           this.setState({
-            data: res.docs
+            data: res.docs,
+            total: res.totalDocs
           });
         })
         .catch(e => message.error(e));
@@ -202,7 +204,12 @@ class Income extends Component {
     if (this.props.expenseList.length > 0) {
       this.setState({
         data: this.props.expenseList,
-        loading: false
+        loading: false,
+        total: this.props.expenseTotal.totalDocs,
+        pagination: {
+          page: this.props.expenseTotal.page,
+          limit: this.props.expenseTotal.limit
+        }
       });
     } else {
       // const id = this.props.match.params.pid;
@@ -211,7 +218,8 @@ class Income extends Component {
         .then(res => {
           this.setState({
             data: res.docs,
-            loading: false
+            loading: false,
+            total: res.totalDocs
           });
         })
         .catch(e => {
@@ -263,7 +271,8 @@ class Income extends Component {
           .getExpense(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              total: res.totalDocs
             });
             this.loadingFalse();
           })
@@ -283,7 +292,8 @@ class Income extends Component {
         .then(res => {
           this.loadingFalse();
           this.setState({
-            data: res
+            data: res,
+            filterPress: true
           });
         })
         .catch(e => {
@@ -308,15 +318,26 @@ class Income extends Component {
         this.handelClosePopUp();
         this.loadingFalse();
         this.setState({
-          data: res.docs
+          data: res.docs,
+          total: res.totalDocs
         });
       });
     });
   };
 
   handelResetFilter = () => {
-    const data = {};
-    this.handelFilterGet(data);
+    this.loadingTrue();
+    this.props
+      .getExpense(this.state.pagination)
+      .then(res => {
+        this.setState({
+          data: res.docs,
+          total: res.totalDocs,
+          filterPress: false
+        });
+        this.loadingFalse();
+      })
+      .catch(e => this.loadingFalse());
   };
 
   showDrawer = () => {
@@ -437,12 +458,16 @@ class Income extends Component {
             columns={columns}
             loading={this.state.loading}
             dataSource={this.state.data || []}
-            pagination={{
-              onChange: this.paginate,
-              current: this.state.pagination.page,
-              total: 20,
-              pageSize: this.state.pagination.limit
-            }}
+            pagination={
+              this.state.filterPress
+                ? false
+                : {
+                    onChange: this.paginate,
+                    current: this.state.pagination.page,
+                    total: this.state.total,
+                    pageSize: this.state.pagination.limit
+                  }
+            }
             bordered
             size="middle"
             scroll={{ x: "calc(700px + 40%)" }}

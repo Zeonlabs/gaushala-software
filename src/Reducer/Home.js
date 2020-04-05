@@ -4,10 +4,14 @@ const Test = (
   state = {
     apicall: false,
     apistatus: false,
-    incomeList: [] || null,
+    incomeList: {} || null,
+    incomeTotal: 0,
     expenseList: [] || null,
+    expenseTotal: 0,
     trustMembers: [] || null,
+    trustTotal: 0,
     chequeList: [] || null,
+    chequeTotal: 0,
     noteList: [] || null,
     totalAnimalCount: 0 || null
   },
@@ -25,6 +29,27 @@ const Test = (
       return {
         ...state,
         incomeList: Action.payload
+      };
+
+    case listing.incomeTotal:
+      return {
+        ...state,
+        incomeTotal: Action.payload
+      };
+    case listing.expenseTotal:
+      return {
+        ...state,
+        expenseTotal: Action.payload
+      };
+    case listing.trustMembers:
+      return {
+        ...state,
+        trustTotal: Action.payload
+      };
+    case listing.chequeTotal:
+      return {
+        ...state,
+        chequeTotal: Action.payload
       };
 
     case listing.expenseListing:

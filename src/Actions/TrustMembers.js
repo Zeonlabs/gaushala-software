@@ -12,6 +12,7 @@ export const getMembers = id => dispatch =>
     )
       .then(res => {
         dispatch({ type: listing.trustMembersListing, payload: res.docs });
+        dispatch({ type: listing.trustMembers, payload: res });
         resolve(res);
       })
       .catch(e => {

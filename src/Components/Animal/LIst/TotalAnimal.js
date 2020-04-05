@@ -25,7 +25,9 @@ class TotalAnimal extends Component {
       },
       editData: "",
       income: false,
-      loading: true
+      loading: true,
+      totalPage: 0,
+      filterPress: false
     };
     this.columns = [
       {
@@ -109,7 +111,8 @@ class TotalAnimal extends Component {
       .then(res => {
         this.setState({
           data: res.docs,
-          loading: false
+          loading: false,
+          totalPage: res.totalDocs
         });
       })
       .catch(e => {
@@ -143,15 +146,33 @@ class TotalAnimal extends Component {
     } else {
       value = {};
     }
-    this.props
-      .getFilterTotalAnimal(value)
-      .then(res => {
-        this.setState({
-          data: res
+    if (dates.length <= 1) {
+      this.props
+        .getTotalAnimal(this.state.pagination)
+        .then(res => {
+          this.setState({
+            data: res.docs,
+            filterPress: false,
+            totalPage: res.totalDocs
+          });
+          this.loadingFalse();
+        })
+        .catch(e => {
+          this.loadingFalse();
+          // }
         });
-        this.loadingFalse();
-      })
-      .catch(e => this.loadingFalse());
+    } else {
+      this.props
+        .getFilterTotalAnimal(value)
+        .then(res => {
+          this.setState({
+            data: res,
+            filterPress: true
+          });
+          this.loadingFalse();
+        })
+        .catch(e => this.loadingFalse());
+    }
   };
 
   handelback = () => {
@@ -172,7 +193,8 @@ class TotalAnimal extends Component {
           .getTotalAnimal(this.state.pagination)
           .then(res => {
             this.setState({
-              data: res.docs
+              data: res.docs,
+              totalPage: res.totalDocs
             });
             this.loadingFalse();
           })
@@ -267,12 +289,16 @@ class TotalAnimal extends Component {
             columns={this.columns}
             className="animal-table"
             loading={this.state.loading}
-            pagination={{
-              onChange: this.paginate,
-              current: this.state.pagination.page,
-              total: 20,
-              pageSize: this.state.pagination.limit
-            }}
+            pagination={
+              this.state.filterPress
+                ? false
+                : {
+                    onChange: this.paginate,
+                    current: this.state.pagination.page,
+                    total: this.state.totalPage,
+                    pageSize: this.state.pagination.limit
+                  }
+            }
             dataSource={this.state.data}
             bordered
           />
