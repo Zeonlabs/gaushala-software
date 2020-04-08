@@ -20,4 +20,5 @@ export interface VariablesModel extends Document{
     pin: number
     stats: StatsModel
     otp: number
+    loggedIn: boolean
 }

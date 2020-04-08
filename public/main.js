@@ -6,14 +6,20 @@ const path = require("path");
 const url = require("url");
 const isDev = require("electron-is-dev");
 
+require('update-electron-app')({
+  repo: 'Zeonlabs/gaushala-software.git'
+})
+
 let mainWindow;
 
 function createWindow() {
   mainWindow = new BrowserWindow({
-    width: 900,
-    height: 680,
-    webPreferences: { nodeIntegration: true }
+    // width: 1280,
+    // height: 720,
+    // webPreferences: { nodeIntegration: true }
   });
+  mainWindow.setMenuBarVisibility(false)
+  mainWindow.maximize()
   mainWindow.loadURL(
     isDev
       ? "http://localhost:3000"
@@ -23,20 +29,6 @@ function createWindow() {
 }
 
 let server = require("../server/dist/server.js");
-
-function slowdown() {
-  console.log("this is a log in slowDown");
-  for (var i = 0; i < 100000; i++) {
-    const x = {
-      y:
-        Math.ceil(i) +
-        "sdsfjdlfjlkMNFONnsdno".slice(4, (Math.random() * 20) | 0)
-    };
-    eval("(" + JSON.stringify(x) + ")");
-  }
-}
-
-slowdown();
 
 app.on("ready", createWindow);
 

@@ -15,7 +15,7 @@ export class VariablesRepository{
     }
 
     async saveInitInfo(data: {name: string, pin: number, phone: number}){
-        const doc = await Variables.findByIdAndUpdate(VAR_DOC_ID, { $set: data }, {new: true})
+        const doc = await Variables.findByIdAndUpdate(VAR_DOC_ID, { $set: {...data, loggedIn: true} }, {new: true})
         return doc
     }
 

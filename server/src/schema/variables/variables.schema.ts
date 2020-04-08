@@ -28,11 +28,15 @@ const variablesSchema = new mongoose.Schema({
             small: commonAttr
         }
     },
-    otp: Number
+    otp: Number,
+    loggedIn: {
+        type: Boolean,
+        default: true
+    }
 })
 
 variablesSchema.methods.toJSON = function(){
-    return _.pick(this.toObject(), ['name', 'phone', 'stats'])
+    return _.pick(this.toObject(), ['name', 'phone', 'stats', 'loggedIn'])
 }
 
 export const Variables: mongoose.Model<VariablesModel> = mongoose.model<VariablesModel>('variables', variablesSchema)

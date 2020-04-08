@@ -1,7 +1,39 @@
 {
-  "name": "gaushala",
-  "version": "0.1.5",
+  "name": "gaushala-trust-accounting",
+  "version": "1.0.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build-server-and-del": "npm run build-ts && del tsconfig.json",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "build-ts": "tsc",
+    "watch-node": "nodemon server/dist/server.js",
+    "watch-ts": "tsc -w",
+    "electron-dev": "concurrently \"npm run start\" \"wait-on http://localhost:3000 && electron .\"",
+    "postinstall": "electron-builder install-app-deps",
+    "electron": "electron .",
+    "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=icons/win-icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Gaushala Trust Accounting\"",
+    "package-linux": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=linux --arch=x64 --icon=icons/linux-icon.png --prune=true --out=release-builds"
+
+  },
+  "main": "public/main.js",
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
   "dependencies": {
     "@material-ui/core": "^4.9.1",
     "@material-ui/icons": "^4.9.1",
@@ -19,6 +51,8 @@
     "dotenv": "^8.1.0",
     "electron": "^6.0.4",
     "electron-is-dev": "^1.1.0",
+    "electron-logger": "0.0.3",
+    "electron-packager": "^14.2.1",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.6",
     "highcharts": "^8.0.4",
@@ -52,37 +86,9 @@
     "simple-react-toast": "^1.0.3",
     "tachyons-components": "^1.0.1",
     "typescript": "^3.7.5",
+    "update-electron-app": "^1.5.0",
     "vue-template-compiler": "^2.6.10",
     "wait-on": "^3.3.0"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build-server-and-del": "npm run build-ts && del tsconfig.json",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "build-ts": "tsc",
-    "watch-node": "nodemon server/dist/server.js",
-    "watch-ts": "tsc -w",
-    "electron-dev": "concurrently \"npm run start\" \"wait-on http://localhost:3000 && electron .\"",
-    "postinstall": "electron-builder install-app-deps",
-    "electron": "electron ."
-  },
-  "main": "public/main.js",
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
   },
   "devDependencies": {
     "@types/express": "^4.17.2",
