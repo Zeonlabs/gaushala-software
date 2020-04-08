@@ -1,6 +1,6 @@
 import React from "react";
 // import ReactToPrint from "react-to-print";
-import src from "./HeaderImage/headerImg.svg";
+import src from "../PrintTemplate/HeaderImage/headerImg.png";
 import "./index.scss";
 import IncomeTable from "./IncomeTable";
 // import {Table} from 'antd'
@@ -9,7 +9,7 @@ class IncomePrintSlip extends React.Component {
   render() {
     return (
       <div>
-        <div className="slip-print">
+        <div className="slip-print-income">
           <div className="slip-header">
             <img className="img-header" src={src} alt="boohoo"></img>
             <hr className="first-hr"></hr>
@@ -31,7 +31,7 @@ class IncomePrintSlip extends React.Component {
             <div className="column-2">
               <h2 className="font-size-20">taarIKa : &nbsp;</h2>
               {/* --------------------------Slip Date --------------------------- */}
-              <h2 className="Date  english-font">{this.props.date}</h2>
+              <h2 className="date  english-font">{this.props.date}</h2>
             </div>
           </div>
 
@@ -39,13 +39,13 @@ class IncomePrintSlip extends React.Component {
             <div className="column-1 padding-top-0">
               <h2 className="font-size-20">dataa EaI : &nbsp;</h2>
               {/* --------------------------Slip Address --------------------------- */}
-              <h2 className="slip-num font-size-20">{this.props.name}</h2>
+              <h2 className="font-size-20">{this.props.name}</h2>
             </div>
 
             <div className="column-2 padding-top-0">
-              <h2 className="font-size-20">gaama : &nbsp;</h2>
+              <h2 className="font-size-20">gaama: &nbsp;</h2>
               {/* --------------------------Slip Name --------------------------- */}
-              <h2 className="Date font-size-20">{this.props.address}</h2>
+              <h2 className="font-size-20">{this.props.address}</h2>
             </div>
           </div>
 

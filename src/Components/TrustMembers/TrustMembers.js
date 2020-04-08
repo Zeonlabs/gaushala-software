@@ -11,7 +11,7 @@ import {
   editMembers,
   addMembers,
   deleteMembers,
-  filterMembers
+  filterMembers,
 } from "../../Actions/TrustMembers";
 import ReactToPrint from "react-to-print";
 import ReportPrint from "../PrintTemplate/Report";
@@ -29,20 +29,20 @@ export class TrustMembers extends Component {
       data: "",
       pagination: {
         page: 1,
-        limit: 20
+        limit: 20,
       },
       editData: "",
       income: false,
       loading: true,
       total: 0,
-      filterPress: false
+      filterPress: false,
     };
   }
 
   componentDidMount = () => {
     const pagination = {
       page: 1,
-      limit: 20
+      limit: 20,
     };
     if (this.props.trustMembers.length > 0) {
       this.setState({
@@ -51,22 +51,22 @@ export class TrustMembers extends Component {
         total: this.props.trustTotal.totalDocs,
         pagination: {
           page: this.props.trustTotal.page,
-          limit: this.props.trustTotal.limit
-        }
+          limit: this.props.trustTotal.limit,
+        },
       });
     } else {
       this.props
         .getMembers(pagination)
-        .then(res => {
+        .then((res) => {
           this.setState({
             data: res.docs,
             loading: false,
-            total: res.totalDocs
+            total: res.totalDocs,
           });
         })
-        .catch(e => {
+        .catch((e) => {
           this.setState({
-            loading: false
+            loading: false,
           });
         });
     }
@@ -75,137 +75,141 @@ export class TrustMembers extends Component {
   handelShowPopup = () => {
     this.setState({
       showAddPopup: !this.state.showAddPopup,
-      income: false
+      income: false,
     });
   };
 
-  handelEdit = record => {
+  handelEdit = (record) => {
     this.setState({
       showAddPopup: !this.state.showAddPopup,
       editData: record,
-      income: true
+      income: true,
     });
   };
 
   loadingTrue = () => {
     this.setState({
-      loading: true
+      loading: true,
     });
   };
 
   loadingFalse = () => {
     this.setState({
-      loading: false
+      loading: false,
     });
   };
 
-  handelDataAdd = data => {
+  handelDataAdd = (data) => {
     this.loadingTrue();
     if (localStorage.getItem("reversePin") === "205") {
       this.loadingFalse();
       this.handelShowPopup();
     } else {
-      this.props.addMembers(data).then(res => {
+      this.props.addMembers(data).then((res) => {
         this.props
           .getMembers(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              total: res.totalDocs
+              total: res.totalDocs,
+              pagination: {
+                page: res.page,
+                limit: res.limit,
+              },
             });
             this.loadingFalse();
             this.handelShowPopup();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       });
     }
   };
 
   handelAddEdit = (id, data) => {
     this.loadingTrue();
-    this.props.editMembers(id, data).then(res => {
+    this.props.editMembers(id, data).then((res) => {
       this.props
         .getMembers(this.state.pagination)
-        .then(res => {
+        .then((res) => {
           this.setState({
             data: res.docs,
-            total: res.totalDocs
+            total: res.totalDocs,
           });
           this.loadingFalse();
           this.handelShowPopup();
         })
-        .catch(e => this.loadingFalse());
+        .catch((e) => this.loadingFalse());
     });
   };
 
-  handelDelete = record => {
+  handelDelete = (record) => {
     this.loadingTrue();
     this.props
       .deleteMembers(record._id)
-      .then(res => {
+      .then((res) => {
         this.props
           .getMembers(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              total: res.totalDocs
+              total: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       })
-      .catch(e => this.loadingFalse());
+      .catch((e) => this.loadingFalse());
   };
 
-  handelFilter = value => {
+  handelFilter = (value) => {
     this.loadingTrue();
     const data = {
-      position: value === "All" ? "" : value
+      position: value === "All" ? "" : value,
     };
     value === "All"
       ? this.props
           .getMembers(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
               total: res.totalDocs,
-              filterPress: false
+              filterPress: false,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse())
+          .catch((e) => this.loadingFalse())
       : this.props
           .filterMembers(data)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res,
-              filterPress: true
+              filterPress: true,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
   };
 
-  paginate = page => {
+  paginate = (page) => {
     this.loadingTrue();
     this.setState(
       {
         pagination: {
           page,
-          limit: 20
-        }
+          limit: 20,
+        },
       },
       () =>
         this.props
           .getMembers(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              total: res.totalDocs
+              total: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse())
+          .catch((e) => this.loadingFalse())
     );
   };
 
@@ -239,7 +243,7 @@ export class TrustMembers extends Component {
                   icon="printer"
                   style={{
                     backgroundColor: "#505D6F",
-                    color: "#ffffff"
+                    color: "#ffffff",
                   }}
                 >
                   ipa`nT
@@ -251,7 +255,7 @@ export class TrustMembers extends Component {
               <ReportPrint
                 //---------------------------------------Change title of report from here----------------------------------------------------
                 name="saByaEaI naI yaadI"
-                ref={el => (this.componentRef = el)}
+                ref={(el) => (this.componentRef = el)}
                 data={this.state.data || []}
                 type="Expense"
                 column={TrustyColumns}
@@ -291,8 +295,8 @@ export class TrustMembers extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  ...state.Test
+const mapStateToProps = (state) => ({
+  ...state.Test,
 });
 
 export default connect(mapStateToProps, {
@@ -300,5 +304,5 @@ export default connect(mapStateToProps, {
   editMembers,
   addMembers,
   deleteMembers,
-  filterMembers
+  filterMembers,
 })(TrustMembers);

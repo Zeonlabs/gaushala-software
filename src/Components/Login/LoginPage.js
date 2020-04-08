@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { loginUser, getOtp, resetPin } from "../../Actions/SetUpUser";
-import { Button, Row, Col, InputNumber, message } from "antd";
+import { Button, InputNumber, message } from "antd";
 import { withRouter } from "react-router";
 import FirstPage from "./FirstPage";
 import ForgotPasswordModal from "../SettingPage/ForgotPasswordModal";
@@ -22,7 +22,7 @@ class Login extends Component {
       ModalText: "Content of the modal",
       firstPin: 0,
       secondPin: 0,
-      otp: 0
+      otp: 0,
     };
   }
 
@@ -30,12 +30,12 @@ class Login extends Component {
     localStorage.getItem("addUser");
     if (localStorage.getItem("addUser") === null) {
       this.setState({
-        firstPage: true
+        firstPage: true,
       });
     } else {
       this.setState({
         firstPage: false,
-        mobilenumber: localStorage.getItem("phone")
+        mobilenumber: localStorage.getItem("phone"),
       });
     }
   };
@@ -43,19 +43,19 @@ class Login extends Component {
   handleSubmit = () => {
     if (this.state.pin !== "") {
       const pin = {
-        pin: this.state.pin
+        pin: this.state.pin,
       };
       axios
         .post("http://localhost:8081/auth", pin)
-        .then(res => {
+        .then((res) => {
           const location = {
             pathname: "/dashboard",
-            state: { status: res.status }
+            state: { status: res.status },
           };
           this.props.history.push(location);
           localStorage.setItem("reversePin", res.status);
         })
-        .catch(e => message.error("invalid Pin !"));
+        .catch((e) => message.error("invalid Pin !"));
       // this.props
       //   .loginUser(pin)
       //   .then(res => {
@@ -69,32 +69,32 @@ class Login extends Component {
 
   handelLoginPage = () => {
     this.setState({
-      firstPage: false
+      firstPage: false,
     });
   };
 
-  handelPinChange = e => {
+  handelPinChange = (e) => {
     this.setState({
-      pin: e
+      pin: e,
     });
   };
 
   handleOk = () => {
     this.setState({
       ModalText: "The modal will be closed after two seconds",
-      confirmLoading: true
+      confirmLoading: true,
     });
     setTimeout(() => {
       this.setState({
         visible: false,
-        confirmLoading: false
+        confirmLoading: false,
       });
     }, 2000);
   };
 
   showModal = () => {
     this.setState({
-      visible: true
+      visible: true,
     });
     this.props.getOtp();
   };
@@ -102,26 +102,26 @@ class Login extends Component {
   handleCancel = () => {
     this.setState({
       visible: false,
-      visibleModal: false
+      visibleModal: false,
     });
   };
 
-  handelFirstPin = e => {
+  handelFirstPin = (e) => {
     this.setState({
-      firstPin: e
+      firstPin: e,
     });
   };
 
-  handelSecondPin = e => {
+  handelSecondPin = (e) => {
     this.setState({
-      secondPin: e
+      secondPin: e,
     });
   };
 
-  handelNewPinSetup = data => {
+  handelNewPinSetup = (data) => {
     this.setState({
       visibleModal: true,
-      otp: data
+      otp: data,
     });
   };
 
@@ -129,12 +129,12 @@ class Login extends Component {
     if (this.state.firstPin === this.state.secondPin) {
       const data = {
         otp: this.state.otp,
-        pin: this.state.secondPin
+        pin: this.state.secondPin,
       };
-      this.props.resetPin(data).then(res => {
+      this.props.resetPin(data).then((res) => {
         this.setState({
           visible: false,
-          visibleModal: false
+          visibleModal: false,
         });
       });
     } else {
@@ -145,63 +145,76 @@ class Login extends Component {
   render() {
     const { visible, confirmLoading, visibleModal, mobilenumber } = this.state;
     return (
-      <div>
-        {this.state.firstPage ? (
-          <FirstPage change={this.handelLoginPage} />
-        ) : (
-          <>
-            <Row gutter={[16, 16]}>
-              <Col span={16}>
-                <h5>paIna</h5>
-                <InputNumber
-                  // style={{
-                  //   width: "100%"
-                  // }}
-                  type="number"
-                  placeholder="pin"
-                  onChange={this.handelPinChange}
-                />
-              </Col>
-            </Row>
-            <div className="m-btn-gru">
-              {/* ------------------------------Save Button--------------------------------- */}
+      <div className="page">
+        <div >
+          {this.state.firstPage ? (
+            <FirstPage change={this.handelLoginPage} />
+          ) : (
+            <>
+              <div className="row-center">
+                <div className="content-row">
+                  <div>
+                    <h1 className="text-center">saItaarama gaaOSaaLaa T/sT</h1>
+                    <h2 className="text-center">paIna naMbar ]maorao</h2>
+                  </div>
+                  <div className="ant-row-center">
+                    <InputNumber
+                      type="number"
+                      placeholder="0    .    0    .    0    .    0"
+                      onChange={this.handelPinChange}
+                    />
+                  </div>
+                  <div className="row-resetpassword">
+                    <h4 onClick={this.showModal}>paasava-D BaulaI gayaa.</h4>
+                  </div>
+                  <div className="ant-row-center">
+                    {/* ------------------------------Save Button--------------------------------- */}
 
-              <Button
-                icon="save"
-                size="default"
-                type="primary"
-                onClick={this.handleSubmit}
-              >
-                saova
-              </Button>
-            </div>
+                    <Button
+                      size="default"
+                      type="primary"
+                      className="btn-login"
+                      onClick={this.handleSubmit}
+                    >
+                      AonTr
+                    </Button>
 
-            <div className="m-btn-gru">
-              {/* ------------------------------Save Button--------------------------------- */}
+                    <div className="english-font-input footer-login-page">
+                      Official product of zeonlabs © 2018
+                    </div>
+                  </div>
 
+                  {/* <div className="m-btn-gru"> */}
+                  {/* ------------------------------Reset password Button--------------------------------- */}
+
+                  {/*               
               <Button
                 icon="save"
                 size="default"
                 type="primary"
                 onClick={this.showModal}
               >
-                rIsaoT
+                
               </Button>
-            </div>
-            <ForgotPasswordModal
-              visible={visible}
-              handleOk={this.handleOk}
-              confirmLoading={confirmLoading}
-              handleCancel={this.handleCancel}
-              visibleModal={visibleModal}
-              handelFirstPin={this.handelFirstPin}
-              handelSecondPin={this.handelSecondPin}
-              handelResetPin={this.handelResetPin}
-              mobilenumber={mobilenumber}
-              handelNewPinSetup={this.handelNewPinSetup}
-            />
-          </>
-        )}
+
+            </div> */}
+                </div>
+              </div>
+              <ForgotPasswordModal
+                visible={visible}
+                handleOk={this.handleOk}
+                confirmLoading={confirmLoading}
+                handleCancel={this.handleCancel}
+                visibleModal={visibleModal}
+                handelFirstPin={this.handelFirstPin}
+                handelSecondPin={this.handelSecondPin}
+                handelResetPin={this.handelResetPin}
+                mobilenumber={mobilenumber}
+                handelNewPinSetup={this.handelNewPinSetup}
+              />
+            </>
+          )}
+        </div>
       </div>
     );
   }

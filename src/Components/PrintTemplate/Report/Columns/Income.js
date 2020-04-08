@@ -6,14 +6,14 @@ import "../index.scss";
 export const IncomeColumn = [
   {
     title: "taarIKa",
-    width: 200,
     dataIndex: "date",
     key: "1",
-    className: "income-table-td-height table-font-english english-font-input",
+    width: 100,
+    className: "date-print english-font-input-table",
     // fixed: "left",
     render: (text, record) => {
       return (
-        <div className=" english-font-input ">
+        <div className="">
           {moment(text).format("YYYY-MM-DD")}
         </div>
       );
@@ -22,56 +22,46 @@ export const IncomeColumn = [
   },
   {
     title: "pahaoMca naM.",
-    width: 130,
     dataIndex: "slip_no",
     key: "2",
-    className: "income-table-td-height table-font-english"
+    className: "gujarati-font-input-table"
   },
   {
     title: "naama",
     dataIndex: "name",
     key: "3",
-    width: 380,
-    className: "income-table-td-height"
+    className: "add-name-field-print gujarati-font-input-table"
   },
   {
     title: "sarnaamau",
     dataIndex: "address",
     key: "address",
-    // width: 300,
-    className: "address"
+    className: "add-name-field-print gujarati-font-input-table"
   },
   {
     title: "rkma",
     dataIndex: "money.amount",
     key: "4",
-    width: 180,
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
   },
   {
     title: "maaobaa[la naMbar ",
     dataIndex: "phone",
     key: "5",
-    width: 180,
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
   },
   {
     title: "Aavak naao pa`kar",
     dataIndex: "type",
     key: "6",
-    width: 250,
+    className: "gujarati-font-input-table",
     render: (text, record) => convertNumberToType(text, "income")
-    // text.type === "cheque" ? (
-    //   <span>{text.cheque_no}</span>
-    // ) : (
-    //   <span>raokD</span>
-    // )
   },
   {
     title: "dana svaIkar",
     dataIndex: "money",
     key: "7",
-    width: 100,
+    className: "gujarati-font-input-table",
     render: (text, record) =>
       text.type === "cheque" ? <p>{text.cheque_no}</p> : <p>raokD</p>
   },
@@ -79,6 +69,6 @@ export const IncomeColumn = [
     title: "hstak naama",
     dataIndex: "ref_name",
     key: "8",
-    width: 280
+    className: "add-name-field-print gujarati-font-input-table"
   }
 ];

@@ -22,7 +22,7 @@ export const BarChart = ({ data }) => (
       tickSize: 5,
       tickPadding: 10,
       tickRotation: 0,
-      legend: "Amount",
+      legend: "rkma",
       legendPosition: "middle",
       legendOffset: -75,
       tickValues: 5

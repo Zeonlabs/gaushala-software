@@ -10,7 +10,7 @@ export const TotalReportColumn = [
     dataIndex: "_id",
     key: "1",
     width: 150,
-    className: "",
+    className: "gujarati-font-input-table",
     render: (text, record) => <p>{}</p>
   },
   {
@@ -18,9 +18,9 @@ export const TotalReportColumn = [
     dataIndex: "date",
     key: "4",
     width: 200,
-    className: "income-table-td-height table-font-english",
+    className: "date-print english-font-input-table",
     render: (text, record) => (
-      <div className="  english-font-input">
+      <div className="">
         {moment(text).format("DD-MM-YYYY")}
       </div>
     )
@@ -29,7 +29,7 @@ export const TotalReportColumn = [
     title: "paSau naI Aavak",
     dataIndex: "added",
     key: "income",
-    className: "table-font-english td-total-animal-table"
+    className: "gujarati-font-input-table"
     // render: text => <p>{text}</p>
   },
   {
@@ -37,13 +37,13 @@ export const TotalReportColumn = [
     dataIndex: "given",
     key: "debit",
     render: text => <p>{text}</p>,
-    className: "table-font-english td-total-animal-table"
+    className: "gujarati-font-input-table"
   },
   {
     title: "maRtyau paamaola paSauAao",
     dataIndex: "dead",
     key: "dead",
-    className: "table-font-english td-total-animal-table"
+    className: "gujarati-font-input-table"
   },
   {
     title: "hala paSau saMKyaa",
@@ -53,19 +53,19 @@ export const TotalReportColumn = [
         dataIndex: "small",
         key: "nana",
         render: text => <p>{text}</p>,
-        className: "table-font-english td-total-animal-table"
+        className: "gujarati-font-input-table"
       },
       {
         title: "maaoTa",
         dataIndex: "big",
         key: "mota",
-        className: "table-font-english td-total-animal-table"
+        className: "gujarati-font-input-table"
       },
       {
         title: "kula",
         dataIndex: "other",
         key: "total",
-        className: "table-font-english td-total-animal-table"
+        className: "gujarati-font-input-table"
       }
     ]
   },
@@ -76,6 +76,6 @@ export const TotalReportColumn = [
     dataIndex: "trusty",
     key: "trusty",
     width: 200,
-    className: ""
+    className: "gujarati-font-input-table"
   }
 ];

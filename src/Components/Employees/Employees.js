@@ -10,7 +10,7 @@ import {
   getEmployeeFilter,
   addEmployee,
   editEmployee,
-  deleteEmployee
+  deleteEmployee,
 } from "../../Actions/Employee";
 import AddEmployee from "./AddEmployee/Index";
 import { FilterData } from "./FilterData";
@@ -34,13 +34,13 @@ export class Employees extends Component {
       data: "",
       pagination: {
         page: 1,
-        limit: 20
+        limit: 20,
       },
       editData: "",
       income: false,
       loading: true,
       total: 0,
-      filterPress: false
+      filterPress: false,
     };
 
     [8, 16, 24, 32, 40, 48].forEach((value, i) => {
@@ -57,7 +57,7 @@ export class Employees extends Component {
   componentDidMount = () => {
     const pagination = {
       page: 1,
-      limit: 20
+      limit: 20,
     };
     if (this.props.employeeListing.length > 0) {
       this.setState({
@@ -66,22 +66,22 @@ export class Employees extends Component {
         total: this.props.employeeTotal.totalDocs,
         pagination: {
           page: this.props.employeeTotal.page,
-          limit: this.props.employeeTotal.limit
-        }
+          limit: this.props.employeeTotal.limit,
+        },
       });
     } else {
       this.props
         .getEmployee(pagination)
-        .then(res => {
+        .then((res) => {
           this.setState({
             data: res.docs,
             loading: false,
-            total: res.totalDocs
+            total: res.totalDocs,
           });
         })
-        .catch(e => {
+        .catch((e) => {
           this.setState({
-            loading: false
+            loading: false,
           });
         });
     }
@@ -89,25 +89,25 @@ export class Employees extends Component {
 
   loadingTrue = () => {
     this.setState({
-      loading: true
+      loading: true,
     });
   };
 
   loadingFalse = () => {
     this.setState({
-      loading: false
+      loading: false,
     });
   };
 
-  onGutterChange = gutterKey => {
+  onGutterChange = (gutterKey) => {
     this.setState({ gutterKey });
   };
 
-  onVGutterChange = vgutterKey => {
+  onVGutterChange = (vgutterKey) => {
     this.setState({ vgutterKey });
   };
 
-  onColCountChange = colCountKey => {
+  onColCountChange = (colCountKey) => {
     this.setState({ colCountKey });
   };
 
@@ -115,11 +115,11 @@ export class Employees extends Component {
     this.setState({
       addPopup: !this.state.addPopup,
       income: false,
-      editData: ""
+      editData: "",
     });
   };
 
-  handelDataAdd = data => {
+  handelDataAdd = (data) => {
     this.loadingTrue();
     if (localStorage.getItem("reversePin") === "205") {
       this.loadingFalse();
@@ -127,117 +127,121 @@ export class Employees extends Component {
     } else {
       axios
         .post("http://localhost:8081/employee/add", data)
-        .then(res => {
-          this.props.getEmployee(this.state.pagination).then(res => {
+        .then((res) => {
+          this.props.getEmployee(this.state.pagination).then((res) => {
             this.setState({
               data: res.docs,
-              total: res.totalDocs
+              total: res.totalDocs,
+              pagination: {
+                page: res.page,
+                limit: res.limit,
+              },
             });
             this.loadingFalse();
           });
           this.handelEmployeePopup();
         })
-        .catch(e => this.loadingFalse());
+        .catch((e) => this.loadingFalse());
     }
   };
 
-  handelDelete = record => {
+  handelDelete = (record) => {
     this.loadingTrue();
     this.props
       .deleteEmployee(record._id)
-      .then(res => {
+      .then((res) => {
         this.props
           .getEmployee(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              total: res.totalDocs
+              total: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       })
-      .catch(e => this.loadingFalse());
+      .catch((e) => this.loadingFalse());
   };
 
-  handelEdit = record => {
+  handelEdit = (record) => {
     this.setState({
       addPopup: !this.state.addPopup,
       editData: record,
-      income: true
+      income: true,
     });
   };
 
-  paginate = page => {
+  paginate = (page) => {
     this.loadingTrue();
     this.setState(
       {
         pagination: {
           page,
-          limit: 20
-        }
+          limit: 20,
+        },
       },
       () =>
         this.props
           .getEmployee(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              total: res.totalDocs
+              total: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse())
+          .catch((e) => this.loadingFalse())
     );
   };
 
-  handelFilter = value => {
+  handelFilter = (value) => {
     this.loadingTrue();
     const data = {
-      type: value === "No" ? "" : value
+      type: value === "No" ? "" : value,
     };
     value === "No"
       ? this.props
           .getEmployee(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
               total: res.totalDocs,
-              filterPress: false
+              filterPress: false,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse())
+          .catch((e) => this.loadingFalse())
       : this.props
           .getEmployeeFilter(data)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res,
-              filterPress: true
+              filterPress: true,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
   };
 
   handelEditSubmit = (id, data) => {
     this.loadingTrue();
     this.props
       .editEmployee(id, data)
-      .then(res => {
+      .then((res) => {
         this.props
           .getEmployee(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              total: res.totalDocs
+              total: res.totalDocs,
             });
             this.loadingFalse();
             this.handelEmployeePopup();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       })
-      .catch(e => this.loadingFalse());
+      .catch((e) => this.loadingFalse());
   };
 
   render() {
@@ -301,8 +305,8 @@ export class Employees extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  ...state.Animals
+const mapStateToProps = (state) => ({
+  ...state.Animals,
 });
 
 export default connect(mapStateToProps, {
@@ -311,5 +315,5 @@ export default connect(mapStateToProps, {
   getEmployeeFilter,
   addEmployee,
   editEmployee,
-  deleteEmployee
+  deleteEmployee,
 })(Employees);

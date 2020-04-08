@@ -10,18 +10,17 @@ export const GivenAnimalColumn = [
     title: "k/ma",
     dataIndex: "_id",
     key: "1",
-    width: 150,
-    className: "",
+    className: "gujarati-font-input-table",
     render: (text, record) => <p>{}</p>
   },
   {
     title: "taarIKa",
     dataIndex: "date",
     key: "4",
-    width: 200,
-    className: "income-table-td-height table-font-english",
+    width: 150,
+    className: "date-print english-font-input-table",
     render: (text, record) => (
-      <div className="  english-font-input">
+      <div className="">
         {moment(text).format("DD-MM-YYYY")}
       </div>
     )
@@ -33,38 +32,38 @@ export const GivenAnimalColumn = [
         title: "gaaya",
         dataIndex: "animal[0].count",
         key: "gay",
-        className: "table-font-english",
+        className: "gujarati-font-input-table",
         render: text => <p>{text}</p>
       },
       {
         title: "baLad",
         dataIndex: "animal[1].count",
         key: "balad",
-        className: "table-font-english"
+        className: "gujarati-font-input-table"
       },
       {
         title: "vaaCrDa",
         dataIndex: "animal[2].count",
         key: "vacharda",
-        className: "table-font-english"
+        className: "gujarati-font-input-table"
       },
       {
         title: "vaaCrDI",
         dataIndex: "animal[3].count",
         key: "vachardi",
-        className: "table-font-english"
+        className: "gujarati-font-input-table"
       },
       {
         title: "Anya",
         dataIndex: "animal[4].count",
         key: "anny",
-        className: "table-font-english"
+        className: "gujarati-font-input-table"
       },
       {
         title: "kula paSauAao",
         dataIndex: "animal",
         key: "total",
-        className: "table-font-english",
+        className: "gujarati-font-input-table",
         render: (text, record) => {
           const total = text.map(val => parseInt(val.count, 10));
           const finalTotal = totalOfArray(total);
@@ -77,31 +76,29 @@ export const GivenAnimalColumn = [
     title: "Toga naMbar",
     dataIndex: "tag",
     key: "tag",
-    width: 180,
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
     // render: text => <p>{text}</p>
   },
   {
     title: "paSau laonaar nau naama",
     dataIndex: "name",
     key: "name",
-    className: "",
-    width: 300,
+    width:200,
+    className: "add-name-field-print gujarati-font-input-table",
     render: text => <p>{text}</p>
   },
   {
     title: "sarnaamau",
     dataIndex: "address",
     key: "address",
-    width: 250,
-    className: ""
+    width: 200,
+    className: "add-name-field-print gujarati-font-input-table"
   },
   {
     title: "maaobaa[la naM.",
     dataIndex: "phone",
     key: "mono",
-    width: 200,
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
   },
   //--------------------Change name --------------------
   {
@@ -109,13 +106,13 @@ export const GivenAnimalColumn = [
     dataIndex: "signPerson",
     key: "personSign",
     width: 200,
-    className: ""
+    className: "gujarati-font-input-table"
   },
   {
     title: "gaaoSaaLaa T/sT vataI",
     dataIndex: "trusty",
     key: "trusty",
     width: 200,
-    className: ""
+    className: "gujarati-font-input-table"
   }
 ];

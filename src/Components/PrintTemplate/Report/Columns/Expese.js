@@ -8,16 +8,15 @@ export const Expense = [
     title: "taarIKa",
     dataIndex: "date",
     key: "3",
-    width: 130,
+    width: 100,
+    className: "date-print english-font-input-table",
     render: (text, record) => {
       return (
-        <div className="icon-group-table english-font-input">
+        <div className="">
           {moment(text).format("YYYY-MM-DD")}
         </div>
       );
     },
-    // fixed: "left",
-    className: "english-font-input"
   },
   {
     // Vauchr No
@@ -25,7 +24,7 @@ export const Expense = [
     width: 130,
     dataIndex: "slip_no",
     key: "name",
-    className: "income-table-td-height table-font-english"
+    className: "gujarati-font-input-table"
   },
 
   {
@@ -33,21 +32,20 @@ export const Expense = [
     title: "naama",
     dataIndex: "name",
     key: "5",
-    width: 380
+    className: "add-name-field-print gujarati-font-input-table"
   },
   {
     title: "sarnaamau",
     dataIndex: "address",
     key: "address",
-    width: 300
+    className: "add-name-field-print gujarati-font-input-table"
   },
   {
     // Amount
     title: "rkma",
     dataIndex: "money.amount",
     key: "2",
-    width: 180,
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
   },
   {
     // Mobile.
@@ -55,21 +53,21 @@ export const Expense = [
     dataIndex: "phone",
     key: "4",
     width: 180,
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
   },
   {
     // Expenses Type
     title: "Javak naao pa`kar",
     dataIndex: "type",
     key: "1",
-    width: 250,
+    className: "gujarati-font-input-table",
     render: (text, record) => convertNumberToType(text, "expense")
   },
   {
     title: "dana svaIkar",
     dataIndex: "money",
     key: "7",
-    width: 130,
+    className: "gujarati-font-input-table",
     render: (text, record) =>
       text.type === "cheque" ? <p>{text.cheque_no}</p> : <p>raokD</p>
   },
@@ -85,7 +83,7 @@ export const Expense = [
     title: "hstak naama",
     dataIndex: "ref_name",
     key: "8",
-    width: 230
+    className: "gujarati-font-input-table"
   }
   // {
   //   // Hastak Name

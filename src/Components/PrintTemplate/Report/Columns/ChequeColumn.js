@@ -9,18 +9,17 @@ export const ChequeColumn = [
     title: "k/ma",
     dataIndex: "_id",
     key: "1",
-    width: 100,
-    className: "",
+    className: "gujarati-font-input-table",
     render: (text, record) => <p>{}</p>
   },
   {
     title: "taarIKa",
     dataIndex: "date",
     key: "date",
-    className: "income-table-td-height table-font-english",
-    width: 130,
+    width: 100,
+    className: "date-print english-font-input-table",
     render: (text, record) => (
-      <div className="  english-font-input">
+      <div className="">
         {moment(text).format("YYYY-MM-DD")}
       </div>
     )
@@ -29,36 +28,31 @@ export const ChequeColumn = [
     title: "naama",
     dataIndex: "name",
     key: "name",
-    className: "",
-    width: 300,
+    className: "add-name-field-print gujarati-font-input-table",
     render: text => <p>{text}</p>
   },
   {
     title: "maaobaa[la naMbar",
     dataIndex: "phone",
     key: "mobile",
-    width: 180,
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
   },
   {
     title: "caok naMbar",
     dataIndex: "no",
     key: "cheque",
-    width: 150,
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
   },
   {
     title: "rkma",
     dataIndex: "amount",
     key: "amount",
-    width: 200,
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
   },
   {
     title: "baoMnk",
     dataIndex: "bank",
     key: "bankname",
-    width: 250,
-    className: ""
+    className: "gujarati-font-input-table"
   }
 ];

@@ -9,18 +9,17 @@ export const CostAnimalColumn = [
     title: "k/ma",
     dataIndex: "_id",
     key: "1",
-    width: 100,
-    className: "",
+    className: "gujarati-font-input-table",
     render: (text, record) => <p>{}</p>
   },
   {
     title: "taarIKa",
     dataIndex: "date",
     key: "4",
-    width: 200,
-    className: "income-table-td-height table-font-english",
+    width: 100,
+    className: "date-print english-font-input-table",
     render: (text, record) => (
-      <div className="  english-font-input">
+      <div className="">
         {moment(text).format("DD-MM-YYYY")}
       </div>
     )
@@ -29,49 +28,49 @@ export const CostAnimalColumn = [
     title: "kula paSauAao",
     dataIndex: "total_animal",
     key: "total",
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
   },
   {
     title: "Gaasa",
     dataIndex: "item.ghas",
     key: "ghas",
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
   },
   {
     title: "caarao",
     dataIndex: "item.charo",
     key: "charo",
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
   },
   {
     title: "daNa",
     dataIndex: "item.dan",
     key: "dana",
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
   },
   {
     title: "majurI",
     dataIndex: "item.majuri",
     key: "majuri",
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
   },
   {
     title: "Dao. e dvaa",
     dataIndex: "item.doctor",
     key: "doctor",
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
   },
   {
     title: "Anya Ka-ca",
     dataIndex: "item.other",
     key: "extracost",
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
   },
   {
     title: "kula Ka-ca",
     dataIndex: "total",
     key: "totalcost",
-    className: "table-font-english"
+    className: "gujarati-font-input-table"
   },
   //--------------------Change name --------------------
 

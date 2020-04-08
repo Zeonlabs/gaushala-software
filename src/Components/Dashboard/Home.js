@@ -23,7 +23,7 @@ class Home extends Component {
       incomeData: [{ x: 0, y: 0 }],
       expenceData: [{ x: 0, y: 0 }],
       totalIncome: 0,
-      totalExpense: 0
+      totalExpense: 0,
     };
   }
 
@@ -36,38 +36,38 @@ class Home extends Component {
         : localStorage.getItem("reversePin") === "205"
     ) {
     } else {
-      this.props.getLinearChart().then(res => {
+      this.props.getLinearChart().then((res) => {
         const arrangedIncomeDate = arrangeDate(res.income);
         const arrangedExpenseDate = arrangeDate(res.expense);
 
-        const incomeData = arrangedIncomeDate.map(val => ({
+        const incomeData = arrangedIncomeDate.map((val) => ({
           x: getDate(val.year, val.month),
-          y: val.amount
+          y: val.amount,
         }));
 
-        const expenseData = arrangedExpenseDate.map(val => ({
+        const expenseData = arrangedExpenseDate.map((val) => ({
           x: getDate(val.year, val.month),
-          y: val.amount
+          y: val.amount,
         }));
 
         this.setState({
           incomeData: incomeData,
           expenceData: expenseData,
           totalIncome: _.sumBy(res.income, "amount"),
-          totalExpense: _.sumBy(res.expense, "amount")
+          totalExpense: _.sumBy(res.expense, "amount"),
         });
       });
     }
   };
 
-  componentDidUpdate = prevProps => {
+  componentDidUpdate = (prevProps) => {
     if (prevProps.totalAnimalCount !== this.props.totalAnimalCount) {
       this.setState({
-        capital: this.props.totalAnimalCount.capital
+        capital: this.props.totalAnimalCount.capital,
       });
     }
   };
-  formatValue = value => value.toFixed(0);
+  formatValue = (value) => value.toFixed(0);
 
   render() {
     return (
@@ -79,13 +79,16 @@ class Home extends Component {
             // statusCode={this.props.location.state.status}
             data={{
               income: this.state.incomeData,
-              expense: this.state.expenceData
+              expense: this.state.expenceData,
             }}
           />
 
           <div className="btml-grph">
             <div className="piechrt-div">
-              <h3 className="dashbrd-label">paSauAao</h3>
+              <div className="row">
+                <h3 className="dashbrd-label">kula paSauAao : &nbsp;</h3>
+                <h3 className="dashbrd-label row"> 523 </h3>
+              </div>
               <AnimalChart
                 statusCode={
                   this.props.location.state
@@ -99,27 +102,30 @@ class Home extends Component {
                 <h1 className=" text-align">krMT baolaonsa kolkulaoSana</h1>
               </div>
 
-              <div className="padding-row">
+              <div className="padding-row year-stick-chart">
                 <div className="row" style={{ height: 250 }}>
-                  <div className="column-50">
+                  <div className="column-50" style={{ padding: "0px" }}>
                     <BarChart
                       data={[
                         {
-                          type: "aavaka",
-                          income: this.state.totalIncome
+                          type: "Aavak",
+                          income: this.state.totalIncome,
                         },
                         {
-                          type: "javak",
-                          expense: this.state.totalExpense
-                        }
+                          type: "Javak",
+                          expense: this.state.totalExpense,
+                        },
                       ]}
                     />
                   </div>
 
-                  <div className="column-50">
-                    <div className="row color-yellow margin-top-15">
-                      <h3 className="yellow margin-top">baolaonsa</h3>
-                      <h2>
+                  <div
+                    className="column-50 blance-content"
+                    style={{ padding: "0px" }}
+                  >
+                    <div className="color-yellow">
+                      <h3 className="yellow current-balance">baolaonsa</h3>
+                      <h2 className="text-center">
                         <AnimatedNumber
                           className="text-center"
                           value={this.state.capital}
@@ -139,8 +145,8 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  ...state.Test
+const mapStateToProps = (state) => ({
+  ...state.Test,
   // ...state.Animals
 });
 

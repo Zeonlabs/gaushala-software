@@ -7,7 +7,7 @@ import {
   Tooltip,
   Popconfirm,
   Divider,
-  message
+  message,
 } from "antd";
 import "./Income.scss";
 import "../Common/Forms/IncomeModels.styles.scss";
@@ -17,7 +17,7 @@ import {
   getExpense,
   getFilterExpense,
   editExpense,
-  deleteExpense
+  deleteExpense,
 } from "../../Actions/Exapmple";
 import moment from "moment";
 import IncomeMobel from "../Common/Forms/IncomeMobel";
@@ -46,9 +46,9 @@ class Income extends Component {
       editData: { money: { type: "cash" } },
       pagination: {
         page: 1,
-        limit: 20
+        limit: 20,
       },
-      filterPress: false
+      filterPress: false,
     };
     this.columns = [
       {
@@ -65,7 +65,7 @@ class Income extends Component {
           );
         },
         // fixed: "left",
-        className: "table-font-english table-font-english english-font-input"
+        className: "table-font-english table-font-english english-font-input",
       },
       {
         // Vauchr No
@@ -73,7 +73,7 @@ class Income extends Component {
         width: "130px",
         dataIndex: "slip_no",
         key: "name",
-        className: "income-table-td-height table-font-english"
+        className: "income-table-td-height table-font-english",
       },
 
       {
@@ -81,13 +81,13 @@ class Income extends Component {
         title: "naama",
         dataIndex: "name",
         key: "5",
-        width: 380
+        width: 380,
       },
       {
         title: "sarnaamau",
         dataIndex: "address",
         key: "address",
-        width: 300
+        width: 300,
       },
       {
         // Amount
@@ -95,7 +95,7 @@ class Income extends Component {
         dataIndex: "money.amount",
         key: "2",
         width: 180,
-        className: "table-font-english"
+        className: "table-font-english",
       },
       {
         // Mobile.
@@ -103,7 +103,7 @@ class Income extends Component {
         dataIndex: "phone",
         key: "4",
         width: 180,
-        className: "table-font-english"
+        className: "table-font-english",
       },
       {
         // Expenses Type
@@ -111,7 +111,7 @@ class Income extends Component {
         dataIndex: "type",
         key: "1",
         width: 250,
-        render: (text, record) => convertNumberToType(text, "expense")
+        render: (text, record) => convertNumberToType(text, "expense"),
       },
       {
         title: "dana svaIkar",
@@ -119,7 +119,7 @@ class Income extends Component {
         key: "7",
         width: 130,
         render: (text, record) =>
-          text.type === "cheque" ? <p>{text.cheque_no}</p> : <p>raokD</p>
+          text.type === "cheque" ? <p>{text.cheque_no}</p> : <p>raokD</p>,
       },
       // {
       //   // Expense in
@@ -133,7 +133,7 @@ class Income extends Component {
         title: "hstak naama",
         dataIndex: "ref_name",
         key: "8",
-        width: 230
+        width: 230,
       },
       {
         title: "AoDIT e DIlaIT",
@@ -168,29 +168,29 @@ class Income extends Component {
               </Popconfirm>
             </div>
           </>
-        )
-      }
+        ),
+      },
     ];
   }
 
   handelEdit = (text, record) => {
     this.setState({
       editData: record,
-      expense: true
+      expense: true,
     });
   };
 
   handleDelete = (key, record) => {
-    this.props.deleteExpense(record._id).then(res => {
+    this.props.deleteExpense(record._id).then((res) => {
       this.props
         .getExpense(this.state.pagination)
-        .then(res => {
+        .then((res) => {
           this.setState({
             data: res.docs,
-            total: res.totalDocs
+            total: res.totalDocs,
           });
         })
-        .catch(e => message.error(e));
+        .catch((e) => message.error(e));
     });
     // const dataSource = [...this.state.data];
     // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
@@ -199,7 +199,7 @@ class Income extends Component {
   componentDidMount = () => {
     const pagination = {
       page: 1,
-      limit: 20
+      limit: 20,
     };
     if (this.props.expenseList.length > 0) {
       this.setState({
@@ -208,23 +208,23 @@ class Income extends Component {
         total: this.props.expenseTotal.totalDocs,
         pagination: {
           page: this.props.expenseTotal.page,
-          limit: this.props.expenseTotal.limit
-        }
+          limit: this.props.expenseTotal.limit,
+        },
       });
     } else {
       // const id = this.props.match.params.pid;
       this.props
         .getExpense(pagination)
-        .then(res => {
+        .then((res) => {
           this.setState({
             data: res.docs,
             loading: false,
-            total: res.totalDocs
+            total: res.totalDocs,
           });
         })
-        .catch(e => {
+        .catch((e) => {
           this.setState({
-            loading: false
+            loading: false,
           });
         });
     }
@@ -232,20 +232,28 @@ class Income extends Component {
 
   loadingTrue = () => {
     this.setState({
-      loading: true
+      loading: true,
     });
   };
 
   loadingFalse = () => {
     this.setState({
-      loading: false
+      loading: false,
     });
   };
 
-  componentDidUpdate = prevPorps => {
+  componentDidUpdate = (prevPorps) => {
     if (prevPorps.expenseList !== this.props.expenseList) {
       this.setState({
-        data: this.props.expenseList
+        data: this.props.expenseList,
+      });
+    }
+    if (prevPorps.expenseTotal !== this.props.expenseTotal) {
+      this.setState({
+        pagination: {
+          page: this.props.expenseTotal.page,
+          limit: this.props.expenseTotal.limit,
+        },
       });
     }
   };
@@ -253,50 +261,50 @@ class Income extends Component {
   onClose = () => {
     this.loadingFalse();
     this.setState({
-      visible: false
+      visible: false,
     });
   };
 
-  paginate = page => {
+  paginate = (page) => {
     this.loadingTrue();
     this.setState(
       {
         pagination: {
           page,
-          limit: 20
-        }
+          limit: 20,
+        },
       },
       () => {
         this.props
           .getExpense(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              total: res.totalDocs
+              total: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       }
     );
     // const id = this.props.match.params.pid;
   };
 
-  handelFilterGet = data => {
+  handelFilterGet = (data) => {
     this.loadingTrue();
     if (localStorage.getItem("reversePin") === "205") {
       this.loadingFalse();
     } else {
       this.props
         .getFilterExpense(data)
-        .then(res => {
+        .then((res) => {
           this.loadingFalse();
           this.setState({
             data: res,
-            filterPress: true
+            filterPress: true,
           });
         })
-        .catch(e => {
+        .catch((e) => {
           message.error(e);
           this.loadingFalse();
         });
@@ -304,22 +312,25 @@ class Income extends Component {
   };
 
   handelClosePopUp = () => {
+    // console.log("Income -> handelClosePopUp -> data", data);
     this.setState({
-      expense: !this.state.expense
+      expense: !this.state.expense,
+      // data: data.docs,
+      // total: data.totalDocs,
     });
   };
 
   handelSubmit = (id, data) => {
     this.loadingTrue();
-    this.props.editExpense(id, data).then(res => {
+    this.props.editExpense(id, data).then((res) => {
       // this.props.toggleModel();
 
-      this.props.getExpense(this.state.pagination).then(res => {
+      this.props.getExpense(this.state.pagination).then((res) => {
         this.handelClosePopUp();
         this.loadingFalse();
         this.setState({
           data: res.docs,
-          total: res.totalDocs
+          total: res.totalDocs,
         });
       });
     });
@@ -329,20 +340,20 @@ class Income extends Component {
     this.loadingTrue();
     this.props
       .getExpense(this.state.pagination)
-      .then(res => {
+      .then((res) => {
         this.setState({
           data: res.docs,
           total: res.totalDocs,
-          filterPress: false
+          filterPress: false,
         });
         this.loadingFalse();
       })
-      .catch(e => this.loadingFalse());
+      .catch((e) => this.loadingFalse());
   };
 
   showDrawer = () => {
     this.setState({
-      visible: true
+      visible: true,
     });
   };
 
@@ -358,19 +369,19 @@ class Income extends Component {
   // };
 
   render() {
-    const columns = this.columns.map(col => {
+    const columns = this.columns.map((col) => {
       if (!col.editable) {
         return col;
       }
       return {
         ...col,
-        onCell: record => ({
+        onCell: (record) => ({
           record,
           inputType: col.dataIndex === "age" ? "number" : "text",
           dataIndex: col.dataIndex,
           title: col.title,
-          editing: this.isEditing(record)
-        })
+          editing: this.isEditing(record),
+        }),
       };
     });
     return (
@@ -413,7 +424,7 @@ class Income extends Component {
                 style={{
                   backgroundColor: "#505D6F",
                   color: "#ffffff",
-                  float: "right"
+                  float: "right",
                 }}
                 // className="filter-button"
               >
@@ -431,7 +442,7 @@ class Income extends Component {
             <ReportPrint
               //---------------------------------------Change title of report from here----------------------------------------------------
               name="Javak rIpaaoT"
-              ref={el => (this.componentRef = el)}
+              ref={(el) => (this.componentRef = el)}
               data={this.state.data || []}
               type="Expense"
               column={Expense}
@@ -465,7 +476,7 @@ class Income extends Component {
                     onChange: this.paginate,
                     current: this.state.pagination.page,
                     total: this.state.total,
-                    pageSize: this.state.pagination.limit
+                    pageSize: this.state.pagination.limit,
                   }
             }
             bordered
@@ -478,13 +489,13 @@ class Income extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  ...state.Test
+const mapStateToProps = (state) => ({
+  ...state.Test,
 });
 
 export default connect(mapStateToProps, {
   getExpense,
   getFilterExpense,
   deleteExpense,
-  editExpense
+  editExpense,
 })(Income);

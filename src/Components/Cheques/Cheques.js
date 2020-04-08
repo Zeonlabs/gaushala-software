@@ -8,7 +8,7 @@ import {
   editCheque,
   deleteCheque,
   addCheque,
-  filterCheque
+  filterCheque,
 } from "../../Actions/Cheque";
 import Index from "./AddCheque/Index";
 import ListingTable from "./ListingTable";
@@ -28,32 +28,32 @@ export class Cheques extends Component {
       data: "",
       pagination: {
         page: 1,
-        limit: 20
+        limit: 20,
       },
       editData: "",
       income: false,
       total: 0,
-      filterPress: false
+      filterPress: false,
     };
   }
 
   handelPopup = () => {
     this.setState({
       openPopup: !this.state.openPopup,
-      editData: ""
+      editData: "",
     });
   };
 
   handelFilterShow = () => {
     this.setState({
-      showFilter: !this.state.showFilter
+      showFilter: !this.state.showFilter,
     });
   };
 
   componentDidMount = () => {
     const pagination = {
       page: 1,
-      limit: 20
+      limit: 20,
     };
     if (this.props.chequeList.length > 0) {
       this.setState({
@@ -62,22 +62,22 @@ export class Cheques extends Component {
         total: this.props.chequeTotal.totalDocs,
         pagination: {
           page: this.props.chequeTotal.page,
-          limit: this.props.chequeTotal.limit
-        }
+          limit: this.props.chequeTotal.limit,
+        },
       });
     } else {
       this.props
         .getCheque(pagination)
-        .then(res => {
+        .then((res) => {
           this.setState({
             data: res.docs,
             loading: false,
-            total: res.totalDocs
+            total: res.totalDocs,
           });
         })
-        .catch(e => {
+        .catch((e) => {
           this.setState({
-            loading: false
+            loading: false,
           });
         });
     }
@@ -85,49 +85,53 @@ export class Cheques extends Component {
 
   loadingTrue = () => {
     this.setState({
-      loading: true
+      loading: true,
     });
   };
 
   loadingFalse = () => {
     this.setState({
-      loading: false
+      loading: false,
     });
   };
 
   handelShowPopup = () => {
     this.setState({
       openPopup: !this.state.openPopup,
-      income: !this.state.income
+      income: !this.state.income,
     });
   };
 
-  handelEdit = record => {
+  handelEdit = (record) => {
     this.setState({
       openPopup: !this.state.openPopup,
       editData: record,
-      income: true
+      income: true,
     });
   };
 
-  handelDataAdd = data => {
+  handelDataAdd = (data) => {
     this.loadingTrue();
     if (localStorage.getItem("reversePin") === "205") {
       this.loadingFalse();
       this.handelShowPopup();
     } else {
-      this.props.addCheque(data).then(res => {
+      this.props.addCheque(data).then((res) => {
         this.props
           .getCheque(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              total: res.totalDocs
+              total: res.totalDocs,
+              pagination: {
+                page: res.page,
+                limit: res.limit,
+              },
             });
             this.loadingFalse();
             this.handelShowPopup();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       });
     }
   };
@@ -137,57 +141,57 @@ export class Cheques extends Component {
     if (localStorage.getItem("reversePin") === "205") {
       this.loadingFalse();
     } else {
-      this.props.editCheque(id, data).then(res => {
+      this.props.editCheque(id, data).then((res) => {
         this.props
           .getCheque(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              total: res.totalDocs
+              total: res.totalDocs,
               // income: false
             });
             this.loadingFalse();
             this.handelShowPopup();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       });
     }
   };
 
-  handelDelete = record => {
+  handelDelete = (record) => {
     this.loadingTrue();
-    this.props.deleteCheque(record._id).then(res => {
+    this.props.deleteCheque(record._id).then((res) => {
       this.props
         .getCheque(this.state.pagination)
-        .then(res => {
+        .then((res) => {
           this.setState({
             data: res.docs,
-            total: res.totalDocs
+            total: res.totalDocs,
           });
           this.loadingFalse();
         })
-        .catch(e => {
+        .catch((e) => {
           message.error(e);
           this.loadingFalse();
         });
     });
   };
 
-  handelFilter = data => {
+  handelFilter = (data) => {
     this.loadingTrue();
     if (localStorage.getItem("reversePin") === "205") {
       this.loadingFalse();
     } else {
       this.props
         .filterCheque(data)
-        .then(res => {
+        .then((res) => {
           this.setState({
             data: res,
-            filterPress: true
+            filterPress: true,
           });
           this.loadingFalse();
         })
-        .catch(e => {
+        .catch((e) => {
           message.error(e);
           this.loadingFalse();
         });
@@ -197,40 +201,40 @@ export class Cheques extends Component {
   handelResetFilter = () => {
     this.props
       .getCheque(this.state.pagination)
-      .then(res => {
+      .then((res) => {
         this.setState({
           data: res.docs,
           total: res.totalDocs,
-          filterPress: false
+          filterPress: false,
         });
         this.loadingFalse();
       })
-      .catch(e => {
+      .catch((e) => {
         message.error(e);
         this.loadingFalse();
       });
   };
 
-  paginate = page => {
+  paginate = (page) => {
     this.loadingTrue();
     this.setState(
       {
         pagination: {
           page,
-          limit: 20
-        }
+          limit: 20,
+        },
       },
       () =>
         this.props
           .getCheque(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              total: res.totalDocs
+              total: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse())
+          .catch((e) => this.loadingFalse())
     );
   };
 
@@ -276,7 +280,7 @@ export class Cheques extends Component {
               backgroundColor: "#505D6F",
               color: "#ffffff",
               marginLeft: 20,
-              float: "right"
+              float: "right",
             }}
             size="large"
             onClick={this.handelPopup}
@@ -293,7 +297,7 @@ export class Cheques extends Component {
                   backgroundColor: "#505D6F",
                   color: "#ffffff",
                   marginLeft: 20,
-                  float: "right"
+                  float: "right",
                 }}
                 size="large"
                 // onClick={this.handelPopup}
@@ -307,7 +311,7 @@ export class Cheques extends Component {
             <ReportPrint
               //---------------------------------------Change title of report from here----------------------------------------------------
               name="Aavak rIpaaoT"
-              ref={el => (this.componentRef = el)}
+              ref={(el) => (this.componentRef = el)}
               data={this.state.data || []}
               type="Expense"
               column={ChequeColumn}
@@ -339,8 +343,8 @@ export class Cheques extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  ...state.Test
+const mapStateToProps = (state) => ({
+  ...state.Test,
 });
 
 export default connect(mapStateToProps, {
@@ -348,5 +352,5 @@ export default connect(mapStateToProps, {
   editCheque,
   deleteCheque,
   addCheque,
-  filterCheque
+  filterCheque,
 })(Cheques);

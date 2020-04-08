@@ -10,7 +10,7 @@ export const TrustyColumns = [
     dataIndex: "_id",
     key: "1",
     width: 120,
-    className: "",
+    className: "gujarati-font-input-table",
     render: (text, record) => <p>{}</p>
   },
   {
@@ -19,20 +19,20 @@ export const TrustyColumns = [
     key: "2",
     width: 100,
     render: text => <p>{text}</p>,
-    className: ""
+    className: "gujarati-font-input-table"
   },
   {
     title: "naama",
     dataIndex: "name",
     key: "3",
     width: 300,
-    className: ""
+    className: "gujarati-font-input-table"
   },
   {
     title: "maaobaa[la naMbar",
     dataIndex: "phone",
     key: "4",
     width: 250,
-    className: ""
+    className: "gujarati-font-input-table"
   }
 ];

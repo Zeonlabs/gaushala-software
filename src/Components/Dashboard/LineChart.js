@@ -10,14 +10,14 @@ const LineChart = ({ data }) => (
           {
             id: "Expense",
             color: "rgb(255, 77, 79)",
-            data: data.income
+            data: data.expense,
           },
           {
             id: "Income",
             // color: 'hsl(157, 70%, 50%)',
             color: "#36B971",
-            data: data.expense
-          }
+            data: data.income,
+          },
         ]}
       />
     </div>

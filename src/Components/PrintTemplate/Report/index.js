@@ -1,6 +1,6 @@
 import React from "react";
 // import ReactToPrint from "react-to-print";
-import src from "../HeaderImage/headerImg.svg";
+import src from "../../../Components/PrintTemplate/HeaderImage/headerImg.png";
 import "./index.scss";
 import ReportTable from "./ReportTable";
 
@@ -8,7 +8,7 @@ class ReportPrint extends React.Component {
   render() {
     return (
       <div>
-        <div className="slip-print">
+        <div className="slip-print-report">
           <div className="slip-header">
             <img className="img-header" src={src} alt="boohoo"></img>
             <hr className="first-hr"></hr>
@@ -17,7 +17,7 @@ class ReportPrint extends React.Component {
 
           <div>
             {/* ---------------------------------------Report Name--------------------------------- */}
-            <h1 className="slip-sign-text">{" "}: &nbsp;<span className="report-name">{this.props.name}</span>&nbsp; :{" "}
+            <h1 className="slip-sign-text gujarati-font">{" "}: &nbsp;<span className="report-name gujarati-font">{this.props.name}</span>&nbsp; :{" "}
             </h1>
           </div>
 
@@ -25,7 +25,7 @@ class ReportPrint extends React.Component {
           --------------------------------------Report slip---------------------------------------------
           -------------------------------------------------------------------------------------------- */}
 
-          <div className="Report table padding-row">
+          <div className="report-table padding-row">
             <ReportTable
               data={this.props.data}
               type={this.props.type}

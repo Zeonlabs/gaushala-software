@@ -4,11 +4,6 @@ import converter from "number-to-words";
 import "./index.scss";
 
 const columns = [
-  // {
-  //   title: "Name",
-  //   dataIndex: "name",
-  //   key: "name"
-  // },
   {
     title: "vaIgata",
     dataIndex: "type",
@@ -28,8 +23,7 @@ const IncomeTable = props => {
     <>
       <Table
         className="table-boder income-expense-table"
-        // components={components}
-        // rowClassName={() => "editable-row"}
+
         bordered
         dataSource={props.data}
         columns={columns}

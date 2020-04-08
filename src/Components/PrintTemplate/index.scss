@@ -1,32 +1,13 @@
-
-/* @font-face {
-    font-family: 'gujrati_saral-1normal';
-    src: url('./fonts/gujrati-saral-1-webfont.woff') format('woff'),
-         url('./fonts/gujrati-saral-1-webfont.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  } */
-
-  /* @font-face {
-    font-family: 'Saumil_guj2';
-    src: url('./fonts/subset-Saumil_guj2.woff') format('woff'),
-         url('./fonts/subset-Saumil_guj2.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-} */
-
-
-.slip-print{
+.slip-print-income {
   border: 2px solid black;
   border-radius: 8px;
-  font-family: 'Saumil_guj2';
-  
+  font-family: "Saumil_guj2";
 }
-.img-header{
+.img-header {
   padding: 14px;
   width: 97% !important;
 }
-hr{
+hr {
   border: 1px solid black;
   margin: 0;
 }
@@ -49,22 +30,22 @@ hr{
   display: flex;
   width: 30%;
   padding: 15px;
-} 
-.row{
-    display: flex;
+}
+.row {
+  display: flex;
 }
 
 .column-3 {
   float: left;
   width: 50%;
   padding: 15px;
-} 
+}
 
 .column-4 {
   float: left;
   width: 50%;
   padding: 15px;
-} 
+}
 
 /* Clear floats after the columns */
 .row:after {
@@ -72,142 +53,39 @@ hr{
   display: table;
   clear: both;
 }
-.first-hr{
+.first-hr {
   border-width: 2px;
   border-color: black;
 }
 
-
-.english-font{
+.english-font {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-  sans-serif;
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+}
+.date {
   margin-top: -2px !important;
   font-weight: 400;
-  font-size: 14px !important;
+  font-size: 16px !important;
 }
-
-.table{
-    justify-content: center;
-    width: 100%;
+.font-size-20 {
+  font-size: 20px !important;
 }
-.padding-row{
+.table {
+  justify-content: center;
+  width: 100%;
+}
+.padding-row {
   padding: 15px;
   padding-top: 0px !important;
 }
-
-.slip-sign-text{
+.slip-sign-text {
   text-align: center;
   margin-top: 15px;
 }
-.padding-top-0{
+.padding-top-0 {
   padding-top: 0 !important;
 }
-.sign-row{
+.sign-row {
   margin-top: 15px !important;
 }
-
-/* -----------------------------------table-------------------------------------------- */
-
-.slip-print{
-  //   .table .totalamount .amount-in-words {
-  //     width: 55%;
-  // }
-
-  
-
-  .ant-table-column-title {
-    font-weight: 600 !important;
-    font-size: 18px !important;
-}
-td ,.ant-table-row-cell-break-word{
-  text-align: center !important;
-  padding: 0px !important;
-  color: black;
-
-  .english-font-input{
-    font-size: 22px !important;
-    font-weight: 600 !important;
-  }
-}
-  .amount-in-words{
-    font-size: 20px !important;
-  }
-  h2{
-    margin: 0;
-    font-size: 24px ;
-  }
-  .font-size-20{
-    font-size: 20px !important;
-  }
-
-  .totalamount{
-    font-size: 24px !important;
-  }
-  
-    .table-boder {
-      table {
-        border-radius: 4px;
-        // border: 2px solid black !important;
-        width: -webkit-fill-available !important;
-        .ant-table-row-cell-break-word {
-          text-align: center;
-        }
-        .ant-table-column-title {
-          font-family: "Saumil_guj2" !important;
-          font-weight: 500;
-          text-align: center;
-        }
-        .ant-form-item {
-          outline: none !important;
-        }
-        .ant-form-explain {
-          display: none;
-        }
-        .ant-input {
-          font-weight: 600 !important;
-        }
-        .table-font{
-          .ant-table-header-column{
-            font-family: 'Saumil_guj2' !important;
-            font-weight: 600;
-            text-align: center;
-          }
-          td{
-            font-family: 'Saumil_guj2' !important;
-            width: 50%;
-          }
-        }
-      }
-    }
-  
-    tr,
-    td {
-      padding: 5px !important;
-      // height: 32px !important;
-    }
-    th {
-      padding: 5px !important;
-      text-align: center !important;
-    }
-  
-    .table th {
-      padding: 5px !important;
-      text-align: center !important;
-      font-size: 14px !important;
-  }
-  
-  .table td ,.table td div{
-    padding: 0px !important;
-      text-align: center !important;
-      font-size: 12px !important;
-  }
-  .editable-cell-value-wrap {
-    padding: 5px 12px;
-    cursor: pointer;
-    font-size: 14px !important;
-    font-weight: 600;
-  }
-  }
-  
-  

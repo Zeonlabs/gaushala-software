@@ -10,12 +10,12 @@ class AnimalChart extends Component {
     super(props);
     this.state = {
       animalData: [{ id: "", label: "chart", value: 1, color: "#e6e6e6" }],
-      expenceData: [{ x: 0, y: 0 }]
+      expenceData: [{ x: 0, y: 0 }],
     };
   }
 
   componentDidMount = () => {
-    this.props.getAnimalChart(this.props.statusCode).then(res => {
+    this.props.getAnimalChart(this.props.statusCode).then((res) => {
       const ArrayMap = Object.values(res.stats.animal);
 
       const newData = [
@@ -23,36 +23,36 @@ class AnimalChart extends Component {
           id: "gaaya",
           label: "gaaya",
           value: ArrayMap[0],
-          color: "#F9C501"
+          color: "#F9C501",
         },
         {
           id: "baLad",
           label: "baLad",
           value: ArrayMap[1],
-          color: "#53D767"
+          color: "#53D767",
         },
         {
           id: "vaaCrDa",
           label: "vaaCrDa",
           value: ArrayMap[2],
-          color: "#021322"
+          color: "#021322",
         },
         {
           id: "vaaCrDI",
           label: "vaaCrDI",
           value: ArrayMap[3],
-          color: "#40a9ff"
+          color: "#40a9ff",
         },
         {
           id: "Anya",
           label: "Anya",
           value: ArrayMap[4],
-          color: "#ff4d4f"
-        }
+          color: "#ff4d4f",
+        },
       ];
 
       this.setState({
-        animalData: newData
+        animalData: newData,
       });
     });
   };

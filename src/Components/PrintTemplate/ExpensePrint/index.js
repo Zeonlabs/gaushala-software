@@ -1,14 +1,14 @@
 import React from "react";
 // import ReactToPrint from "react-to-print";
-import src from "../HeaderImage/headerImg.svg";
+import src from "../../../Components/PrintTemplate/HeaderImage/headerImg.png";
 import "./index.scss";
 import ExpenseTable from "./ExpenseTable";
 
 class ExpensePrintSlip extends React.Component {
   render() {
     return (
-      <div>
-        <div className="slip-print">
+      <div> 
+        <div className="slip-print-income">
           <div className="slip-header">
             <img className="img-header" src={src} alt="boohoo"></img>
             <hr className="first-hr"></hr>
@@ -48,7 +48,7 @@ class ExpensePrintSlip extends React.Component {
             </div>
 
             <div className="column-2 padding-top-0">
-              <h2 className="font-size-20">gaama : &nbsp;</h2>
+              <h2 className="font-size-20">gaama: &nbsp;</h2>
               {/* --------------------------Slip Name --------------------------- */}
               <h2 className="Date font-size-20">{this.props.address}</h2>
             </div>
@@ -79,9 +79,6 @@ class ExpensePrintSlip extends React.Component {
             </div>
 
             <div className="column-50 padding-top-0">
-              {/* <h2>gaama : &nbsp;</h2> */}
-              {/* --------------------------Slip Name --------------------------- */}
-              {/* <h2 className="Date " >ivarDI</h2> */}
             </div>
           </div>
 
@@ -89,11 +86,6 @@ class ExpensePrintSlip extends React.Component {
           <div className="table padding-row">
             <ExpenseTable data={this.props.table} total={this.props.amount} />
           </div>
-
-          {/* -----------------------------------------------Content-------------------------------- */}
-          {/* <div className="row padding-row">
-            <h3></h3>
-          </div> */}
 
           <div className="row sign-row-expenses">
             <div className="column-50-sign">
@@ -117,19 +109,5 @@ class ExpensePrintSlip extends React.Component {
     );
   }
 }
-
-// class Example extends React.Component {
-//   render() {
-//     return (
-//       <div>
-//         <ComponentToPrint ref={el => (this.componentRef = el)} />
-//         <ReactToPrint
-//           trigger={() => <a href="#">Print this out!</a>}
-//           content={() => this.componentRef}
-//         />
-//       </div>
-//     );
-//   }
-// }
 
 export default ExpensePrintSlip;

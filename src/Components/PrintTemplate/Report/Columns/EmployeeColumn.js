@@ -10,36 +10,34 @@ export const EmployeeColumn = [
     dataIndex: "_id",
     key: "1",
     width: 100,
-    className: "",
+    className: "gujarati-font-input-table",
     render: (text, record) => <p>{}</p>
   },
   {
     title: "k-macaarI naao pa`kar",
     dataIndex: "type",
-    width: 100,
     key: "name",
+    width: 200,
     render: text => <p>{text}</p>,
-    className: ""
+    className: "gujarati-font-input-table"
   },
   {
     title: "naama",
     dataIndex: "name",
     key: "age",
-    width: 300,
-    className: ""
+    className: "add-name-field-print gujarati-font-input-table"
   },
   {
     title: "maaobaa[la naMbar",
     dataIndex: "phone",
     key: "phone",
-    className: "",
-    width: 180
+    width: 200,
+    className: "gujarati-font-input-table",
   },
   {
     title: "sarnaamau",
     dataIndex: "address",
     key: "address",
-    width: 200,
-    className: ""
+    className: "gujarati-font-input-table"
   }
 ];

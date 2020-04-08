@@ -9,7 +9,7 @@ import {
   Button,
   InputNumber,
   Row,
-  Col
+  Col,
 } from "antd";
 import "./IncomeModels.styles.scss";
 import moment from "moment";
@@ -20,7 +20,7 @@ import {
   getExpense,
   addExpense,
   editExpense,
-  editIncome
+  editIncome,
 } from "../../../Actions/Exapmple";
 import { sendSms } from "../../../Actions/SetUpUser";
 import NumericInput from "./InputNumber";
@@ -45,24 +45,24 @@ class IncomeMobels extends Component {
       printStatus: false,
       data: {},
       itemData: [],
-      typeStatus: ""
+      typeStatus: "",
     };
   }
 
-  componentDidUpdate = prevProps => {
+  componentDidUpdate = (prevProps) => {
     if (prevProps !== this.props) {
       if (this.props.modalType) {
         this.setState({
-          value: this.props.data.phone
+          value: this.props.data.phone,
         });
         if (this.state.typeStatus === "") {
           if (this.props.cash === "cheque") {
             this.setState({
-              type: "cheque"
+              type: "cheque",
             });
           } else {
             this.setState({
-              type: "cash"
+              type: "cash",
             });
           }
         }
@@ -70,7 +70,7 @@ class IncomeMobels extends Component {
     }
   };
 
-  onChange = value => {
+  onChange = (value) => {
     this.setState({ value });
   };
 
@@ -93,19 +93,19 @@ class IncomeMobels extends Component {
       money: {
         type: this.state.type,
         amount: finalTotal,
-        cheque_no: values.chequeno
+        cheque_no: values.chequeno,
       },
       pan_no: values.pan_no,
       item: itemData,
       ref_name: values.ref_name,
-      note: values.note
+      note: values.note,
     };
     if (localStorage.getItem("reversePin") === "205") {
       this.props.form.resetFields();
       this.setState({
         type: "cash",
         resetStatus: !this.state.resetStatus,
-        typeStatus: ""
+        typeStatus: "",
       });
       this.props.toggleModel();
     } else {
@@ -115,34 +115,36 @@ class IncomeMobels extends Component {
         if (values.sms === "yes") {
           const data = {
             phone: parseInt(values.phone, 10),
-            message
+            message,
           };
           this.props.sendSms(data);
         }
         // this.props.editIncome(id, data).then(res => this.props.toggleModel());
       } else {
-        this.props.addIncome(data).then(res => {
+        this.props.addIncome(data).then((res) => {
           const pagination = {
             page: 1,
-            limit: 20
+            limit: 20,
           };
           if (values.sms === "yes") {
             const data = {
               phone: parseInt(values.phone, 10),
-              message
+              message,
             };
             this.props.sendSms(data);
           }
-          this.props
-            .getIncome(pagination)
-            .then(res => this.props.toggleModel());
+          this.props.getIncome(pagination).then((res) => {
+            this.props.toggleModel();
+            // console.log("IncomeMobels -> incomeData -> this.props", this.props);
+            // this.props.handelAddPagination(res);
+          });
         });
       }
       this.props.form.resetFields();
       this.setState({
         type: "cash",
         resetStatus: !this.state.resetStatus,
-        typeStatus: ""
+        typeStatus: "",
       });
     }
   };
@@ -159,19 +161,19 @@ class IncomeMobels extends Component {
       money: {
         type: this.state.type,
         amount: finalTotal,
-        cheque_no: values.chequeno
+        cheque_no: values.chequeno,
       },
       pan_no: values.pan_no,
       item: itemData,
       ref_name: values.ref_name,
-      note: values.note
+      note: values.note,
     };
     if (localStorage.getItem("reversePin") === "205") {
       this.props.form.resetFields();
       this.setState({
         type: "cash",
         resetStatus: !this.state.resetStatus,
-        typeStatus: ""
+        typeStatus: "",
       });
       this.props.toggleModel();
     } else {
@@ -180,25 +182,25 @@ class IncomeMobels extends Component {
         this.props.submit(id, data);
         // this.props.editExpense(id, data).then(res => this.props.toggleModel());
       } else {
-        this.props.addExpense(data).then(res => {
+        this.props.addExpense(data).then((res) => {
           const pagination = {
             page: 1,
-            limit: 20
+            limit: 20,
           };
           this.props
             .getExpense(pagination)
-            .then(res => this.props.toggleModel());
+            .then((res) => this.props.toggleModel());
         });
       }
       this.props.form.resetFields();
       this.setState({
         type: "cash",
-        resetStatus: !this.state.resetStatus
+        resetStatus: !this.state.resetStatus,
       });
     }
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       let itemData = [];
@@ -206,40 +208,42 @@ class IncomeMobels extends Component {
       let totalAmount = "";
       if (this.props.modalType) {
         if (!this.state.tableStatus) {
-          amount = this.props.data.item.map(val =>
+          amount = this.props.data.item.map((val) =>
             itemData.push({
               type: val.type,
-              amount: parseInt(val.amount, 10)
+              amount: parseInt(val.amount, 10),
             })
           );
-          totalAmount = this.props.data.item.map(val =>
+          totalAmount = this.props.data.item.map((val) =>
             parseInt(val.amount, 10)
           );
         } else {
-          amount = this.state.tableData.map(val =>
+          amount = this.state.tableData.map((val) =>
             itemData.push({
               type: val.type,
-              amount: parseInt(val.amount, 10)
+              amount: parseInt(val.amount, 10),
             })
           );
-          totalAmount = this.state.tableData.map(val =>
+          totalAmount = this.state.tableData.map((val) =>
             parseInt(val.amount, 10)
           );
         }
       } else {
-        amount = this.state.tableData.map(val =>
+        amount = this.state.tableData.map((val) =>
           itemData.push({
             type: val.type,
-            amount: parseInt(val.amount, 10)
+            amount: parseInt(val.amount, 10),
           })
         );
-        totalAmount = this.state.tableData.map(val => parseInt(val.amount, 10));
+        totalAmount = this.state.tableData.map((val) =>
+          parseInt(val.amount, 10)
+        );
       }
       const finalTotal = totalAmount.reduce(this.sumArray);
       this.setState({
         finalTotal,
         data: values,
-        itemData
+        itemData,
       });
 
       if (!err) {
@@ -252,29 +256,29 @@ class IncomeMobels extends Component {
     });
   };
 
-  onTableSubmit = data => {
+  onTableSubmit = (data) => {
     this.setState({
       tableData: data,
-      tableStatus: true
+      tableStatus: true,
       // resetStatus: false
     });
   };
 
   printIncomeSlip = () => {};
-  onChangeType = e => {
+  onChangeType = (e) => {
     this.setState({
       type: e.target.value,
-      typeStatus: "cash"
+      typeStatus: "cash",
     });
   };
 
-  onChanges = value => {};
+  onChanges = (value) => {};
 
   onBlur = () => {};
 
   onFocus = () => {};
 
-  onSearch = val => {};
+  onSearch = (val) => {};
   handleReset = () => {
     this.props.form.resetFields();
     this.props.toggleModel();
@@ -283,7 +287,7 @@ class IncomeMobels extends Component {
       resetStatus: !this.state.resetStatus,
       type: "cash",
       printStatus: false,
-      typeStatus: ""
+      typeStatus: "",
     });
   };
 
@@ -299,7 +303,7 @@ class IncomeMobels extends Component {
           maskClosable={false}
           visible={this.props.visible}
           footer={null}
-          onOk={this.props.toggleModel}
+          // onOk={this.props.toggleModel}
           onCancel={this.handleReset}
         >
           <h3 className="form-titel" style={{ paddingBottom: 10 }}>{`${
@@ -325,7 +329,7 @@ class IncomeMobels extends Component {
                           : ""
                         : modalType === "edit"
                         ? data.slip_no
-                        : ""
+                        : "",
                   })(
                     <InputNumber
                       className="gujarati-font"
@@ -349,7 +353,7 @@ class IncomeMobels extends Component {
                           : ""
                         : modalType === "edit"
                         ? moment(data.date)
-                        : ""
+                        : "",
                   })(
                     <DatePicker
                       className="english-font-input "
@@ -374,7 +378,7 @@ class IncomeMobels extends Component {
                           : ""
                         : modalType === "edit"
                         ? convertNumberToType(data.type, "expense")
-                        : ""
+                        : "",
                   })(
                     type === "expense" ? (
                       <Select
@@ -439,7 +443,7 @@ class IncomeMobels extends Component {
                           : ""
                         : modalType === "edit"
                         ? data.name
-                        : ""
+                        : "",
                   })(<Input placeholder="naama" />)}
                 </Form.Item>
               </Col>
@@ -456,7 +460,7 @@ class IncomeMobels extends Component {
                             : ""
                           : modalType === "edit"
                           ? data.phone
-                          : ""
+                          : "",
                     })(
                       <NumericInput
                         className="gujarati-font"
@@ -476,7 +480,7 @@ class IncomeMobels extends Component {
                             : ""
                           : modalType === "edit"
                           ? data.phone
-                          : ""
+                          : "",
                     })(
                       <NumericInput
                         value={this.state.value}
@@ -501,11 +505,11 @@ class IncomeMobels extends Component {
                           : ""
                         : modalType === "edit"
                         ? data.address
-                        : ""
+                        : "",
                   })(
                     <Input
                       style={{
-                        width: "100%"
+                        width: "100%",
                       }}
                       placeholder="sarnaamau"
                     />
@@ -535,7 +539,7 @@ class IncomeMobels extends Component {
                         ? data.money
                           ? data.money.type
                           : ""
-                        : "cash"
+                        : "cash",
                   })(
                     <Radio.Group onChange={this.onChangeType}>
                       <Radio value="cash">raokD</Radio>
@@ -561,7 +565,7 @@ class IncomeMobels extends Component {
                           ? data.money
                             ? data.money.cheque_no
                             : ""
-                          : "cash"
+                          : "cash",
                     })(
                       <Input
                         type="number"
@@ -620,7 +624,7 @@ class IncomeMobels extends Component {
                           : ""
                         : modalType === "edit"
                         ? data.ref_name
-                        : ""
+                        : "",
                   })(
                     <Input
                       style={{ width: "100%" }}
@@ -640,7 +644,7 @@ class IncomeMobels extends Component {
                           : ""
                         : modalType === "edit"
                         ? data.note || ""
-                        : ""
+                        : "",
                   })(
                     <Input style={{ width: "100%" }} placeholder="naaoMGa:" />
                   )}
@@ -654,7 +658,7 @@ class IncomeMobels extends Component {
                   <Form.Item label="saMdoSa maaoklaao:">
                     {getFieldDecorator("sms", {
                       rules: [{ required: true }],
-                      initialValue: "no"
+                      initialValue: "no",
                     })(
                       <Radio.Group>
                         <Radio value="no">nahI</Radio>
@@ -699,7 +703,7 @@ class IncomeMobels extends Component {
               <div style={{ display: "none" }}>
                 {type === "income" ? (
                   <IncomePrintSlip
-                    ref={el => (this.componentRef = el)}
+                    ref={(el) => (this.componentRef = el)}
                     voucher={this.state.data.slip_no}
                     name={this.state.data.name}
                     date={moment(this.state.data.date).format("DD-MM-YYYY")}
@@ -710,7 +714,7 @@ class IncomeMobels extends Component {
                   />
                 ) : (
                   <ExpensePrintSlip
-                    ref={el => (this.componentRef = el)}
+                    ref={(el) => (this.componentRef = el)}
                     voucher={this.state.data.slip_no}
                     name={this.state.data.name}
                     date={moment(this.state.data.date).format("DD-MM-YYYY")}
@@ -732,8 +736,8 @@ class IncomeMobels extends Component {
 }
 const IncomeMobel = Form.create({ name: "Income" })(IncomeMobels);
 
-const mapStateToProps = state => ({
-  ...state.Test
+const mapStateToProps = (state) => ({
+  ...state.Test,
 });
 
 export default connect(mapStateToProps, {
@@ -743,5 +747,5 @@ export default connect(mapStateToProps, {
   addExpense,
   editIncome,
   editExpense,
-  sendSms
+  sendSms,
 })(IncomeMobel);

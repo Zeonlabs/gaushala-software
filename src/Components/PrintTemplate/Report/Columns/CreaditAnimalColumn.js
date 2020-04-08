@@ -9,18 +9,17 @@ export const CreaditAnimalColumn = [
     title: "k/ma",
     dataIndex: "_id",
     key: "1",
-    width: 150,
-    className: "",
+    className: "gujarati-font-input-table",
     render: (text, record) => <p>{}</p>
   },
   {
     title: "taarIKa",
     dataIndex: "date",
     key: "4",
-    width: 200,
-    className: "income-table-td-height table-font-english",
+    width: 100,
+    className: "date-print english-font-input-table",
     render: (text, record) => (
-      <div className="  english-font-input">
+      <div className="">
         {moment(text).format("DD-MM-YYYY")}
       </div>
     )
@@ -32,39 +31,38 @@ export const CreaditAnimalColumn = [
         title: "gaaya",
         dataIndex: "animal[0].count",
         key: "gay",
-        className: "table-font-english",
+        className: "gujarati-font-input-table",
         render: text => <p>{text}</p>
       },
       {
         title: "baLad",
         dataIndex: "animal[1].count",
         key: "balad",
-        className: "table-font-english"
+        className: "gujarati-font-input-table"
       },
       {
         title: "vaaCrDa",
         dataIndex: "animal[2].count",
         key: "vacharda",
-        className: "table-font-english"
+        className: "gujarati-font-input-table"
       },
       {
         title: "vaaCrDI",
         dataIndex: "animal[3].count",
         key: "vachardi",
-        className: "table-font-english"
+        className: "gujarati-font-input-table"
       },
       {
         title: "Anya",
         dataIndex: "animal[4].count",
         key: "anny",
-        className: "table-font-english"
+        className: "gujarati-font-input-table"
       },
       {
         title: "kula",
         dataIndex: "total",
         key: "total",
-        width: 120,
-        className: "table-font-english"
+        className: "gujarati-font-input-table"
       }
     ]
   },
@@ -72,23 +70,22 @@ export const CreaditAnimalColumn = [
     title: "paSau mauknaar nau naama",
     dataIndex: "name",
     key: "name",
-    width: 300,
-    className: "",
+    width: 150,
+    className: "gujarati-font-input-table",
     render: text => <p>{text}</p>
   },
   {
     title: "sarnaamau",
     dataIndex: "address",
     key: "address",
-    width: 250,
-    className: ""
+    width: 150,
+    className: "add-name-field-print gujarati-font-input-table"
   },
   {
     title: "maaobaa[la naMbar",
     dataIndex: "phone",
     key: "mono",
-    width: 200,
-    className: ""
+    className: "gujarati-font-input-table"
   },
   //--------------------Change name --------------------
   {
@@ -96,13 +93,13 @@ export const CreaditAnimalColumn = [
     dataIndex: "signPerson",
     key: "personSign",
     width: 150,
-    className: ""
+    className: "gujarati-font-input-table"
   },
   {
     title: "gaaoSaaLaa T/sT vataI",
     dataIndex: "trusty",
     key: "trusty",
     width: 200,
-    className: ""
+    className: "gujarati-font-input-table"
   }
 ];

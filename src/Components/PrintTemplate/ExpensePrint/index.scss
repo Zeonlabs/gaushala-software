@@ -1,26 +1,7 @@
-
-/* @font-face {
-    font-family: 'gujrati_saral-1normal';
-    src: url('./fonts/gujrati-saral-1-webfont.woff') format('woff'),
-         url('./fonts/gujrati-saral-1-webfont.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-  } */
-
-  /* @font-face {
-    font-family: 'Saumil_guj2';
-    src: url('./fonts/subset-Saumil_guj2.woff') format('woff'),
-         url('./fonts/subset-Saumil_guj2.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-} */
-
-
 .slip-print{
     border: 2px solid black;
     border-radius: 8px;
     font-family: 'Saumil_guj2';
-    
 }
 .img-header{
     padding: 14px;
@@ -119,9 +100,10 @@ hr{
 /* -----------------------------------table-------------------------------------------- */
 
 .slip-print{
-  //   .table .totalamount .amount-in-words {
-  //     width: 55%;
-  // }
+  .table-font-english {
+    font-family: 'Saumil_guj2' !important;
+    font-weight: normal !important;
+}
   h2{
     margin: 0;
     font-size: 24px ;
