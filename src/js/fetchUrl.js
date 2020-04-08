@@ -1,7 +1,7 @@
 import axios from "axios";
 import qs from "qs";
 import { message } from "antd";
-const baseUrl = "http://localhost:8081";
+import { baseUrl } from "./Helper";
 
 const GET = "GET";
 const DELETE = "DELETE";
@@ -20,15 +20,15 @@ const ACTION_HANDLERS = {
     }
     return axios.get(baseUrl + queryUrl, {
       // withCredentials: true,
-      cancelToken: new axios.CancelToken(c => {
+      cancelToken: new axios.CancelToken((c) => {
         cancel.push({ url, c });
-      })
+      }),
     });
   },
   [DELETE]: (url, data) => axios.delete(baseUrl + url, { data }),
   [POST]: (url, data) => axios.post(baseUrl + url, data),
   [PUT]: (url, data) => axios.put(baseUrl + url, data),
-  [PATCH]: (url, data) => axios.patch(baseUrl + url, data)
+  [PATCH]: (url, data) => axios.patch(baseUrl + url, data),
 };
 
 export const setHeaders = (contentType, authToken) => {
@@ -57,13 +57,13 @@ export const showErrorAsToast = (error, type) => {
   if (response?.data) {
     const { errors, message: msg } = response.data;
     if (errors) {
-      Object.keys(errors).forEach(x => {
+      Object.keys(errors).forEach((x) => {
         if (typeof errors[x] === "object") {
-          Object.keys(errors[x]).forEach(y => {
+          Object.keys(errors[x]).forEach((y) => {
             // message.error(errors[x][y]);
           });
         } else if (Array.isArray(errors[x])) {
-          errors[x].map(e => message.error(e));
+          errors[x].map((e) => message.error(e));
         }
       });
     }
@@ -94,8 +94,8 @@ export const fetchUrl = (
   if (!shouldRefetch) {
     if (type.toUpperCase() === "GET") {
       if (cache.indexOf(url) !== -1) {
-        const controller = cancel.filter(i => i.url === url);
-        controller.map(item => item.c());
+        const controller = cancel.filter((i) => i.url === url);
+        controller.map((item) => item.c());
       } else {
         cache.push(url);
       }
@@ -104,9 +104,9 @@ export const fetchUrl = (
   const handler = ACTION_HANDLERS[type.toUpperCase()];
   return !fetchBaseResponse
     ? handler(url, data)
-        .then(res => Promise.resolve(res.data, res))
-        .catch(error => showErrorAsToast(error, type))
-    : handler(url, data).catch(error => showErrorAsToast(error, type));
+        .then((res) => Promise.resolve(res.data, res))
+        .catch((error) => showErrorAsToast(error, type))
+    : handler(url, data).catch((error) => showErrorAsToast(error, type));
 };
 
 // import axios from "axios";

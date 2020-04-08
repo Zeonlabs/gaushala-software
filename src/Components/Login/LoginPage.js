@@ -6,6 +6,7 @@ import { withRouter } from "react-router";
 import FirstPage from "./FirstPage";
 import ForgotPasswordModal from "../SettingPage/ForgotPasswordModal";
 import axios from "axios";
+import { baseUrl } from "../../js/Helper";
 
 class Login extends Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class Login extends Component {
         pin: this.state.pin,
       };
       axios
-        .post("http://localhost:8081/auth", pin)
+        .post(`${baseUrl}/auth`, pin)
         .then((res) => {
           const location = {
             pathname: "/dashboard",
@@ -146,7 +147,7 @@ class Login extends Component {
     const { visible, confirmLoading, visibleModal, mobilenumber } = this.state;
     return (
       <div className="page">
-        <div >
+        <div>
           {this.state.firstPage ? (
             <FirstPage change={this.handelLoginPage} />
           ) : (

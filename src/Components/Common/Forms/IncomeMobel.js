@@ -27,9 +27,14 @@ import { sendSms } from "../../../Actions/SetUpUser";
 import NumericInput from "./InputNumber";
 import { connect } from "react-redux";
 import ReactToPrint from "react-to-print";
-import { convertNumberToType, convertTypeToNumber } from "../../../js/Helper";
+import {
+  convertNumberToType,
+  convertTypeToNumber,
+  baseUrl,
+} from "../../../js/Helper";
 import IncomePrintSlip from "../../PrintTemplate";
 import ExpensePrintSlip from "../../PrintTemplate/ExpensePrint";
+import axios from "axios";
 
 const { Option } = Select;
 
@@ -118,10 +123,14 @@ class IncomeMobels extends Component {
             phone: parseInt(values.phone, 10),
             message: messageContent,
           };
-          this.props
-            .sendSms(data)
-            .then((res) => message.success(res))
-            .catch((e) => message.error(e.message));
+          axios
+            .post(`${baseUrl}/sms/send`, data)
+            .then((res) => {
+              if (res.status === 219) {
+                message.warn("Your account balance is insufficient");
+              }
+            })
+            .catch((e) => message.error("Message not send try again !"));
         }
         // this.props.editIncome(id, data).then(res => this.props.toggleModel());
       } else {
@@ -135,15 +144,17 @@ class IncomeMobels extends Component {
               phone: parseInt(values.phone, 10),
               message: messageContent,
             };
-            this.props
-              .sendSms(data)
-              .then((res) => message.success(res))
-              .catch((e) => message.error(e.message));
+            axios
+              .post(`${baseUrl}/sms/send`, data)
+              .then((res) => {
+                if (res.status === 219) {
+                  message.warn("Your account balance is insufficient");
+                }
+              })
+              .catch((e) => message.error("Message not send try again !"));
           }
           this.props.getIncome(pagination).then((res) => {
             this.props.toggleModel();
-            // console.log("IncomeMobels -> incomeData -> this.props", this.props);
-            // this.props.handelAddPagination(res);
           });
         });
       }

@@ -6,23 +6,22 @@ import "../Cheques/SideDrawer.scss";
 import { employeeList } from "../../js/apiList";
 import ReactToPrint from "react-to-print";
 import DocumentPrint from "../PrintTemplate/DocumentPrint";
-
-const baseUrl = "http://localhost:8081";
+import { baseUrl } from "../../js/Helper";
 
 class ProfileView extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      userDocs: ""
+      userDocs: "",
     };
   }
 
-  componentDidUpdate = prevProps => {
+  componentDidUpdate = (prevProps) => {
     if (prevProps.visible !== this.props.visible)
-      this.props.getEmployeeDocs(this.props.data._id).then(res => {
+      this.props.getEmployeeDocs(this.props.data._id).then((res) => {
         this.setState({
-          userDocs: res
+          userDocs: res,
         });
       });
   };
@@ -54,7 +53,7 @@ class ProfileView extends Component {
                 backgroundColor: "#505D6F",
                 marginRight: 10,
                 color: "#ffffff",
-                float: "right"
+                float: "right",
               }}
             >
               <Icon
@@ -68,7 +67,7 @@ class ProfileView extends Component {
           content={() => this.componentRef}
         />
         <DocumentPrint
-          ref={el => (this.componentRef = el)}
+          ref={(el) => (this.componentRef = el)}
           //---------------------------------------Change title of report from here----------------------------------------------------
           name="Aavak rIpaaoT"
           className="profile-view-image"

@@ -16,6 +16,7 @@ import AddEmployee from "./AddEmployee/Index";
 import { FilterData } from "./FilterData";
 import ListingTable from "./ListingTable";
 import axios from "axios";
+import { baseUrl } from "../../js/Helper";
 export class Employees extends Component {
   gutters = {};
 
@@ -126,7 +127,7 @@ export class Employees extends Component {
       this.handelEmployeePopup();
     } else {
       axios
-        .post("http://localhost:8081/employee/add", data)
+        .post(`${baseUrl}/employee/add`, data)
         .then((res) => {
           this.props.getEmployee(this.state.pagination).then((res) => {
             this.setState({

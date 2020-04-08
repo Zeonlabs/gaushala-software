@@ -1,25 +1,25 @@
-export const animalCode = formData => {
+export const animalCode = (formData) => {
   const Array = [
     {
       type: 5,
-      count: formData.gay
+      count: formData.gay,
     },
     {
       type: 6,
-      count: formData.balad
+      count: formData.balad,
     },
     {
       type: 1,
-      count: formData.vacharda
+      count: formData.vacharda,
     },
     {
       type: 2,
-      count: formData.vachardi
+      count: formData.vachardi,
     },
     {
       type: 10,
-      count: formData.anny
-    }
+      count: formData.anny,
+    },
   ];
   return Array;
 };
@@ -28,9 +28,10 @@ const sumArray = (total, num) => {
   return total + num;
 };
 
-export const sumObjValuses = obj => Object.values(obj).reduce((a, b) => a + b);
+export const sumObjValuses = (obj) =>
+  Object.values(obj).reduce((a, b) => a + b);
 
-export const totalOfArray = array => {
+export const totalOfArray = (array) => {
   const total = array.reduce(sumArray);
   return total;
 };
@@ -128,3 +129,5 @@ export const convertTypeToNumber = (id, type) => {
     }
   }
 };
+
+export const baseUrl = "http://localhost:8081";
