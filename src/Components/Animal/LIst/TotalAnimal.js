@@ -3,7 +3,7 @@ import { Form, DatePicker, Icon, Button, Row, Col, Table } from "antd";
 import moment from "moment";
 import {
   getTotalAnimal,
-  getFilterTotalAnimal
+  getFilterTotalAnimal,
 } from "../../../Actions/Animal/TotalAnimal";
 import { connect } from "react-redux";
 import ReactToPrint from "react-to-print";
@@ -21,13 +21,13 @@ class TotalAnimal extends Component {
       sequence: 1,
       pagination: {
         page: 1,
-        limit: 20
+        limit: 20,
       },
       editData: "",
       income: false,
       loading: true,
       totalPage: 0,
-      filterPress: false
+      filterPress: false,
     };
     this.columns = [
       {
@@ -38,8 +38,8 @@ class TotalAnimal extends Component {
         className: "",
         render: (text, record) =>
           this.state.data.length >= 1 ? (
-            <div>{this.state.data.findIndex(x => x._id === text) + 1}</div>
-          ) : null
+            <div>{this.state.data.findIndex((x) => x._id === text) + 1}</div>
+          ) : null,
       },
       {
         title: "taarIKa",
@@ -51,27 +51,27 @@ class TotalAnimal extends Component {
           <div className="  english-font-input">
             {moment(text).format("DD-MM-YYYY")}
           </div>
-        )
+        ),
       },
       {
         title: "paSau naI Aavak",
         dataIndex: "added",
         key: "income",
-        className: "table-font-english td-total-animal-table"
+        className: "table-font-english td-total-animal-table",
         // render: text => <p>{text}</p>
       },
       {
         title: "paSau naI Javak",
         dataIndex: "given",
         key: "debit",
-        render: text => <p>{text}</p>,
-        className: "table-font-english td-total-animal-table"
+        render: (text) => <p>{text}</p>,
+        className: "table-font-english td-total-animal-table",
       },
       {
         title: "maRtyau paamaola paSauAao",
         dataIndex: "dead",
         key: "dead",
-        className: "table-font-english td-total-animal-table"
+        className: "table-font-english td-total-animal-table",
       },
       {
         title: "hala paSau saMKyaa",
@@ -80,23 +80,23 @@ class TotalAnimal extends Component {
             title: "naanaa",
             dataIndex: "small",
             key: "nana",
-            render: text => <p>{text}</p>,
-            className: "table-font-english td-total-animal-table"
+            render: (text) => <p>{text}</p>,
+            className: "table-font-english td-total-animal-table",
           },
           {
             title: "maaoTa",
             dataIndex: "big",
             key: "mota",
-            className: "table-font-english td-total-animal-table"
+            className: "table-font-english td-total-animal-table",
           },
           {
-            title: "kula",
+            title: "Anya",
             dataIndex: "other",
             key: "total",
-            className: "table-font-english td-total-animal-table"
-          }
-        ]
-      }
+            className: "table-font-english td-total-animal-table",
+          },
+        ],
+      },
     ];
   }
 
@@ -108,16 +108,16 @@ class TotalAnimal extends Component {
     // } else {
     this.props
       .getTotalAnimal(this.state.pagination)
-      .then(res => {
+      .then((res) => {
         this.setState({
           data: res.docs,
           loading: false,
-          totalPage: res.totalDocs
+          totalPage: res.totalDocs,
         });
       })
-      .catch(e => {
+      .catch((e) => {
         this.setState({
-          loading: false
+          loading: false,
         });
         // }
       });
@@ -125,13 +125,13 @@ class TotalAnimal extends Component {
 
   loadingTrue = () => {
     this.setState({
-      loading: true
+      loading: true,
     });
   };
 
   loadingFalse = () => {
     this.setState({
-      loading: false
+      loading: false,
     });
   };
 
@@ -141,7 +141,7 @@ class TotalAnimal extends Component {
     if (dates.length > 1) {
       value = {
         dateFrom: moment(dates[0]).format("YYYY-MM-DD"),
-        dateTo: moment(dates[1]).format("YYYY-MM-DD")
+        dateTo: moment(dates[1]).format("YYYY-MM-DD"),
       };
     } else {
       value = {};
@@ -149,29 +149,29 @@ class TotalAnimal extends Component {
     if (dates.length <= 1) {
       this.props
         .getTotalAnimal(this.state.pagination)
-        .then(res => {
+        .then((res) => {
           this.setState({
             data: res.docs,
             filterPress: false,
-            totalPage: res.totalDocs
+            totalPage: res.totalDocs,
           });
           this.loadingFalse();
         })
-        .catch(e => {
+        .catch((e) => {
           this.loadingFalse();
           // }
         });
     } else {
       this.props
         .getFilterTotalAnimal(value)
-        .then(res => {
+        .then((res) => {
           this.setState({
             data: res,
-            filterPress: true
+            filterPress: true,
           });
           this.loadingFalse();
         })
-        .catch(e => this.loadingFalse());
+        .catch((e) => this.loadingFalse());
     }
   };
 
@@ -179,26 +179,26 @@ class TotalAnimal extends Component {
     this.props.back();
   };
 
-  paginate = page => {
+  paginate = (page) => {
     this.loadingTrue();
     this.setState(
       {
         pagination: {
           page,
-          limit: 20
-        }
+          limit: 20,
+        },
       },
       () =>
         this.props
           .getTotalAnimal(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              totalPage: res.totalDocs
+              totalPage: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse())
+          .catch((e) => this.loadingFalse())
     );
   };
 
@@ -233,8 +233,8 @@ class TotalAnimal extends Component {
                     Today: [moment(), moment()],
                     "This Month": [
                       moment().startOf("month"),
-                      moment().endOf("month")
-                    ]
+                      moment().endOf("month"),
+                    ],
                   }}
                   onChange={this.onChange}
                 />
@@ -274,7 +274,7 @@ class TotalAnimal extends Component {
                   <ReportPrint
                     //---------------------------------------Change title of report from here----------------------------------------------------
                     name="kula paSauAao nau rPsTr"
-                    ref={el => (this.componentRef = el)}
+                    ref={(el) => (this.componentRef = el)}
                     data={this.state.data || []}
                     type="Expense"
                     column={TotalReportColumn}
@@ -296,7 +296,7 @@ class TotalAnimal extends Component {
                     onChange: this.paginate,
                     current: this.state.pagination.page,
                     total: this.state.totalPage,
-                    pageSize: this.state.pagination.limit
+                    pageSize: this.state.pagination.limit,
                   }
             }
             dataSource={this.state.data}
@@ -308,11 +308,11 @@ class TotalAnimal extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  ...state.Animals
+const mapStateToProps = (state) => ({
+  ...state.Animals,
 });
 
 export default connect(mapStateToProps, {
   getFilterTotalAnimal,
-  getTotalAnimal
+  getTotalAnimal,
 })(TotalAnimal);

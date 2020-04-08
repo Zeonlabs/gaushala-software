@@ -17,29 +17,29 @@ class CreaditAnimal extends Component {
       value: "",
       data: "",
       tableStatus: false,
-      cancel: false
+      cancel: false,
     };
   }
 
   componentDidMount = () => {};
 
-  componentDidUpdate = prevProps => {
+  componentDidUpdate = (prevProps) => {
     if (prevProps !== this.props) {
       const { data } = this.props;
       if (this.props.type) {
         this.setState({
-          data: data
+          data: data,
         });
         if (!this.state.tableStatus) {
           this.setState({
-            tableData: data.animal
+            tableData: data.animal,
           });
         }
       }
     }
   };
 
-  onChange = value => {
+  onChange = (value) => {
     this.setState({ value });
   };
 
@@ -55,7 +55,7 @@ class CreaditAnimal extends Component {
       address: values.address,
       phone: parseInt(values.phone, 10),
       total: finalTotal,
-      animal: this.state.tableData
+      animal: this.state.tableData,
     };
     if (localStorage.getItem("reversePin") === "205") {
       // this.loadingFalse();
@@ -66,7 +66,7 @@ class CreaditAnimal extends Component {
         this.props.submit(this.props.data._id, data);
         this.props.form.resetFields();
       } else {
-        this.props.addIncomeAnimal(data).then(res => {
+        this.props.addIncomeAnimal(data).then((res) => {
           this.props.toggleModel();
           this.props.form.resetFields();
         });
@@ -74,10 +74,10 @@ class CreaditAnimal extends Component {
     }
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
-      const totalAmount = this.state.tableData.map(val =>
+      const totalAmount = this.state.tableData.map((val) =>
         parseInt(val.count, 10)
       );
       const finalTotal = totalAmount.reduce(this.sumArray);
@@ -87,29 +87,29 @@ class CreaditAnimal extends Component {
     });
   };
 
-  onTableSubmit = data => {
+  onTableSubmit = (data) => {
     const tableData = animalCode(data);
     this.setState({
       tableData,
-      tableStatus: true
+      tableStatus: true,
     });
   };
 
-  onChangeType = e => {
+  onChangeType = (e) => {
     this.setState({
-      type: e.target.value
+      type: e.target.value,
     });
   };
 
-  onChangeSawingType = e => {};
+  onChangeSawingType = (e) => {};
 
-  onChanges = value => {};
+  onChanges = (value) => {};
 
   onBlur = () => {};
 
   onFocus = () => {};
 
-  onSearch = val => {};
+  onSearch = (val) => {};
   handleReset = () => {
     this.props.form.resetFields();
     this.props.toggleModel();
@@ -135,7 +135,7 @@ class CreaditAnimal extends Component {
                 <Form.Item className="date-input" label="taarIKa">
                   {getFieldDecorator("date", {
                     rules: [{ required: true, message: "Enter The Date!" }],
-                    initialValue: type && moment(data.date)
+                    initialValue: type && moment(data.date),
                   })(<DatePicker className="english-font-input" />)}
                 </Form.Item>
               </Col>
@@ -144,7 +144,7 @@ class CreaditAnimal extends Component {
                 <Form.Item className="" label="paSau mauknaar nau rPsTr">
                   {getFieldDecorator("name", {
                     rules: [{ required: true }],
-                    initialValue: type && data.name
+                    initialValue: type && data.name,
                   })(<Input placeholder="naama" />)}
                 </Form.Item>
               </Col>
@@ -156,7 +156,7 @@ class CreaditAnimal extends Component {
                   <Form.Item className="" label="maaobaa[la naM">
                     {getFieldDecorator("phone", {
                       rules: [{ required: true }],
-                      initialValue: type && data.phone
+                      initialValue: type && data.phone,
                     })(
                       <NumericInput
                         value={this.state.value}
@@ -167,7 +167,7 @@ class CreaditAnimal extends Component {
                 ) : (
                   <Form.Item className="" label="maaobaa[la naM">
                     {getFieldDecorator("phone", {
-                      rules: [{ required: true, len: 10 }]
+                      rules: [{ required: true, len: 10 }],
                       // initialValue: type && data.phone
                     })(
                       <NumericInput
@@ -183,11 +183,11 @@ class CreaditAnimal extends Component {
                 <Form.Item className="ant-col-24" label="sarnaamau:">
                   {getFieldDecorator("address", {
                     rules: [{ required: true }],
-                    initialValue: type && data.address
+                    initialValue: type && data.address,
                   })(
                     <Input
                       style={{
-                        width: "100%"
+                        width: "100%",
                       }}
                       placeholder="sarnaamau"
                     />
@@ -234,8 +234,8 @@ class CreaditAnimal extends Component {
 }
 const CreaditAnimals = Form.create({ name: "Income" })(CreaditAnimal);
 
-const mapStateToProps = state => ({
-  ...state.Test
+const mapStateToProps = (state) => ({
+  ...state.Test,
 });
 
 export default connect(mapStateToProps, { addIncomeAnimal })(CreaditAnimals);

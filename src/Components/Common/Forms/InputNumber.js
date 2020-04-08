@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Input } from "antd";
 
 class NumericInput extends Component {
-  onChange = e => {
+  onChange = (e) => {
     const { value } = e.target;
     const reg = /^-?[0-9]*(\.[0-9]*)?$/;
     if ((!isNaN(value) && reg.test(value)) || value === "" || value === "-") {
@@ -11,17 +11,19 @@ class NumericInput extends Component {
   };
 
   // '.' at the end or only '-' in the input box.
-  onBlur = () => {
-    const { value, onBlur, onChange } = this.props;
-    let valueTemp = value;
-    if (value.charAt(value.length - 1) === "." || value === "-") {
-      valueTemp = value.slice(0, -1);
-    }
-    onChange(valueTemp.replace(/0*(\d+)/, "$1"));
-    if (onBlur) {
-      onBlur();
-    }
-  };
+  // onBlur = () => {
+  //   const { value, onBlur, onChange } = this.props;
+  //   console.log("NumericInput -> onBlur -> value", value);
+  //   let valueTemp = value;
+
+  //   if (value.charAt(value.length - 1) === "." || value === "-") {
+  //     valueTemp = value.slice(0, -1);
+  //   }
+  //   onChange(valueTemp.replace(/0*(\d+)/, "$1"));
+  //   if (onBlur) {
+  //     onBlur();
+  //   }
+  // };
 
   render() {
     // const { value } = this.props;
@@ -34,7 +36,7 @@ class NumericInput extends Component {
       <Input
         {...this.props}
         onChange={this.onChange}
-        onBlur={this.onBlur}
+        // onBlur={this.onBlur}
         placeholder=""
         maxLength={10}
         className=" gujarati-font"

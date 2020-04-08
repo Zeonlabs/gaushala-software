@@ -8,6 +8,7 @@ import {
   Radio,
   Button,
   InputNumber,
+  message,
   Row,
   Col,
 } from "antd";
@@ -81,7 +82,7 @@ class IncomeMobels extends Component {
   incomeData = (values, finalTotal, itemData) => {
     const date = moment(values.date).format("YYYY-MM-DD");
     const messageDate = moment(values.date).format("DD-MM-YYYY");
-    const message = `સિતારામ ગૌશાળા ટ્સ્ટ ગામઃવિરડી, તા:ગારીયાધાર, જી: ભાવનગર,૨જી.નં :ઈ-3256- ભાવનગર આપ શ્રી દ્રારા તા:${messageDate} ના રોજ ₹ ${finalTotal}/- દાન પેટે પ્રાપ્ત થયેલ છે. સહકાર ખુબ આભાર.`;
+    const messageContent = `સિતારામ ગૌશાળા ટ્સ્ટ ગામઃવિરડી, તા:ગારીયાધાર, જી: ભાવનગર,૨જી.નં :ઈ-3256- ભાવનગર આપ શ્રી દ્રારા તા:${messageDate} ના રોજ ₹ ${finalTotal}/- દાન પેટે પ્રાપ્ત થયેલ છે. સહકાર ખુબ આભાર.`;
 
     const data = {
       slip_no: values.slip_no,
@@ -115,9 +116,12 @@ class IncomeMobels extends Component {
         if (values.sms === "yes") {
           const data = {
             phone: parseInt(values.phone, 10),
-            message,
+            message: messageContent,
           };
-          this.props.sendSms(data);
+          this.props
+            .sendSms(data)
+            .then((res) => message.success(res))
+            .catch((e) => message.error(e.message));
         }
         // this.props.editIncome(id, data).then(res => this.props.toggleModel());
       } else {
@@ -129,9 +133,12 @@ class IncomeMobels extends Component {
           if (values.sms === "yes") {
             const data = {
               phone: parseInt(values.phone, 10),
-              message,
+              message: messageContent,
             };
-            this.props.sendSms(data);
+            this.props
+              .sendSms(data)
+              .then((res) => message.success(res))
+              .catch((e) => message.error(e.message));
           }
           this.props.getIncome(pagination).then((res) => {
             this.props.toggleModel();
