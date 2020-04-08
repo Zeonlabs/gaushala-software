@@ -16,31 +16,33 @@ class AnimalChart extends Component {
 
   componentDidMount = () => {
     this.props.getAnimalChart(this.props.statusCode).then((res) => {
+      console.log("AnimalChart -> componentDidMount -> res", res);
       const ArrayMap = Object.values(res.stats.animal);
+      console.log("AnimalChart -> componentDidMount -> ArrayMap", ArrayMap);
 
       const newData = [
         {
           id: "gaaya",
           label: "gaaya",
-          value: ArrayMap[0],
+          value: ArrayMap[2],
           color: "#F9C501",
         },
         {
           id: "baLad",
           label: "baLad",
-          value: ArrayMap[1],
+          value: ArrayMap[3],
           color: "#53D767",
         },
         {
           id: "vaaCrDa",
           label: "vaaCrDa",
-          value: ArrayMap[2],
+          value: ArrayMap[0],
           color: "#021322",
         },
         {
           id: "vaaCrDI",
           label: "vaaCrDI",
-          value: ArrayMap[3],
+          value: ArrayMap[1],
           color: "#40a9ff",
         },
         {
