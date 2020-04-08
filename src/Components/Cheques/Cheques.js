@@ -98,7 +98,7 @@ export class Cheques extends Component {
   handelShowPopup = () => {
     this.setState({
       openPopup: !this.state.openPopup,
-      income: !this.state.income,
+      income: false,
     });
   };
 
