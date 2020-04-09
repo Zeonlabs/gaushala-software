@@ -24,6 +24,7 @@ class Home extends Component {
       expenceData: [{ x: 0, y: 0 }],
       totalIncome: 0,
       totalExpense: 0,
+      animal_total: 0,
     };
   }
 
@@ -65,6 +66,21 @@ class Home extends Component {
       this.setState({
         capital: this.props.totalAnimalCount.capital,
       });
+      if (this.props.totalAnimalCount === null) {
+        this.props.getAnimalChart().then((res) => {
+          const total = res.stats.animal;
+          delete total.big;
+          delete total.small;
+          const total_count = this.sumValuses(total);
+          this.setState({
+            animal_total: total_count,
+          });
+        });
+      } else {
+        this.setState({
+          animal_total: this.props.totalAnimalCount.animal_total,
+        });
+      }
     }
   };
   formatValue = (value) => value.toFixed(0);
@@ -86,8 +102,16 @@ class Home extends Component {
           <div className="btml-grph">
             <div className="piechrt-div">
               <div className="row">
-                <h3 className="dashbrd-label">kula paSauAao : &nbsp;</h3>
-                <h3 className="dashbrd-label row"> 523 </h3>
+                <h3 className="dashbrd-label ">kula paSauAao : &nbsp;</h3>
+                {/* <==================TOTAL Animal=======================> */}
+                <h3 className="dashbrd-label row animal-total-dis">
+                  <AnimatedNumber
+                    className="text-center "
+                    value={this.state.animal_total}
+                    duration={1800}
+                    formatValue={this.formatValue}
+                  />{" "}
+                </h3>
               </div>
               <AnimalChart
                 statusCode={

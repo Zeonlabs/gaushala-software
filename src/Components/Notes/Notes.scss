@@ -11,11 +11,11 @@
   }
   // display: flex;
   .ant-card-bordered {
-    border: 1px solid #000000;
+    border: 1px solid #001529;
     border-radius: 5px;
   }
   .ant-card-cover {
-    background-color: black;
+    background-color: #001529;
     h1 {
       text-align: center;
       color: white;
@@ -57,7 +57,7 @@
       }
     }
     li:last-child {
-      border: 1px solid black;
+      border: 1px solid #001529;
       border-right: none;
       border-bottom-right-radius: 5px;
       border-left: none;

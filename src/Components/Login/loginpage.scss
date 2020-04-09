@@ -34,7 +34,7 @@
     margin-top: 5px !important;
     margin: auto;
     width: 95% !important;
-    cursor: pointer;
+    
   }
   .ant-row-center {
     margin-top: 10px !important;
@@ -76,5 +76,12 @@
     background-color: #eaeaea;
     border-radius: 4px;
     margin-top: 20px;
+  }
+  .password-forgot{
+    width: 25% !important;
+    font-size: 18px;
+    color: #096dd9;
+    cursor: pointer;
+    font-weight: 600;
   }
 }

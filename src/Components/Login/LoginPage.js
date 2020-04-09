@@ -156,7 +156,7 @@ class Login extends Component {
                 <div className="content-row">
                   <div>
                     <h1 className="text-center">saItaarama gaaOSaaLaa T/sT</h1>
-                    <h2 className="text-center">paIna naMbar ]maorao</h2>
+                    <h1 className="text-center">paIna naMbar ]maorao</h1>
                   </div>
                   <div className="ant-row-center">
                     <InputNumber
@@ -166,7 +166,7 @@ class Login extends Component {
                     />
                   </div>
                   <div className="row-resetpassword">
-                    <h4 onClick={this.showModal}>paasava-D BaulaI gayaa.</h4>
+                    <h4 className="password-forgot" onClick={this.showModal}>paasava-D BaulaI gayaa?</h4>
                   </div>
                   <div className="ant-row-center">
                     {/* ------------------------------Save Button--------------------------------- */}

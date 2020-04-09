@@ -158,9 +158,8 @@ class ResicentalAnimal extends Component {
                   kula paSauAao naI saMKyaa:
                 </label>
                 <Tag
-                  className="tag-clock "
+                  className="tag-clock"
                   color="#f50"
-                  style={{ marginTop: "-2px" }}
                 >
                   {this.state.animal_total}
                 </Tag>

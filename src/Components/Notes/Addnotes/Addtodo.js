@@ -92,6 +92,7 @@ class NormalLoginForm extends Component {
                     <TextArea
                       // prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                       placeholder="naaoMGa AhI ]maorao."
+                      style={{fontSize:'24px',}}
                       rows={8}
                     />
                   )}
