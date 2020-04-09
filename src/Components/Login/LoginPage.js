@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { loginUser, getOtp, resetPin } from "../../Actions/SetUpUser";
+import { getAnimalChart } from "../../Actions/ChartActions";
 import { Button, InputNumber, message } from "antd";
 import { withRouter } from "react-router";
 import FirstPage from "./FirstPage";
@@ -28,17 +29,23 @@ class Login extends Component {
   }
 
   componentDidMount = () => {
-    localStorage.getItem("addUser");
-    if (localStorage.getItem("addUser") === null) {
-      this.setState({
-        firstPage: true,
+    this.props
+      .getAnimalChart()
+      .then((res) => {
+        if (res.lologgedIn === false) {
+          this.setState({
+            firstPage: true,
+          });
+        } else {
+          this.setState({
+            firstPage: false,
+            mobilenumber: localStorage.getItem("phone"),
+          });
+        }
+      })
+      .catch((e) => {
+        console.log("Login -> componentDidMount -> e", e);
       });
-    } else {
-      this.setState({
-        firstPage: false,
-        mobilenumber: localStorage.getItem("phone"),
-      });
-    }
   };
 
   handleSubmit = () => {
@@ -166,7 +173,9 @@ class Login extends Component {
                     />
                   </div>
                   <div className="row-resetpassword">
-                    <h4 className="password-forgot" onClick={this.showModal}>paasava-D BaulaI gayaa?</h4>
+                    <h4 className="password-forgot" onClick={this.showModal}>
+                      paasava-D BaulaI gayaa?
+                    </h4>
                   </div>
                   <div className="ant-row-center">
                     {/* ------------------------------Save Button--------------------------------- */}
@@ -223,5 +232,5 @@ class Login extends Component {
 
 // const Logins = Form.create({ name: "Income" })(Login);
 export default withRouter(
-  connect(null, { loginUser, getOtp, resetPin })(Login)
+  connect(null, { getAnimalChart, loginUser, getOtp, resetPin })(Login)
 );
