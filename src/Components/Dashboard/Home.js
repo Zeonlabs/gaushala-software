@@ -105,12 +105,7 @@ class Home extends Component {
                 <h3 className="dashbrd-label ">kula paSauAao : &nbsp;</h3>
                 {/* <==================TOTAL Animal=======================> */}
                 <h3 className="dashbrd-label row animal-total-dis">
-                  <AnimatedNumber
-                    className="text-center "
-                    value={this.state.animal_total}
-                    duration={1800}
-                    formatValue={this.formatValue}
-                  />{" "}
+                  {this.state.animal_total}
                 </h3>
               </div>
               <AnimalChart
@@ -149,14 +144,16 @@ class Home extends Component {
                   >
                     <div className="color-yellow">
                       <h3 className="yellow current-balance">baolaonsa</h3>
-                      <h2 className="text-center">
-                        <AnimatedNumber
+                      <h1 className="text-center">
+                        ₹&nbsp;
+                        <span>{this.state.capital}</span>
+                        {/* <AnimatedNumber
                           className="text-center"
                           value={this.state.capital}
                           duration={1800}
                           formatValue={this.formatValue}
-                        />
-                      </h2>
+                        /> */}
+                      </h1>
                     </div>
                   </div>
                 </div>

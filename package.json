@@ -15,10 +15,32 @@
     "postinstall": "electron-builder install-app-deps",
     "electron": "electron .",
     "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=icons/win-icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Gaushala Trust Accounting\"",
-    "package-linux": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=linux --arch=x64 --icon=icons/linux-icon.png --prune=true --out=release-builds"
-
+    "package-linux": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=linux --arch=x64 --icon=icons/linux-icon.png --prune=true --out=release-builds",
+    "electron-pack": "build -mw",
+    "dist": "electron-builder"
   },
-  "main": "public/main.js",
+  "main": "public/electron.js",
+  "homepage": "./",
+  "author": {
+    "name": "Zeonlabs",
+    "email": "zeonlabs@outlook.com",
+    "url": "https://zeonlabs.co"
+  },
+  "build": {
+    "appId": "com.zeonlabs.gaushala-trust-accounting",
+    "productName": "Gaushala Trust Accounting",
+    "copyright": "Copyright © 2020 ${author}",
+    "mac": {
+      "category": "public.app-category.utilities"
+    },
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
@@ -49,7 +71,6 @@
     "cors": "^2.8.5",
     "cross-env": "^6.0.2",
     "dotenv": "^8.1.0",
-    "electron": "^6.0.4",
     "electron-is-dev": "^1.1.0",
     "electron-logger": "0.0.3",
     "electron-packager": "^14.2.1",
@@ -97,6 +118,7 @@
     "@types/mongoose-paginate-v2": "^1.3.1",
     "electron-builder": "^21.2.0",
     "electron-rebuild": "^1.10.0",
-    "tslint": "^6.0.0"
+    "tslint": "^6.0.0",
+    "electron": "^6.0.4"
   }
 }

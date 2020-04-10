@@ -6,7 +6,7 @@ export const BarChart = ({ data }) => (
     data={data}
     keys={["income", "expense"]}
     indexBy="type"
-    margin={{ top: 20, right: 30, bottom: 20, left: 85 }}
+    margin={{ top: 20, right: 10, bottom: 20, left: 110 }}
     padding={0.45}
     colors={bar => (bar.id === "income" ? "#36B971" : "rgb(255, 77, 79)")}
     axisTop={null}
@@ -24,7 +24,7 @@ export const BarChart = ({ data }) => (
       tickRotation: 0,
       legend: "rkma",
       legendPosition: "middle",
-      legendOffset: -75,
+      legendOffset: -95,
       tickValues: 5
     }}
     labelSkipWidth={12}
