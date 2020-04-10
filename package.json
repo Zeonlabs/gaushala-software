@@ -14,8 +14,8 @@
     "electron-dev": "concurrently \"npm run start\" \"wait-on http://localhost:3000 && electron .\"",
     "postinstall": "electron-builder install-app-deps",
     "electron": "electron .",
-    "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=icons/win-icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Gaushala Trust Accounting\"",
-    "package-linux": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=linux --arch=x64 --icon=icons/linux-icon.png --prune=true --out=release-builds",
+    "package-win": "electron-packager . --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Gaushala Trust Accounting\"",
+    "package-linux": "electron-packager . gaushala-trust-accounting --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/linux-icon.png --prune=true --out=release-builds",
     "electron-pack": "build -mw",
     "dist": "electron-builder"
   },
