@@ -1,5 +1,6 @@
 {
   "name": "gaushala-trust-accounting",
+  "homepage":"./",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -20,7 +21,6 @@
     "dist": "electron-builder"
   },
   "main": "public/electron.js",
-  "homepage": "./",
   "author": {
     "name": "Zeonlabs",
     "email": "zeonlabs@outlook.com",
@@ -32,6 +32,12 @@
     "copyright": "Copyright © 2020 ${author}",
     "mac": {
       "category": "public.app-category.utilities"
+    },
+    "win": {
+      "target": [
+        "nsis",
+        "msi"
+      ]
     },
     "files": [
       "build/**/*",

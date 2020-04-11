@@ -10,6 +10,9 @@ require('update-electron-app')({
   repo: 'Zeonlabs/gaushala-software.git'
 })
 
+//start server
+require("./server/dist/server.js");
+
 let mainWindow;
 
 function createWindow() {
@@ -27,8 +30,6 @@ function createWindow() {
   );
   mainWindow.on("closed", () => (mainWindow = null));
 }
-
-let server = require("../server/dist/server.js");
 
 app.on("ready", createWindow);
 
