@@ -63,7 +63,7 @@ export const TotalReportColumn = [
         title: "Anya",
         dataIndex: "other",
         key: "mota",
-        className: "table-font-english td-total-animal-table",
+        className: "gujarati-font-input-table"
       },
       {
         title: "kula",
