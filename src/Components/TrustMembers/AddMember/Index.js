@@ -11,7 +11,7 @@ class Index extends Component {
     this.state = {};
   }
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -55,7 +55,7 @@ class Index extends Component {
                   <Form.Item className="" label="haodao" hasFeedback>
                     {getFieldDecorator("position", {
                       rules: [{ required: true }],
-                      initialValue: type === "edit" ? data.position : ""
+                      initialValue: type === "edit" ? data.position : "",
                       // initialValue: type && data.position
                     })(
                       <Select
@@ -66,6 +66,9 @@ class Index extends Component {
                         <Option value="]papa`mauKa EaI">]papa`mauKa EaI</Option>
                         <Option value="maM~aI EaI">maM~aI EaI </Option>
                         <Option value="KaJanacaI">KaJanacaI</Option>
+                        <Option value="sahKaJanacaI EaI">
+                          sahKaJanacaI EaI
+                        </Option>
                         <Option value="sahmaM~aI EaI">sahmaM~aI EaI</Option>
                         <Option value="T/sTI EaI">T/sTI EaI</Option>
                         <Option value="saMgaZnamaM~aI EaI">
@@ -81,7 +84,7 @@ class Index extends Component {
                     {getFieldDecorator("name", {
                       rules: [{ required: true, message: "Enter The Name" }],
                       // initialValue: type && data.name
-                      initialValue: type === "edit" ? data.name : ""
+                      initialValue: type === "edit" ? data.name : "",
                     })(<Input placeholder="naama" />)}
                   </Form.Item>
                 </Col>
@@ -94,7 +97,7 @@ class Index extends Component {
                     {getFieldDecorator("phone", {
                       rules: [{ required: true }],
                       // initialValue: type === "edit" && data.phone
-                      initialValue: type === "edit" ? data.phone : ""
+                      initialValue: type === "edit" ? data.phone : "",
                     })(
                       <Input
                         type="number"

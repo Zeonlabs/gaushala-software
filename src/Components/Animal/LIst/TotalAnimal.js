@@ -90,11 +90,19 @@ class TotalAnimal extends Component {
             className: "table-font-english td-total-animal-table",
           },
           {
+            title: "Anya",
+            dataIndex: "other",
+            key: "mota",
+            className: "table-font-english td-total-animal-table",
+          },
+          {
             title: "kula",
             dataIndex: "other",
             key: "total",
             className: "table-font-english td-total-animal-table",
-            render: (text, record) => <p>{record.small + record.big}</p>,
+            render: (text, record) => (
+              <p>{record.small + record.big + record.other}</p>
+            ),
           },
         ],
       },

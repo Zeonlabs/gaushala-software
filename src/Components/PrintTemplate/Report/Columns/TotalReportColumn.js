@@ -60,11 +60,19 @@ export const TotalReportColumn = [
         className: "gujarati-font-input-table",
       },
       {
+        title: "Anya",
+        dataIndex: "other",
+        key: "mota",
+        className: "table-font-english td-total-animal-table",
+      },
+      {
         title: "kula",
         dataIndex: "other",
         key: "total",
         className: "gujarati-font-input-table",
-        render: (text, record) => <p>{record.small + record.big}</p>,
+        render: (text, record) => (
+          <p>{record.small + record.big + record.other}</p>
+        ),
       },
     ],
   },

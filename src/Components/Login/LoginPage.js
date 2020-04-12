@@ -32,7 +32,7 @@ class Login extends Component {
     this.props
       .getAnimalChart()
       .then((res) => {
-        if (res.lologgedIn === false) {
+        if (res.loggedIn === false) {
           this.setState({
             firstPage: true,
           });

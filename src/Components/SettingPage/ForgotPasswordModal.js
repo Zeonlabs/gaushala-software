@@ -41,10 +41,10 @@ class ForgotPasswordModal extends Component {
               <Row gutter={[16, 16]}>
                 <Col span={8}></Col>
                 <Col span={8}>
-                  <Form.Item label="nvo pIn n>br ]mero:">
+                  <Form.Item label="paIna naMbar ]maorao ">
                     <InputNumber onChange={this.props.handelFirstPin} />
                   </Form.Item>
-                  <Form.Item label="frI pIn n>br ]mero:">
+                  <Form.Item label=" FrI paIna naMbar ]maorao">
                     <InputNumber onChange={this.props.handelSecondPin} />
                   </Form.Item>
                 </Col>
