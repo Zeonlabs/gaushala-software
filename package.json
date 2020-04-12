@@ -125,6 +125,6 @@
     "electron-builder": "^21.2.0",
     "electron-rebuild": "^1.10.0",
     "tslint": "^6.0.0",
-    "electron": "^6.0.4"
+    "electron": "^8.2.1"
   }
 }
