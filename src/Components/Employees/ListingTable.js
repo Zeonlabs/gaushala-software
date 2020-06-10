@@ -7,7 +7,7 @@ class ListingTable extends Component {
     super(props);
     this.state = {
       userRecord: "",
-      profileView: false
+      profileView: false,
     };
     this.columns = [
       {
@@ -18,37 +18,37 @@ class ListingTable extends Component {
         width: 150,
         render: (text, record) =>
           this.props.data.length >= 1 ? (
-            <div>{this.props.data.findIndex(x => x._id === text) + 1}</div>
-          ) : null
+            <div>{this.props.data.findIndex((x) => x._id === text) + 1}</div>
+          ) : null,
       },
       {
         title: "k-macaarI naao pa`kar",
         dataIndex: "type",
         width: 200,
         key: "name",
-        render: text => <p>{text}</p>,
-        className: ""
+        render: (text) => <p>{text}</p>,
+        className: "",
       },
       {
         title: "naama",
         dataIndex: "name",
         key: "age",
         width: 300,
-        className: ""
+        className: "",
       },
       {
         title: "maaobaa[la naMbar",
         dataIndex: "phone",
         key: "phone",
         className: "",
-        width: 180
+        width: 180,
       },
       {
         title: "sarnaamau",
         dataIndex: "address",
         key: "address",
         width: 200,
-        className: ""
+        className: "",
       },
       {
         title: "AoDIT e DIlaIT",
@@ -90,15 +90,15 @@ class ListingTable extends Component {
               />
             </div>
           </>
-        )
-      }
+        ),
+      },
     ];
   }
 
-  handelProfile = record => {
+  handelProfile = (record) => {
     this.setState({
       userRecord: record,
-      profileView: true
+      profileView: true,
     });
   };
 
@@ -112,7 +112,7 @@ class ListingTable extends Component {
 
   handelDrawerClose = () => {
     this.setState({
-      profileView: !this.state.profileView
+      profileView: !this.state.profileView,
     });
   };
 
@@ -125,6 +125,7 @@ class ListingTable extends Component {
           data={this.state.userRecord}
         />
         <Table
+          className="trustmember-table-scroll table-income"
           columns={this.columns}
           loading={this.props.loading}
           pagination={
@@ -134,7 +135,7 @@ class ListingTable extends Component {
                   onChange: this.props.pagination,
                   current: this.props.current,
                   total: this.props.total,
-                  pageSize: this.props.pageSize
+                  pageSize: this.props.pageSize,
                 }
           }
           dataSource={this.props.data}

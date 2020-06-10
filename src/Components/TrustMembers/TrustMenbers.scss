@@ -20,10 +20,16 @@
   width: 100%;
 }
 
-.filter-select-width{
-    width:45%
+.filter-select-width {
+  width: 45%;
 }
 
-.listing-table-wrapper{
-    margin-top: 28px;
+.listing-table-wrapper {
+  margin-top: 28px;
+}
+
+.trustmember-table-scroll {
+  .ant-table {
+    height: calc(100vh - 50vh) !important;
+  }
 }

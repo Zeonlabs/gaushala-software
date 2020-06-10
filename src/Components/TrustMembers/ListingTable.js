@@ -15,30 +15,30 @@ class ListingTable extends Component {
         width: 100,
         render: (text, record) =>
           this.props.data.length >= 1 ? (
-            <div>{this.props.data.findIndex(x => x._id === text) + 1}</div>
-          ) : null
+            <div>{this.props.data.findIndex((x) => x._id === text) + 1}</div>
+          ) : null,
       },
       {
         title: "haodao",
         dataIndex: "position",
         key: "2",
         width: 200,
-        render: text => <p>{text}</p>,
-        className: ""
+        render: (text) => <p>{text}</p>,
+        className: "",
       },
       {
         title: "naama",
         dataIndex: "name",
         key: "3",
         width: 300,
-        className: ""
+        className: "",
       },
       {
         title: "maaobaa[la naMbar",
         dataIndex: "phone",
         key: "4",
         width: 250,
-        className: ""
+        className: "",
       },
       {
         title: "AoDIT e DIlaIT",
@@ -71,8 +71,8 @@ class ListingTable extends Component {
               </Popconfirm>
             </div>
           </>
-        )
-      }
+        ),
+      },
     ];
   }
 
@@ -88,6 +88,7 @@ class ListingTable extends Component {
     return (
       <div>
         <Table
+          className="trustmember-table-scroll table-income"
           columns={this.columns}
           loading={this.props.loading}
           pagination={
@@ -97,7 +98,7 @@ class ListingTable extends Component {
                   onChange: this.props.pagination,
                   current: this.props.current,
                   total: this.props.total,
-                  pageSize: this.props.pageSize
+                  pageSize: this.props.pageSize,
                 }
           }
           dataSource={this.props.data}

@@ -47,7 +47,7 @@ class SiderBar extends Component {
         <div className="logo">
           <h1
             style={{
-              color: "#ffffff"
+              color: "#ffffff",
             }}
           >
             saItaarama gaaOSaaLaa T/sT
@@ -87,12 +87,12 @@ class SiderBar extends Component {
           {/* -----------------------------------------------------------------
         -------------------------Cheque-Button-Sider----------------------
         --------------------------------------------------------------------- */}
-          <Menu.Item key={routes.cheques}>
+          {/* <Menu.Item key={routes.cheques}>
             <Link to={routes.cheques}>
               <Icon className="menu-list-icon" type="audit" />
               <span className="menu-list-title">caok pa`InT</span>
             </Link>
-          </Menu.Item>
+          </Menu.Item> */}
           {/* -----------------------------------------------------------------
         -------------------------Animal-Button-Sider----------------------
         --------------------------------------------------------------------- */}
