@@ -17,7 +17,16 @@ class ReportPrint extends React.Component {
 
           <div>
             {/* ---------------------------------------Report Name--------------------------------- */}
-            <h1 className="slip-sign-text gujarati-font">{" "}: &nbsp;<span className="report-name gujarati-font">{this.props.name}</span>&nbsp; :{" "}
+            <h1 className="slip-sign-text gujarati-font">
+              {" "}
+              : &nbsp;
+              <span className="report-name gujarati-font">
+                {this.props.name}
+              </span>
+              &nbsp; :{" "}
+              <span className="report-name gujarati-font">
+                TaoTla :{this.props.total}
+              </span>
             </h1>
           </div>
 

@@ -40,9 +40,10 @@ class Income extends Component {
       editData: { money: { type: "cash" } },
       pagination: {
         page: 1,
-        limit: 20,
+        limit: 10,
       },
       total: 0,
+      filterTotal: 0,
       filterPress: false,
     };
     this.columns = [
@@ -176,7 +177,7 @@ class Income extends Component {
   componentDidMount = () => {
     const pagination = {
       page: 1,
-      limit: 20,
+      limit: 10,
     };
 
     // const id = this.props.match.params.pid;
@@ -261,7 +262,7 @@ class Income extends Component {
       {
         pagination: {
           page,
-          limit: 20,
+          limit: 10,
         },
       },
       () =>
@@ -302,6 +303,12 @@ class Income extends Component {
       this.props
         .getFilterIncome(data)
         .then((res) => {
+          res.map((value) => {
+            return this.setState({
+              filterTotal:
+                parseInt(this.state.filterTotal) + parseInt(value.money.amount),
+            });
+          });
           this.setState({
             data: res,
             filterPress: true,
@@ -350,6 +357,7 @@ class Income extends Component {
         data: res.docs,
         total: res.totalDocs,
         filterPress: false,
+        filterTotal: 0,
       });
       this.loadingFalse();
     });
@@ -393,6 +401,7 @@ class Income extends Component {
               data={this.state.data || []}
               type="Expense"
               column={IncomeColumn}
+              total={this.state.filterTotal}
             />
           </div>
           <Button
@@ -410,6 +419,11 @@ class Income extends Component {
             />
             rIsaoT
           </Button>
+          {this.state.filterPress ? (
+            <h1>TaoTla : {this.state.filterTotal}</h1>
+          ) : (
+            ""
+          )}
 
           <ReactToPrint
             trigger={() => (
@@ -423,6 +437,8 @@ class Income extends Component {
                   marginRight: 10,
                   color: "#ffffff",
                   float: "right",
+                  position: "absolute",
+                  right: "28px",
                 }}
               >
                 <Icon

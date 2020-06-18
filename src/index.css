@@ -269,5 +269,5 @@ label {
   overflow: hidden;
 }
 .income-form-wrapper {
-  display: flow-root !important;
+  /* display: flow-root !important; */
 }

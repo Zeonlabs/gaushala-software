@@ -44,9 +44,10 @@ class Income extends Component {
       loading: true,
       data: "",
       editData: { money: { type: "cash" } },
+      filterTotal: 0,
       pagination: {
         page: 1,
-        limit: 20,
+        limit: 10,
       },
       filterPress: false,
     };
@@ -199,7 +200,7 @@ class Income extends Component {
   componentDidMount = () => {
     const pagination = {
       page: 1,
-      limit: 20,
+      limit: 10,
     };
     if (this.props.expenseList.length > 0) {
       this.setState({
@@ -271,7 +272,7 @@ class Income extends Component {
       {
         pagination: {
           page,
-          limit: 20,
+          limit: 10,
         },
       },
       () => {
@@ -298,7 +299,14 @@ class Income extends Component {
       this.props
         .getFilterExpense(data)
         .then((res) => {
+          console.log("Income -> handelFilterGet -> res", res);
           this.loadingFalse();
+          res.map((value) => {
+            return this.setState({
+              filterTotal:
+                parseInt(this.state.filterTotal) + parseInt(value.money.amount),
+            });
+          });
           this.setState({
             data: res,
             filterPress: true,
@@ -345,6 +353,7 @@ class Income extends Component {
           data: res.docs,
           total: res.totalDocs,
           filterPress: false,
+          filterTotal: 0,
         });
         this.loadingFalse();
       })
@@ -414,6 +423,11 @@ class Income extends Component {
             />
             rIsaoT
           </Button>
+          {this.state.filterPress ? (
+            <h1>TaoTla : {this.state.filterTotal}</h1>
+          ) : (
+            ""
+          )}
           <ReactToPrint
             trigger={() => (
               <Button
@@ -425,6 +439,9 @@ class Income extends Component {
                   backgroundColor: "#505D6F",
                   color: "#ffffff",
                   float: "right",
+                  position: "absolute",
+                  right: "28px",
+                  marginRight: 10,
                 }}
                 // className="filter-button"
               >
@@ -446,6 +463,7 @@ class Income extends Component {
               data={this.state.data || []}
               type="Expense"
               column={Expense}
+              total={this.state.filterTotal}
             />
           </div>
         </div>
