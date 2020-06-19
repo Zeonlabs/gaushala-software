@@ -10,7 +10,7 @@ import {
   Radio,
   DatePicker,
   Row,
-  Col
+  Col,
 } from "antd";
 import "./Income.scss";
 import "../Common/Forms/IncomeModels.styles.scss";
@@ -25,11 +25,11 @@ class FilterDrawers extends Component {
 
     this.state = {
       start_date: "",
-      end_date: ""
+      end_date: "",
     };
   }
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -39,16 +39,16 @@ class FilterDrawers extends Component {
         } else {
           this.props.onClose();
           Object.keys(values).forEach(
-            key => values[key] === undefined && delete values[key]
+            (key) => values[key] === undefined && delete values[key]
           );
           const data = {
             dateFrom: values.daterange ? this.state.start_date : undefined,
             dateTo: values.daterange ? this.state.end_date : undefined,
-            ...values
+            ...values,
           };
           delete data.daterange;
           Object.keys(data).forEach(
-            key => data[key] === undefined && delete data[key]
+            (key) => data[key] === undefined && delete data[key]
           );
           this.props.submit(data);
           this.props.form.resetFields();
@@ -64,7 +64,7 @@ class FilterDrawers extends Component {
     const updatedEndDate = endDate.replace(/\//g, "-");
     this.setState({
       start_date: updatedStartDate,
-      end_date: updatedEndDate
+      end_date: updatedEndDate,
     });
   };
 
@@ -104,8 +104,8 @@ class FilterDrawers extends Component {
                         Today: [moment(), moment()],
                         "This Month": [
                           moment().startOf("month"),
-                          moment().endOf("month")
-                        ]
+                          moment().endOf("month"),
+                        ],
                       }}
                       format={dateFormat}
                       onChange={this.dateChange}

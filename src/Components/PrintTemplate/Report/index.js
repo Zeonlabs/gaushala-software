@@ -24,7 +24,7 @@ class ReportPrint extends React.Component {
                 {this.props.name}
               </span>
               &nbsp; :{" "}
-              <span className="report-name gujarati-font">
+              <span className="total-text-print gujarati-font">
                 TaoTla :{this.props.total}
               </span>
             </h1>

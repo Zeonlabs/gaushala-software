@@ -36,6 +36,7 @@ class Income extends Component {
       visible: false,
       income: false,
       loading: true,
+      editClick: false,
       data: [],
       editData: { money: { type: "cash" } },
       pagination: {
@@ -171,6 +172,7 @@ class Income extends Component {
     this.setState({
       editData: record,
       income: true,
+      editClick: true,
     });
   };
 
@@ -324,10 +326,12 @@ class Income extends Component {
     // console.log(" -> handelClosePopUp -> data", data);
     this.setState({
       income: !this.state.income,
+      editClick: !this.state.editClick,
     });
   };
 
   handelSubmit = (id, data) => {
+    // console.log("Income -> handelSubmit -> data", data);
     this.loadingTrue();
     this.props.editIncome(id, data).then((res) => {
       // this.props.toggleModel();
@@ -383,7 +387,6 @@ class Income extends Component {
       <PageWrapper title="Aavak rIpaaoT">
         <div className="row income-form-wrapper">
           <Button
-            shape="squre"
             size="large"
             type="primary"
             onClick={this.showDrawer}
@@ -405,7 +408,6 @@ class Income extends Component {
             />
           </div>
           <Button
-            shape="squre"
             size="large"
             type="primary"
             onClick={this.handelResetFilter}
@@ -420,7 +422,9 @@ class Income extends Component {
             rIsaoT
           </Button>
           {this.state.filterPress ? (
-            <h1>TaoTla : {this.state.filterTotal}</h1>
+            <h1 style={{ padding: "5px" }}>
+              TaoTla : {this.state.filterTotal}
+            </h1>
           ) : (
             ""
           )}
@@ -428,7 +432,6 @@ class Income extends Component {
           <ReactToPrint
             trigger={() => (
               <Button
-                shape="squre"
                 size="large"
                 type="primary"
                 // onClick={this.handelResetFilter}
@@ -466,6 +469,7 @@ class Income extends Component {
           submit={this.handelSubmit}
           data={this.state.editData}
           // handelAddPagination={this.handelAddPagination}
+          editClick={this.state.editClick}
           cash={this.state.editData.money.type}
         />
         <div className="">

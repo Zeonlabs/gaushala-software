@@ -5,7 +5,6 @@ import LineChart from "./LineChart";
 import { getLinearChart, getAnimalChart } from "../../Actions/ChartActions";
 import { connect } from "react-redux";
 import AnimalChart from "./AnimalChart";
-import AnimatedNumber from "animated-number-react";
 // import LoaderAnimation from "../../Static/Widgets/LoaderAnimation";
 import { arrangeDate } from "./arrangeDate";
 import { BarChart } from "./barChart";

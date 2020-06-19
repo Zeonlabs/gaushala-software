@@ -398,7 +398,6 @@ class Income extends Component {
         <div className="row income-form-wrapper">
           <Tooltip title="" placement="bottom">
             <Button
-              shape="squre"
               size="large"
               type="primary"
               onClick={this.showDrawer}
@@ -409,7 +408,6 @@ class Income extends Component {
             </Button>
           </Tooltip>
           <Button
-            shape="squre"
             size="large"
             type="primary"
             onClick={this.handelResetFilter}
@@ -431,7 +429,6 @@ class Income extends Component {
           <ReactToPrint
             trigger={() => (
               <Button
-                shape="squre"
                 size="large"
                 type="primary"
                 // onClick={this.handelResetFilter}

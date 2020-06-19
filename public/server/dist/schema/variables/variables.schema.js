@@ -33,7 +33,7 @@ const variablesSchema = new mongoose_1.default.Schema({
     otp: Number,
     loggedIn: {
         type: Boolean,
-        default: true
+        default: false
     }
 });
 variablesSchema.methods.toJSON = function () {

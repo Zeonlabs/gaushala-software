@@ -15,7 +15,7 @@ const EditableFormRow = Form.create()(EditableRow);
 
 class EditableCell extends Component {
   state = {
-    editing: false
+    editing: false,
   };
 
   toggleEdit = () => {
@@ -27,7 +27,7 @@ class EditableCell extends Component {
     });
   };
 
-  save = e => {
+  save = (e) => {
     const { record, handleSave } = this.props;
     this.form.validateFields((error, values) => {
       if (error && error[e.currentTarget.id]) {
@@ -38,7 +38,7 @@ class EditableCell extends Component {
     });
   };
 
-  renderCell = form => {
+  renderCell = (form) => {
     this.form = form;
     const { children, dataIndex, title } = this.props;
     const { editing } = this.state;
@@ -48,13 +48,13 @@ class EditableCell extends Component {
           rules: [
             {
               required: true,
-              message: `${title} is required.`
-            }
+              message: `${title} is required.`,
+            },
           ],
-          initialValue: this.props.inputType === "number" ? "" : ""
+          initialValue: this.props.inputType === "number" ? "" : "",
         })(
           <Input
-            ref={node => (this.input = node)}
+            ref={(node) => (this.input = node)}
             onPressEnter={this.save}
             onBlur={this.save}
             className={this.props.inputType === "number" ? "gujarati-font" : ""}
@@ -107,7 +107,7 @@ class Tables extends Component {
         dataIndex: "type",
         width: "60%",
         editable: true,
-        className: "table-font-gujarati table-animal-popup-td"
+        className: "table-font-gujarati table-animal-popup-td",
       },
       {
         // -----------------------------Amount--------------------------
@@ -115,7 +115,7 @@ class Tables extends Component {
         title: "rkma",
         dataIndex: "amount",
         editable: true,
-        className: "gujarati-font table-animal-popup-td"
+        className: "gujarati-font table-animal-popup-td",
       },
       {
         //-----------------------------Delete---------------------------
@@ -135,8 +135,8 @@ class Tables extends Component {
                 />
               </div>
             </Popconfirm>
-          ) : null
-      }
+          ) : null,
+      },
     ];
 
     this.state = {
@@ -144,35 +144,40 @@ class Tables extends Component {
         {
           _id: "0",
           type: "",
-          amount: "0"
-        }
+          amount: "0",
+        },
       ],
       count: 1,
       totalAmount: 0,
-      update: false
+      update: false,
     };
   }
 
   componentDidMount = () => {
     // const { money } = this.props.data;
+    // console.log("Tables -> componentDidMount -> this.props", this.props);
 
     if (this.props.type) {
       this.setState({
         dataSource: this.props.data,
-        totalAmount: this.props.total.amount
+        totalAmount: this.props.total.amount,
       });
     }
   };
-  componentDidUpdate = prevProps => {
-    // const { money } = this.props.data;
+  componentDidUpdate = (prevProps) => {
+    if (prevProps.modalType !== this.props.modalType) {
+      if (this.props.type) {
+        this.setState({
+          dataSource: this.props.data,
+          totalAmount: this.props.total.amount,
+        });
+      }
+    }
     if (prevProps.data !== this.props.data) {
-      // if (!this.state.update) {
       this.setState({
         dataSource: this.props.data,
-        totalAmount: this.props.total.amount
-        // totalAmount: this.props.money
+        totalAmount: this.props.total.amount,
       });
-      // }
     }
     if (prevProps.resetStatus !== this.props.resetStatus) {
       this.setState({
@@ -180,18 +185,21 @@ class Tables extends Component {
           {
             _id: "0",
             type: "",
-            amount: "0"
-          }
+            amount: "0",
+          },
         ],
         count: 1,
-        totalAmount: 0
+        totalAmount: 0,
       });
     }
+    console.log(this.state.totalAmount);
   };
 
-  handleDelete = key => {
+  handleDelete = (key) => {
     const dataSource = [...this.state.dataSource];
-    this.setState({ dataSource: dataSource.filter(item => item._id !== key) });
+    this.setState({
+      dataSource: dataSource.filter((item) => item._id !== key),
+    });
   };
 
   handleAdd = () => {
@@ -199,32 +207,33 @@ class Tables extends Component {
     const newData = {
       _id: count,
       type: `vaIgata`,
-      amount: 0
+      amount: 0,
     };
     this.setState({
       dataSource: [...dataSource, newData],
-      count: count + 1
+      count: count + 1,
     });
   };
   sumArray = (total, num) => {
     return total + num;
   };
 
-  handleSave = row => {
+  handleSave = (row) => {
     const newData = [...this.state.dataSource];
-    const index = newData.findIndex(item => row._id === item._id);
+    const index = newData.findIndex((item) => row._id === item._id);
     const item = newData[index];
     newData.splice(index, 1, {
       ...item,
-      ...row
+      ...row,
     });
-    const totalAmount = newData.map(val => parseInt(val.amount, 10));
+    const totalAmount = newData.map((val) => parseInt(val.amount, 10));
     const finalTotal = totalAmount.reduce(this.sumArray);
+    console.log("Tables -> handleSave -> finalTotal", finalTotal);
     this.props.submit(newData);
     this.setState({
       dataSource: newData,
       totalAmount: finalTotal,
-      update: true
+      update: true,
     });
   };
 
@@ -233,17 +242,17 @@ class Tables extends Component {
     const components = {
       body: {
         row: EditableFormRow,
-        cell: EditableCell
-      }
+        cell: EditableCell,
+      },
     };
-    const columns = this.columns.map(col => {
+    const columns = this.columns.map((col) => {
       if (!col.editable) {
         return col;
       }
       return {
         ...col,
-        onCell: record => {
-          const checkInput = index => {
+        onCell: (record) => {
+          const checkInput = (index) => {
             switch (index) {
               case "amount":
                 return "number";
@@ -265,9 +274,9 @@ class Tables extends Component {
             editable: col.editable,
             dataIndex: col.dataIndex,
             title: col.title,
-            handleSave: this.handleSave
+            handleSave: this.handleSave,
           };
-        }
+        },
       };
     });
     return (

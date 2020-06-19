@@ -21,7 +21,7 @@ class Income extends Component {
     super(props);
     this.state = {
       visible: false,
-      data: ""
+      data: "",
     };
     this.columns = [
       {
@@ -29,43 +29,43 @@ class Income extends Component {
         width: "100px",
         dataIndex: "slip_no",
         key: "name",
-        fixed: "left"
+        fixed: "left",
       },
       {
         title: "Type",
         width: 200,
         dataIndex: "type",
-        key: "age"
+        key: "age",
       },
       {
         title: "Money Type",
         dataIndex: "money.type",
         key: "1",
-        width: 150
+        width: 150,
       },
       {
         title: "Amount",
         dataIndex: "money.amount",
         key: "2",
-        width: 150
+        width: 150,
       },
       {
         title: "Date",
         dataIndex: "date",
         key: "3",
-        width: 250
+        width: 250,
       },
       {
         title: "Phone No.",
         dataIndex: "phone",
         key: "4",
-        width: 150
+        width: 150,
       },
       {
         title: "Refrence_Name",
         dataIndex: "ref_name",
         key: "5",
-        width: 150
+        width: 150,
       },
       {
         title: "operation",
@@ -87,55 +87,57 @@ class Income extends Component {
               />
             </div>
           </>
-        )
-      }
+        ),
+      },
     ];
   }
 
   componentDidMount = () => {
     const pagination = {
       page: 1,
-      limit: 20
+      limit: 20,
     };
     // const id = this.props.match.params.pid;
-    this.props.getIncome(pagination).then(res => {
+    this.props.getIncome(pagination).then((res) => {
       this.setState({
-        data: res.docs
+        data: res.docs,
       });
     });
   };
 
   showDrawer = () => {
     this.setState({
-      visible: true
+      visible: true,
     });
   };
 
   onClose = () => {
     this.setState({
-      visible: false
+      visible: false,
     });
   };
 
-  handleDelete = key => {
+  handleDelete = (key) => {
     const dataSource = [...this.state.data];
-    this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
+    this.setState({
+      dataSource: dataSource.filter((item) => item.key !== key),
+    });
   };
 
   render() {
-    const columns = this.columns.map(col => {
+    const columns = this.columns.map((col) => {
       if (!col.editable) {
         return col;
       }
       return {
         ...col,
-        onCell: record => ({
+        onCell: (record) => ({
           record,
           inputType: col.dataIndex === "age" ? "number" : "text",
           dataIndex: col.dataIndex,
           title: col.title,
-          editing: this.isEditing(record)
-        })
+          editing: this.isEditing(record),
+        }),
       };
     });
     return (
@@ -143,7 +145,6 @@ class Income extends Component {
         <div className="row income-form-wrapper">
           <Tooltip title="fIL3r" placement="bottom">
             <Button
-              shape="squre"
               size="large"
               type="primary"
               onClick={this.showDrawer}
@@ -167,8 +168,8 @@ class Income extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  ...state.Test
+const mapStateToProps = (state) => ({
+  ...state.Test,
 });
 
 export default connect(mapStateToProps, { getIncome, getFilterIncome })(Income);

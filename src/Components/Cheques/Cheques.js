@@ -252,7 +252,6 @@ export class Cheques extends Component {
         />
         <div className="row income-form-wrapper display-flex">
           <Button
-            shape="squre"
             size="large"
             type="primary"
             onClick={this.handelFilterShow}
@@ -262,7 +261,6 @@ export class Cheques extends Component {
             fIlTr
           </Button>
           <Button
-            shape="squre"
             size="large"
             type="primary"
             onClick={this.handelResetFilter}

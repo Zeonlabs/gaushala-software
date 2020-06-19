@@ -137,7 +137,7 @@ class IncomeMobels extends Component {
         this.props.addIncome(data).then((res) => {
           const pagination = {
             page: 1,
-            limit: 20,
+            limit: 10,
           };
           if (values.sms === "yes") {
             const data = {
@@ -203,7 +203,7 @@ class IncomeMobels extends Component {
         this.props.addExpense(data).then((res) => {
           const pagination = {
             page: 1,
-            limit: 20,
+            limit: 10,
           };
           this.props
             .getExpense(pagination)
@@ -311,7 +311,7 @@ class IncomeMobels extends Component {
 
   render() {
     // const { type } = this.props;
-    const { type, modalType, data } = this.props;
+    const { type, modalType, data, editClick } = this.props;
     // const { slip_no } = data;
     const { getFieldDecorator } = this.props.form;
     return (
@@ -623,6 +623,7 @@ class IncomeMobels extends Component {
                 total={modalType === "edit" ? data.money : ""}
                 data={modalType === "edit" ? data.item : ""}
                 type={modalType === "edit"}
+                modalType={editClick}
               />
             </Row>
 

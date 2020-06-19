@@ -45,7 +45,6 @@ class ProfileView extends Component {
         <ReactToPrint
           trigger={() => (
             <Button
-              shape="squre"
               size="large"
               type="primary"
               // onClick={this.handelResetFilter}
