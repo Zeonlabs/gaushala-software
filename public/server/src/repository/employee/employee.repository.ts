@@ -11,7 +11,7 @@ export class EmployeeRepository{
         const savedEmployee = await employee.save()
 
         return new Promise((resolve, reject) => {
-            doc.mv(join(__dirname, `../../../../employee-docs/${savedEmployee._id}.png`), (err) => {
+            doc.mv(join(__dirname, `../../../../../employee-docs/${savedEmployee._id}.png`), (err) => {
                 if(err) reject(new ImageUploadFailedException())
                 resolve(savedEmployee)
             })
@@ -23,7 +23,7 @@ export class EmployeeRepository{
         if(!deteledDoc) throw new NoRecordWithIDException()
 
         return new Promise((resolve, reject) => {
-            fs.unlink(join(__dirname, `../../../../employee-docs/${id}.png`), (err) => {
+            fs.unlink(join(__dirname, `../../../../../employee-docs/${id}.png`), (err) => {
                 if(err) reject(err)
                 resolve(deteledDoc)
             })

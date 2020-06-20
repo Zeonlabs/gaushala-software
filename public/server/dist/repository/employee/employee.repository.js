@@ -22,7 +22,7 @@ class EmployeeRepository {
             const employee = new schema_1.Employee(data);
             const savedEmployee = yield employee.save();
             return new Promise((resolve, reject) => {
-                doc.mv(path_1.join(__dirname, `../../../../employee-docs/${savedEmployee._id}.png`), (err) => {
+                doc.mv(path_1.join(__dirname, `../../../../../employee-docs/${savedEmployee._id}.png`), (err) => {
                     if (err)
                         reject(new exceptions_common_1.ImageUploadFailedException());
                     resolve(savedEmployee);
@@ -36,7 +36,7 @@ class EmployeeRepository {
             if (!deteledDoc)
                 throw new exceptions_common_1.NoRecordWithIDException();
             return new Promise((resolve, reject) => {
-                fs_1.default.unlink(path_1.join(__dirname, `../../../../employee-docs/${id}.png`), (err) => {
+                fs_1.default.unlink(path_1.join(__dirname, `../../../../../employee-docs/${id}.png`), (err) => {
                     if (err)
                         reject(err);
                     resolve(deteledDoc);
