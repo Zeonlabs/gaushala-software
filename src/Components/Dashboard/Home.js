@@ -6,7 +6,7 @@ import { getLinearChart, getAnimalChart } from "../../Actions/ChartActions";
 import { connect } from "react-redux";
 import AnimalChart from "./AnimalChart";
 // import LoaderAnimation from "../../Static/Widgets/LoaderAnimation";
-import { arrangeDate } from "./arrangeDate";
+// import { arrangeDate } from "./arrangeDate";
 import { BarChart } from "./barChart";
 
 import "./Home.scss";
@@ -37,8 +37,10 @@ class Home extends Component {
     ) {
     } else {
       this.props.getLinearChart().then((res) => {
-        const arrangedIncomeDate = arrangeDate(res.income);
-        const arrangedExpenseDate = arrangeDate(res.expense);
+        // const arrangedIncomeDate = arrangeDate(res.income);
+        // const arrangedExpenseDate = arrangeDate(res.expense);
+        const arrangedIncomeDate = res.income;
+        const arrangedExpenseDate = res.expense;
 
         const incomeData = arrangedIncomeDate.map((val) => ({
           x: getDate(val.year, val.month),

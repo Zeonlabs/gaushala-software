@@ -10,7 +10,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "build-ts": "tsc",
-    "watch-node": "nodemon server/dist/server.js",
+    "watch-node": "nodemon public/server/dist/server.js",
     "watch-ts": "tsc -w",
     "electron-dev": "concurrently \"npm run start\" \"wait-on http://localhost:3000 && electron .\"",
     "postinstall": "electron-builder install-app-deps",

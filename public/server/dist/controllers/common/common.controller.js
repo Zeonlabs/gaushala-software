@@ -53,11 +53,16 @@ exports.generateFilteredReport = (Model) => (req, res) => __awaiter(void 0, void
 });
 exports.getIncomeExpenseAnalytics = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const crrntDate = new Date();
-        const prvDate = new Date();
-        prvDate.setMonth(prvDate.getMonth() - 11);
-        prvDate.setDate(1);
-        prvDate.setUTCHours(0, 0, 0, 0);
+        //----------OLD LOGIC-------------
+        // const crrntDate = new Date()
+        // const prvDate = new Date()
+        // prvDate.setMonth(prvDate.getMonth() - 11)
+        // prvDate.setDate(1)
+        // prvDate.setUTCHours(0,0,0,0)
+        //--------------------------------
+        const crrntYear = new Date().getFullYear();
+        const crrntDate = new Date(crrntYear, 11, 31, 23, 59, 59);
+        const prvDate = new Date(crrntYear, 0, 1, 24);
         const incomeRepo = new repository_1.IncomeRepository();
         const expenseRepo = new repository_1.ExpenseRepository();
         const [incomes, expenses] = yield Promise.all([
@@ -83,24 +88,37 @@ exports.getIncomeExpenseAnalytics = (req, res) => __awaiter(void 0, void 0, void
             });
             return monthlyData;
         };
+        //--------------OLD CODE-------------------
+        // const fillUnavailableDatesData = (arr: IncomeModel[] | ExpenseModel[]) => {
+        //     const monthlyData = genMonthlyData(arr)
+        //     const prvMonth = prvDate.getMonth() + 1
+        //     const prvYear = prvDate.getUTCFullYear()
+        //     const crrntMonth = crrntDate.getMonth() + 1
+        //     const crrntYear = crrntDate.getUTCFullYear()
+        //     const pushEmptyData = (month, year) => monthlyData.push({ month, year, amount: 0 })
+        //     for(let i = prvMonth; i<=12; i++){
+        //         const index = monthlyData.findIndex(data => data.month == i && data.year == prvYear)
+        //         if(index < 0) pushEmptyData(i, prvYear)
+        //     }
+        //     for(let i = 1; i <= crrntMonth; i++){
+        //         const index = monthlyData.findIndex(data => data.month == i && data.year == crrntYear)
+        //         if(index < 0) pushEmptyData(i, crrntYear)
+        //     }
+        //     return monthlyData
+        // }
+        //-----------------------------------------
         const fillUnavailableDatesData = (arr) => {
             const monthlyData = genMonthlyData(arr);
-            const prvMonth = prvDate.getMonth() + 1;
-            const prvYear = prvDate.getUTCFullYear();
-            const crrntMonth = crrntDate.getMonth() + 1;
-            const crrntYear = crrntDate.getUTCFullYear();
-            const pushEmptyData = (month, year) => monthlyData.push({ month, year, amount: 0 });
-            for (let i = prvMonth; i <= 12; i++) {
-                const index = monthlyData.findIndex(data => data.month == i && data.year == prvYear);
-                if (index < 0)
-                    pushEmptyData(i, prvYear);
-            }
-            for (let i = 1; i <= crrntMonth; i++) {
-                const index = monthlyData.findIndex(data => data.month == i && data.year == crrntYear);
+            let formattedMonthlyData = [];
+            const pushEmptyData = (month, year) => formattedMonthlyData.push({ month, year, amount: 0 });
+            for (let i = 1; i <= 12; i++) {
+                const index = monthlyData.findIndex(data => data.month == i);
                 if (index < 0)
                     pushEmptyData(i, crrntYear);
+                else
+                    formattedMonthlyData.push(monthlyData[index]);
             }
-            return monthlyData;
+            return formattedMonthlyData;
         };
         res.json({
             income: fillUnavailableDatesData(incomes),
