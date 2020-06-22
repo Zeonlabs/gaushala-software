@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import PageWrapper from "../Common/PageWrapper/PageWrapper";
 import "./Employees.scss";
 // import moment from "moment";
-import { Icon, Button, Row, Col } from "antd";
+import { Icon, Button, Row, Col, message } from "antd";
 import {
   getEmployee,
   getEmployeeDocs,
@@ -35,7 +35,7 @@ export class Employees extends Component {
       data: "",
       pagination: {
         page: 1,
-        limit: 20,
+        limit: 10,
       },
       editData: "",
       income: false,
@@ -58,7 +58,7 @@ export class Employees extends Component {
   componentDidMount = () => {
     const pagination = {
       page: 1,
-      limit: 20,
+      limit: 10,
     };
     if (this.props.employeeListing.length > 0) {
       this.setState({
@@ -142,7 +142,11 @@ export class Employees extends Component {
           });
           this.handelEmployeePopup();
         })
-        .catch((e) => this.loadingFalse());
+        .catch((e) => {
+          message.error(e.message);
+          this.loadingFalse();
+          this.handelEmployeePopup();
+        });
     }
   };
 
@@ -179,7 +183,7 @@ export class Employees extends Component {
       {
         pagination: {
           page,
-          limit: 20,
+          limit: 10,
         },
       },
       () =>
@@ -240,9 +244,15 @@ export class Employees extends Component {
             this.loadingFalse();
             this.handelEmployeePopup();
           })
-          .catch((e) => this.loadingFalse());
+          .catch((e) => {
+            this.loadingFalse();
+            this.handelEmployeePopup();
+          });
       })
-      .catch((e) => this.loadingFalse());
+      .catch((e) => {
+        this.handelEmployeePopup();
+        this.loadingFalse();
+      });
   };
 
   render() {

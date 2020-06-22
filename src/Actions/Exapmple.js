@@ -1,26 +1,26 @@
 import { actionName, listing } from "../js/actions";
 import { fetchUrl } from "../js/fetchUrl";
 
-const loadData = values => {
+const loadData = (values) => {
   // console.log("this is a data from the action values",values);
   return {
     type: actionName.apisuccess,
-    values
+    values,
   };
 };
 
-export const loadDatas = () => dispatch =>
+export const loadDatas = () => (dispatch) =>
   new Promise((resolve, reject) => {
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "get",
       `api/link/afterurl`
     )
-      .then(res => {
+      .then((res) => {
         dispatch(loadData(res));
         // notification.success({ message: "Sorting added sucessfully !" });
         resolve(res);
       })
-      .catch(e => {
+      .catch((e) => {
         reject(e);
       });
   });
@@ -35,7 +35,7 @@ export const loadDatas = () => dispatch =>
 //         reject(e);
 //       });
 //   });
-export const addIncome = data => dispatch =>
+export const addIncome = (data) => (dispatch) =>
   new Promise((resolve, reject) => {
     // console.log("TCL: data", data);
     fetchUrl(
@@ -43,15 +43,15 @@ export const addIncome = data => dispatch =>
       "/income/add",
       data
     )
-      .then(res => {
+      .then((res) => {
         resolve(res);
       })
-      .catch(e => {
+      .catch((e) => {
         reject(e);
       });
   });
 
-export const getExpense = id => dispatch =>
+export const getExpense = (id) => (dispatch) =>
   new Promise((resolve, reject) => {
     // console.log("TCL: data", id);
     fetchUrl(
@@ -59,17 +59,17 @@ export const getExpense = id => dispatch =>
       `/expense`,
       id
     )
-      .then(res => {
+      .then((res) => {
         dispatch({ type: listing.expenseListing, payload: res.docs });
         dispatch({ type: listing.expenseTotal, payload: res });
         resolve(res);
       })
-      .catch(e => {
+      .catch((e) => {
         reject(e);
       });
   });
 
-export const getIncome = id => dispatch =>
+export const getIncome = (id) => (dispatch) =>
   new Promise((resolve, reject) => {
     // console.log("TCL: data", id);
     fetchUrl(
@@ -77,18 +77,28 @@ export const getIncome = id => dispatch =>
       `/income`,
       id
     )
-      .then(res => {
+      .then((res) => {
         // console.log("res", res);
         dispatch({ type: listing.incomeListing, payload: res.docs });
         dispatch({ type: listing.incomeTotal, payload: res });
         resolve(res);
       })
-      .catch(e => {
+      .catch((e) => {
         reject(e);
       });
   });
 
-export const getFilterIncome = data => dispatch =>
+export const storeSum = (data) => (dispatch) =>
+  new Promise((resolve, reject) => {
+    dispatch({ type: listing.storeTotal, payload: data });
+  });
+
+export const expenseStoreSum = (data) => (dispatch) =>
+  new Promise((resolve, reject) => {
+    dispatch({ type: listing.storeExpenseTotal, payload: data });
+  });
+
+export const getFilterIncome = (data) => (dispatch) =>
   new Promise((resolve, reject) => {
     // console.log("TCL: data", data);
     fetchUrl(
@@ -96,16 +106,16 @@ export const getFilterIncome = data => dispatch =>
       `/income/filter`,
       data
     )
-      .then(res => {
+      .then((res) => {
         dispatch({ type: listing.incomeListing, payload: res });
         resolve(res);
       })
-      .catch(e => {
+      .catch((e) => {
         reject(e);
       });
   });
 
-export const getFilterExpense = data => dispatch =>
+export const getFilterExpense = (data) => (dispatch) =>
   new Promise((resolve, reject) => {
     // console.log("TCL: data", data);
     fetchUrl(
@@ -113,16 +123,16 @@ export const getFilterExpense = data => dispatch =>
       `/expense/filter`,
       data
     )
-      .then(res => {
+      .then((res) => {
         dispatch({ type: listing.expenseListing, payload: res.docs });
         resolve(res);
       })
-      .catch(e => {
+      .catch((e) => {
         reject(e);
       });
   });
 
-export const addExpense = data => dispatch =>
+export const addExpense = (data) => (dispatch) =>
   new Promise((resolve, reject) => {
     // console.log("TCL: data", data);
     fetchUrl(
@@ -130,15 +140,15 @@ export const addExpense = data => dispatch =>
       "/expense/add",
       data
     )
-      .then(res => {
+      .then((res) => {
         resolve(res);
       })
-      .catch(e => {
+      .catch((e) => {
         reject(e);
       });
   });
 
-export const editExpense = (id, data) => dispatch =>
+export const editExpense = (id, data) => (dispatch) =>
   new Promise((resolve, reject) => {
     // console.log("TCL: data", id);
     fetchUrl(
@@ -146,17 +156,17 @@ export const editExpense = (id, data) => dispatch =>
       `/expense/edit/${id}`,
       data
     )
-      .then(res => {
+      .then((res) => {
         // console.log("res-> edit expense res ->", res);
 
         resolve(res);
       })
-      .catch(e => {
+      .catch((e) => {
         reject(e);
       });
   });
 
-export const editIncome = (id, data) => dispatch =>
+export const editIncome = (id, data) => (dispatch) =>
   new Promise((resolve, reject) => {
     // console.log("TCL: data", id);
     fetchUrl(
@@ -164,44 +174,44 @@ export const editIncome = (id, data) => dispatch =>
       `/income/edit/${id}`,
       data
     )
-      .then(res => {
+      .then((res) => {
         // console.log("res-> edit income res ->", res);
         // getIncome()
         resolve(res);
       })
-      .catch(e => {
+      .catch((e) => {
         reject(e);
       });
   });
 
-export const deleteIncome = id => dispatch =>
+export const deleteIncome = (id) => (dispatch) =>
   new Promise((resolve, reject) => {
     // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "DEleTE",
       `/income/delete/${id}`
     )
-      .then(res => {
+      .then((res) => {
         // console.log("res-> edit income res ->", res);
         resolve(res);
       })
-      .catch(e => {
+      .catch((e) => {
         reject(e);
       });
   });
 
-export const deleteExpense = id => dispatch =>
+export const deleteExpense = (id) => (dispatch) =>
   new Promise((resolve, reject) => {
     // console.log("TCL: data", id);
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "delete",
       `/expense/delete/${id}`
     )
-      .then(res => {
+      .then((res) => {
         // console.log("res-> edit income res ->", res);
         resolve(res);
       })
-      .catch(e => {
+      .catch((e) => {
         reject(e);
       });
   });

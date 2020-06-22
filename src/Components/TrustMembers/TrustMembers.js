@@ -79,6 +79,12 @@ export class TrustMembers extends Component {
     });
   };
 
+  handelClosePopup = () => {
+    this.setState({
+      showAddPopup: false,
+    });
+  };
+
   handelEdit = (record) => {
     this.setState({
       showAddPopup: !this.state.showAddPopup,
@@ -118,7 +124,7 @@ export class TrustMembers extends Component {
               },
             });
             this.loadingFalse();
-            this.handelShowPopup();
+            this.handelClosePopup();
           })
           .catch((e) => this.loadingFalse());
       });

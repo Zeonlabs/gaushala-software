@@ -21,7 +21,9 @@ import {
   getExpense,
   addExpense,
   editExpense,
+  getFilterIncome,
   editIncome,
+  storeSum,
 } from "../../../Actions/Exapmple";
 import { sendSms } from "../../../Actions/SetUpUser";
 import NumericInput from "./InputNumber";
@@ -35,6 +37,7 @@ import {
 import IncomePrintSlip from "../../PrintTemplate";
 import ExpensePrintSlip from "../../PrintTemplate/ExpensePrint";
 import axios from "axios";
+import { ArraySum } from "../CommonCalculation";
 
 const { Option } = Select;
 
@@ -137,7 +140,7 @@ class IncomeMobels extends Component {
         this.props.addIncome(data).then((res) => {
           const pagination = {
             page: 1,
-            limit: 10,
+            limit: 13,
           };
           if (values.sms === "yes") {
             const data = {
@@ -153,6 +156,19 @@ class IncomeMobels extends Component {
               })
               .catch((e) => message.error("Message not send try again !"));
           }
+          this.props
+            .getFilterIncome()
+            .then((res) => {
+              this.props.storeSum(ArraySum(res));
+              // this.setState({
+              //   filterTotal: ArraySum(res),
+              // });
+            })
+            .catch((e) => {
+              // this.setState({
+              //   filterTotal: 0,
+              // });
+            });
           this.props.getIncome(pagination).then((res) => {
             this.props.toggleModel();
           });
@@ -203,7 +219,7 @@ class IncomeMobels extends Component {
         this.props.addExpense(data).then((res) => {
           const pagination = {
             page: 1,
-            limit: 10,
+            limit: 13,
           };
           this.props
             .getExpense(pagination)
@@ -766,5 +782,7 @@ export default connect(mapStateToProps, {
   addExpense,
   editIncome,
   editExpense,
+  getFilterIncome,
   sendSms,
+  storeSum,
 })(IncomeMobel);

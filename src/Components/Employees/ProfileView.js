@@ -29,17 +29,10 @@ class ProfileView extends Component {
   render() {
     const { visible, onClose } = this.props;
     return (
-      <Modal
-        centered
-        // maskClosable={false}
-        visible={visible}
-        footer={null}
-        // onOk={this.handelData}
-        onCancel={onClose}
-      >
+      <Modal centered visible={visible} footer={null} onCancel={onClose}>
         <div className="income-model-wrapper">
           <Row>
-            <h2 className="form-titel ">caok fIlTr</h2>
+            <h2 className="form-titel ">Aa.[DI ka-D</h2>
           </Row>
         </div>
         <ReactToPrint

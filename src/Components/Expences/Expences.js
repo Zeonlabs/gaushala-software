@@ -15,6 +15,7 @@ import FilterDrawer from "./FilterDrawer";
 import { connect } from "react-redux";
 import {
   getExpense,
+  expenseStoreSum,
   getFilterExpense,
   editExpense,
   deleteExpense,
@@ -25,6 +26,7 @@ import { convertNumberToType } from "../../js/Helper";
 import ReactToPrint from "react-to-print";
 import ReportPrint from "../PrintTemplate/Report";
 import { Expense } from "../PrintTemplate/Report/Columns/Expese";
+import { ArraySum } from "../Common/CommonCalculation";
 
 // const data = [];
 // for (let i = 0; i < 100; i++) {
@@ -42,14 +44,17 @@ class Income extends Component {
       visible: false,
       expense: false,
       loading: true,
+      allData: [],
       data: "",
       editData: { money: { type: "cash" } },
       filterTotal: 0,
       pagination: {
         page: 1,
-        limit: 10,
+        limit: 13,
       },
+      total: 0,
       filterPress: false,
+      editClick: false,
     };
     this.columns = [
       {
@@ -115,7 +120,7 @@ class Income extends Component {
         render: (text, record) => convertNumberToType(text, "expense"),
       },
       {
-        title: "dana svaIkar",
+        title: "Javak rupa",
         dataIndex: "money",
         key: "7",
         width: 130,
@@ -178,11 +183,25 @@ class Income extends Component {
     this.setState({
       editData: record,
       expense: true,
+      editClick: true,
     });
   };
 
   handleDelete = (key, record) => {
     this.props.deleteExpense(record._id).then((res) => {
+      this.props
+        .getFilterExpense()
+        .then((res) => {
+          this.props.expenseStoreSum(ArraySum(res));
+          this.setState({
+            filterTotal: ArraySum(res),
+          });
+        })
+        .catch((e) => {
+          this.setState({
+            filterTotal: 0,
+          });
+        });
       this.props
         .getExpense(this.state.pagination)
         .then((res) => {
@@ -200,11 +219,12 @@ class Income extends Component {
   componentDidMount = () => {
     const pagination = {
       page: 1,
-      limit: 10,
+      limit: 13,
     };
     if (this.props.expenseList.length > 0) {
       this.setState({
         data: this.props.expenseList,
+        filterTotal: this.props.expenseSumTotal,
         loading: false,
         total: this.props.expenseTotal.totalDocs,
         pagination: {
@@ -214,6 +234,24 @@ class Income extends Component {
       });
     } else {
       // const id = this.props.match.params.pid;
+      this.props
+        .getFilterExpense()
+        .then((res) => {
+          this.props.expenseStoreSum(ArraySum(res));
+          this.setState({
+            filterTotal: ArraySum(res),
+          });
+          if (!this.state.filterPress) {
+            this.setState({
+              allData: res,
+            });
+          }
+        })
+        .catch((e) => {
+          this.setState({
+            filterTotal: 0,
+          });
+        });
       this.props
         .getExpense(pagination)
         .then((res) => {
@@ -244,11 +282,18 @@ class Income extends Component {
   };
 
   componentDidUpdate = (prevPorps) => {
-    if (prevPorps.expenseList !== this.props.expenseList) {
+    // if (prevPorps.expenseList !== this.props.expenseList) {
+    //   this.setState({
+    //     data: this.props.expenseList,
+    //   });
+    // }
+
+    if (prevPorps.expenseSumTotal !== this.props.expenseSumTotal) {
       this.setState({
-        data: this.props.expenseList,
+        filterTotal: this.props.expenseSumTotal,
       });
     }
+
     if (prevPorps.expenseTotal !== this.props.expenseTotal) {
       this.setState({
         pagination: {
@@ -272,7 +317,7 @@ class Income extends Component {
       {
         pagination: {
           page,
-          limit: 10,
+          limit: 13,
         },
       },
       () => {
@@ -299,17 +344,12 @@ class Income extends Component {
       this.props
         .getFilterExpense(data)
         .then((res) => {
-          console.log("Income -> handelFilterGet -> res", res);
           this.loadingFalse();
-          res.map((value) => {
-            return this.setState({
-              filterTotal:
-                parseInt(this.state.filterTotal) + parseInt(value.money.amount),
-            });
-          });
+          this.props.expenseStoreSum(ArraySum(res));
           this.setState({
             data: res,
             filterPress: true,
+            filterTotal: ArraySum(res),
           });
         })
         .catch((e) => {
@@ -323,6 +363,7 @@ class Income extends Component {
     // console.log("Income -> handelClosePopUp -> data", data);
     this.setState({
       expense: !this.state.expense,
+      editClick: !this.state.editClick,
       // data: data.docs,
       // total: data.totalDocs,
     });
@@ -332,13 +373,27 @@ class Income extends Component {
     this.loadingTrue();
     this.props.editExpense(id, data).then((res) => {
       // this.props.toggleModel();
-
+      this.props
+        .getFilterExpense()
+        .then((res) => {
+          this.props.expenseStoreSum(ArraySum(res));
+          this.setState({
+            filterTotal: ArraySum(res),
+          });
+        })
+        .catch((e) => {
+          this.setState({
+            filterTotal: 0,
+          });
+        });
       this.props.getExpense(this.state.pagination).then((res) => {
         this.handelClosePopUp();
+
         this.loadingFalse();
         this.setState({
           data: res.docs,
           total: res.totalDocs,
+          filterPress: false,
         });
       });
     });
@@ -347,13 +402,25 @@ class Income extends Component {
   handelResetFilter = () => {
     this.loadingTrue();
     this.props
+      .getFilterExpense()
+      .then((res) => {
+        this.props.expenseStoreSum(ArraySum(res));
+        this.setState({
+          filterTotal: ArraySum(res),
+        });
+      })
+      .catch((e) => {
+        this.setState({
+          filterTotal: 0,
+        });
+      });
+    this.props
       .getExpense(this.state.pagination)
       .then((res) => {
         this.setState({
           data: res.docs,
           total: res.totalDocs,
           filterPress: false,
-          filterTotal: 0,
         });
         this.loadingFalse();
       })
@@ -421,11 +488,8 @@ class Income extends Component {
             />
             rIsaoT
           </Button>
-          {this.state.filterPress ? (
-            <h1>TaoTla : {this.state.filterTotal}</h1>
-          ) : (
-            ""
-          )}
+          <h1 style={{ padding: "5px" }}>TaoTla : {this.state.filterTotal}</h1>
+
           <ReactToPrint
             trigger={() => (
               <Button
@@ -457,7 +521,11 @@ class Income extends Component {
               //---------------------------------------Change title of report from here----------------------------------------------------
               name="Javak rIpaaoT"
               ref={(el) => (this.componentRef = el)}
-              data={this.state.data || []}
+              data={
+                !this.state.filterPress
+                  ? this.state.allData
+                  : this.state.data || []
+              }
               type="Expense"
               column={Expense}
               total={this.state.filterTotal}
@@ -476,11 +544,12 @@ class Income extends Component {
           modalType="edit"
           submit={this.handelSubmit}
           data={this.state.editData}
+          editClick={this.state.editClick}
           cash={this.state.editData.money.type}
         />
         <div>
           <Table
-            className="table-income table-income-expense"
+            className="table-income overflow-hidden table-income-expense"
             columns={columns}
             loading={this.state.loading}
             dataSource={this.state.data || []}
@@ -511,6 +580,7 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getExpense,
   getFilterExpense,
+  expenseStoreSum,
   deleteExpense,
   editExpense,
 })(Income);

@@ -5,6 +5,8 @@ const Test = (
     apicall: false,
     apistatus: false,
     incomeList: {} || null,
+    sumTotal: 0,
+    expenseSumTotal: 0,
     incomeTotal: 0,
     expenseList: [] || null,
     expenseTotal: 0,
@@ -13,7 +15,7 @@ const Test = (
     chequeList: [] || null,
     chequeTotal: 0,
     noteList: [] || null,
-    totalAnimalCount: 0 || null
+    totalAnimalCount: 0 || null,
   },
   Action
 ) => {
@@ -22,60 +24,72 @@ const Test = (
       return {
         ...state,
         apicall: false,
-        apistatus: false
+        apistatus: false,
       };
 
     case listing.incomeListing:
       return {
         ...state,
-        incomeList: Action.payload
+        incomeList: Action.payload,
+      };
+
+    case listing.storeTotal:
+      return {
+        ...state,
+        sumTotal: Action.payload,
+      };
+
+    case listing.storeExpenseTotal:
+      return {
+        ...state,
+        expenseSumTotal: Action.payload,
       };
 
     case listing.incomeTotal:
       return {
         ...state,
-        incomeTotal: Action.payload
+        incomeTotal: Action.payload,
       };
     case listing.expenseTotal:
       return {
         ...state,
-        expenseTotal: Action.payload
+        expenseTotal: Action.payload,
       };
     case listing.trustMembers:
       return {
         ...state,
-        trustTotal: Action.payload
+        trustTotal: Action.payload,
       };
     case listing.chequeTotal:
       return {
         ...state,
-        chequeTotal: Action.payload
+        chequeTotal: Action.payload,
       };
 
     case listing.expenseListing:
       return {
         ...state,
-        expenseList: Action.payload
+        expenseList: Action.payload,
       };
     case listing.trustMembersListing:
       return {
         ...state,
-        trustMembers: Action.payload
+        trustMembers: Action.payload,
       };
     case listing.chequeListing:
       return {
         ...state,
-        chequeList: Action.payload
+        chequeList: Action.payload,
       };
     case listing.noteListing:
       return {
         ...state,
-        noteList: Action.payload
+        noteList: Action.payload,
       };
     case animal.totalAnimalCount:
       return {
         ...state,
-        totalAnimalCount: Action.payload
+        totalAnimalCount: Action.payload,
       };
 
     default:

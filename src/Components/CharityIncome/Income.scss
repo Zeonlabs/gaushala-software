@@ -35,9 +35,15 @@
     // height:150px;
     height: calc(100vh - 39vh);
     // overflow: scroll !important;
-    // overflow-y: scroll !important;
+    overflow-y: scroll !important;
   }
 }
+
+// .overflow-hidden {
+//   .ant-table {
+//     overflow-y: hidden !important;
+//   }
+// }
 
 .income-expense-table {
   .ant-table {

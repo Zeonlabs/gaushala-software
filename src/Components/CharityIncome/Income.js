@@ -10,6 +10,7 @@ import {
   getFilterIncome,
   editIncome,
   deleteIncome,
+  storeSum,
 } from "../../Actions/Exapmple";
 import moment from "moment";
 import IncomeMobel from "../Common/Forms/IncomeMobel";
@@ -17,6 +18,7 @@ import { convertNumberToType } from "../../js/Helper";
 import ReportPrint from "../PrintTemplate/Report";
 import ReactToPrint from "react-to-print";
 import { IncomeColumn } from "../PrintTemplate/Report/Columns/Income";
+import { ArraySum } from "../Common/CommonCalculation";
 // import Loading from "../Loading/Loading";
 
 // const data = [];
@@ -38,10 +40,11 @@ class Income extends Component {
       loading: true,
       editClick: false,
       data: [],
+      allData: [],
       editData: { money: { type: "cash" } },
       pagination: {
         page: 1,
-        limit: 10,
+        limit: 13,
       },
       total: 0,
       filterTotal: 0,
@@ -172,6 +175,7 @@ class Income extends Component {
     this.setState({
       editData: record,
       income: true,
+
       editClick: true,
     });
   };
@@ -179,13 +183,14 @@ class Income extends Component {
   componentDidMount = () => {
     const pagination = {
       page: 1,
-      limit: 10,
+      limit: 13,
     };
 
     // const id = this.props.match.params.pid;
     if (this.props.incomeList.length > 0) {
       this.setState({
         data: this.props.incomeList,
+        filterTotal: this.props.sumTotal,
         loading: false,
         total: this.props.incomeTotal.totalDocs,
         pagination: {
@@ -194,6 +199,24 @@ class Income extends Component {
         },
       });
     } else {
+      this.props
+        .getFilterIncome()
+        .then((res) => {
+          this.props.storeSum(ArraySum(res));
+          this.setState({
+            filterTotal: ArraySum(res),
+          });
+          if (!this.state.filterPress) {
+            this.setState({
+              allData: res,
+            });
+          }
+        })
+        .catch((e) => {
+          this.setState({
+            filterTotal: 0,
+          });
+        });
       this.props
         .getIncome(pagination)
         .then((res) => {
@@ -218,6 +241,13 @@ class Income extends Component {
         data: this.props.incomeList,
       });
     }
+
+    if (prevPorps.sumTotal !== this.props.sumTotal) {
+      this.setState({
+        filterTotal: this.props.sumTotal,
+      });
+    }
+
     if (prevPorps.incomeTotal !== this.props.incomeTotal) {
       this.setState({
         pagination: {
@@ -264,7 +294,7 @@ class Income extends Component {
       {
         pagination: {
           page,
-          limit: 10,
+          limit: 13,
         },
       },
       () =>
@@ -285,6 +315,19 @@ class Income extends Component {
       this.props
         .getIncome(this.state.pagination)
         .then((res) => {
+          this.props
+            .getFilterIncome()
+            .then((res) => {
+              this.props.storeSum(ArraySum(res));
+              this.setState({
+                filterTotal: ArraySum(res),
+              });
+            })
+            .catch((e) => {
+              this.setState({
+                filterTotal: 0,
+              });
+            });
           this.setState({
             data: res.docs,
             total: res.totalDocs,
@@ -305,14 +348,10 @@ class Income extends Component {
       this.props
         .getFilterIncome(data)
         .then((res) => {
-          res.map((value) => {
-            return this.setState({
-              filterTotal:
-                parseInt(this.state.filterTotal) + parseInt(value.money.amount),
-            });
-          });
+          this.props.storeSum(ArraySum(res));
           this.setState({
             data: res,
+            filterTotal: ArraySum(res),
             filterPress: true,
             // total: res.totalDocs
           });
@@ -336,11 +375,26 @@ class Income extends Component {
     this.props.editIncome(id, data).then((res) => {
       // this.props.toggleModel();
       this.handelClosePopUp();
+      this.props
+        .getFilterIncome()
+        .then((res) => {
+          this.props.storeSum(ArraySum(res));
+          this.setState({
+            filterTotal: ArraySum(res),
+          });
+        })
+        .catch((e) => {
+          this.setState({
+            filterTotal: 0,
+          });
+        });
       this.props.getIncome(this.state.pagination).then((res) => {
         this.setState({
           data: res.docs,
           total: res.totalDocs,
+          filterPress: false,
         });
+
         this.loadingFalse();
       });
     });
@@ -356,12 +410,24 @@ class Income extends Component {
 
   handelResetFilter = () => {
     this.loadingTrue();
+    this.props
+      .getFilterIncome()
+      .then((res) => {
+        this.props.storeSum(ArraySum(res));
+        this.setState({
+          filterTotal: ArraySum(res),
+        });
+      })
+      .catch((e) => {
+        this.setState({
+          filterTotal: 0,
+        });
+      });
     this.props.getIncome(this.state.pagination).then((res) => {
       this.setState({
         data: res.docs,
         total: res.totalDocs,
         filterPress: false,
-        filterTotal: 0,
       });
       this.loadingFalse();
     });
@@ -401,7 +467,11 @@ class Income extends Component {
               //---------------------------------------Change title of report from here----------------------------------------------------
               name="Aavak rIpaaoT"
               ref={(el) => (this.componentRef = el)}
-              data={this.state.data || []}
+              data={
+                !this.state.filterPress
+                  ? this.state.allData
+                  : this.state.data || []
+              }
               type="Expense"
               column={IncomeColumn}
               total={this.state.filterTotal}
@@ -421,13 +491,7 @@ class Income extends Component {
             />
             rIsaoT
           </Button>
-          {this.state.filterPress ? (
-            <h1 style={{ padding: "5px" }}>
-              TaoTla : {this.state.filterTotal}
-            </h1>
-          ) : (
-            ""
-          )}
+          <h1 style={{ padding: "5px" }}>TaoTla : {this.state.filterTotal}</h1>
 
           <ReactToPrint
             trigger={() => (
@@ -478,7 +542,7 @@ class Income extends Component {
             <Loading type="spinningBubbles" />
           </div> */}
           <Table
-            className="table-income table-income-expense"
+            className="table-income overflow-hidden table-income-expense"
             columns={columns}
             loading={this.state.loading}
             dataSource={this.state.data || []}
@@ -512,4 +576,5 @@ export default connect(mapStateToProps, {
   editIncome,
   deleteIncome,
   getFilterIncome,
+  storeSum,
 })(Income);

@@ -8,7 +8,7 @@
 
 export const actionName = {
   apisuccess: "API_SUCCESS",
-  apifailed: "API_FAILED"
+  apifailed: "API_FAILED",
 };
 
 export const listing = {
@@ -20,12 +20,15 @@ export const listing = {
   trustMembers: "EXPENSE_TOTAL",
   chequeListing: "CHEQUE_LISTING",
   chequeTotal: "EXPENSE_TOTAL",
-  noteListing: "NOTE_LISTING"
+  noteListing: "NOTE_LISTING",
+  totalIncome: "TOTAL_INCOME_ST",
+  storeTotal: "STORE_TOTAL",
+  storeExpenseTotal: "STORE_EXPENSE_TOTAL",
 };
 
 export const employee = {
   employeesting: "EMPLOYEE_LISTING",
-  employeeCount: "EMPYEE_COUNT"
+  employeeCount: "EMPYEE_COUNT",
   // expenseListing: "EXPENSE_LISTING"
 };
 
@@ -40,5 +43,5 @@ export const animal = {
   deadAnimalTotal: "DEAD_ANIMAL_TOTAL",
   givenAnimalTotal: "GIVEN_ANIMAL_TOTAL",
   costAnimalTotal: "COST_ANIMAL_TOTAL",
-  totalAnimalTotal: "TOTAL_ANIMAL_TOTAL"
+  totalAnimalTotal: "TOTAL_ANIMAL_TOTAL",
 };

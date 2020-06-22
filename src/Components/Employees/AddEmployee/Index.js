@@ -8,8 +8,10 @@ import {
   Row,
   Col,
   Select,
-  Modal
+  Modal,
+  message,
 } from "antd";
+import NumericInput from "../../Common/Forms/InputNumber";
 const { Option } = Select;
 
 // const props = {
@@ -18,17 +20,29 @@ const { Option } = Select;
 //   // defaultFileList: [...fileList],
 // };
 
+function beforeUpload(file) {
+  const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+  if (!isJpgOrPng) {
+    message.error("You can only upload JPG/PNG file!");
+  }
+  const isLt2M = file.size / 1024 / 1024 < 2;
+  if (!isLt2M) {
+    message.error("Image must smaller than 2MB!");
+  }
+  return isJpgOrPng && isLt2M;
+}
+
 class Index extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       fileData: {},
-      fileList: []
+      fileList: [],
     };
   }
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -46,7 +60,7 @@ class Index extends Component {
         }
         this.props.form.resetFields();
         this.setState({
-          fileList: []
+          fileList: [],
         });
       }
     });
@@ -56,20 +70,29 @@ class Index extends Component {
     this.props.form.resetFields();
     this.props.handelEmployeePopup();
     this.setState({
-      fileList: []
+      fileList: [],
     });
   };
 
-  documentsUpload = file => {
+  documentsUpload = (file) => {
     this.setState({
-      fileData: file
+      fileData: file,
     });
-    return true;
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    if (!isJpgOrPng) {
+      message.error("You can only upload JPG/PNG file!");
+    }
+    const isLt2M = file.size / 1024 / 1024 < 2;
+    if (!isLt2M) {
+      message.error("Image must smaller than 2MB!");
+    }
+    return isJpgOrPng && isLt2M && true;
+    // return ;
     // const formData = new FormData();
     // formData["import_file"] = file;
   };
 
-  handleChange = info => {
+  handleChange = (info) => {
     let fileList = [...info.fileList];
 
     // 1. Limit the number of uploaded files
@@ -77,7 +100,7 @@ class Index extends Component {
     fileList = fileList.slice(-2);
 
     // 2. Read from response and show file link
-    fileList = fileList.map(file => {
+    fileList = fileList.map((file) => {
       if (file.response) {
         // Component will show file.url as link
         file.url = file.response.url;
@@ -88,6 +111,10 @@ class Index extends Component {
     this.setState({ fileList });
   };
 
+  onChange = (value) => {
+    this.setState({ value });
+  };
+
   render() {
     if (this.props.type === "edit") {
     } else {
@@ -96,9 +123,10 @@ class Index extends Component {
       action: "https://www.mocky.io/v2/5cc8019d300000980a055e76",
       listType: "picture",
       // defaultFileList: [...fileList],
+
       className: "upload-list-inline",
       defaultFileList: [],
-      onChange: this.handleChange
+      onChange: this.handleChange,
     };
     const { getFieldDecorator } = this.props.form;
     const { type, data } = this.props;
@@ -127,7 +155,7 @@ class Index extends Component {
                     {getFieldDecorator("type", {
                       rules: [{ required: true }],
                       // initialValue: type && data.type
-                      initialValue: type === "edit" ? data.type : ""
+                      initialValue: type === "edit" ? data.type : "",
                     })(
                       <Select
                         className="in-icon-arrow"
@@ -150,7 +178,7 @@ class Index extends Component {
                     {getFieldDecorator("name", {
                       rules: [{ required: true, message: "Enter The Name" }],
                       // initialValue: type && data.name
-                      initialValue: type === "edit" ? data.name : ""
+                      initialValue: type === "edit" ? data.name : "",
                     })(<Input placeholder="naama" />)}
                   </Form.Item>
                 </Col>
@@ -162,16 +190,22 @@ class Index extends Component {
                   <Form.Item label="maaobaa[la naMbar">
                     {getFieldDecorator("phone", {
                       rules: [
-                        { required: true, message: "Enter The Mobile Number!" }
+                        { required: true, message: "Enter The Mobile Number!" },
                       ],
                       // initialValue: type && data.phone
-                      initialValue: type === "edit" ? data.phone : ""
+                      initialValue: type === "edit" ? data.phone : "",
                     })(
-                      <Input
-                        type="number"
-                        className=""
-                        placeholder="maaobaa[la naMbar"
+                      <NumericInput
+                        className="gujarati-font"
+                        value={this.state.value}
+                        onChange={this.onChange}
                       />
+                      // <InputNumber
+                      //   type="number"
+                      //   className=""
+                      //   max={10}
+                      //   placeholder="maaobaa[la naMbar"
+                      // />
                     )}
                   </Form.Item>
                 </Col>
@@ -180,10 +214,10 @@ class Index extends Component {
                   <Form.Item className="ant-col" label="sarnaamau">
                     {getFieldDecorator("address", {
                       rules: [
-                        { required: true, message: "Enter The Address!" }
+                        { required: true, message: "Enter The Address!" },
                       ],
                       // initialValue: type && data.address
-                      initialValue: type === "edit" ? data.address : ""
+                      initialValue: type === "edit" ? data.address : "",
                     })(<Input placeholder="sarnaamau" />)}
                   </Form.Item>
                 </Col>
@@ -195,10 +229,12 @@ class Index extends Component {
               ) : (
                 <Row>
                   <Form.Item label="ApalaaoD Aa.[DI ka-D:" extra="">
-                    {getFieldDecorator("file")(
+                    {getFieldDecorator("file", {
+                      rules: [{ required: true, message: "add id" }],
+                    })(
                       <Upload
                         {...props2}
-                        beforeUpload={file => this.documentsUpload(file)}
+                        beforeUpload={(file) => this.documentsUpload(file)}
                         fileList={this.state.fileList}
                       >
                         <Button type="primary">
