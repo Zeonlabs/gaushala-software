@@ -19,6 +19,7 @@ import ReportPrint from "../PrintTemplate/Report";
 import ReactToPrint from "react-to-print";
 import { IncomeColumn } from "../PrintTemplate/Report/Columns/Income";
 import { ArraySum } from "../Common/CommonCalculation";
+import IncomePrintSlip from "../PrintTemplate";
 // import Loading from "../Loading/Loading";
 
 // const data = [];
@@ -49,6 +50,20 @@ class Income extends Component {
       total: 0,
       filterTotal: 0,
       filterPress: false,
+      printData: {
+        data: {
+          slip_no: 2120,
+          name: "dsfsd",
+          date: "23-5-2020",
+          address: "dsfsdfafasdf",
+          cheque_no: "234234",
+          phone: "ewrwerwe",
+          ref_name: "dsfdsf",
+        },
+        itemData: "",
+        finalTotal: 444440,
+      },
+      printstatus: true,
     };
     this.columns = [
       {
@@ -164,12 +179,34 @@ class Income extends Component {
                   style={{ color: "rgba(255, 0, 0)" }}
                 />
               </Popconfirm>
+              <Divider type="vertical" />
+              <Divider type="vertical" />
+              <span onClick={() => this.handelPrint(text, record)}>
+                <ReactToPrint
+                  trigger={() => (
+                    <Icon
+                      type="printer"
+                      theme="filled"
+                      // onClick={() => this.handelPrint(text, record)}
+                      style={{ color: "#727070cf" }}
+                    />
+                  )}
+                  content={() => this.printsingledata}
+                  onAfterPrint={this.printIncomeSlip}
+                />
+              </span>
             </div>
           </>
         ),
       },
     ];
   }
+
+  printIncomeSlip = () => {
+    // this.setState({
+    //   printstatus: false,
+    // });
+  };
 
   handelEdit = (text, record) => {
     this.setState({
@@ -285,6 +322,14 @@ class Income extends Component {
   onClose = () => {
     this.setState({
       visible: false,
+    });
+  };
+
+  handelPrint = (index, data) => {
+    console.log("log in a printer", index, data);
+    this.setState({
+      printstatus: true,
+      // printData: data,
     });
   };
 
@@ -541,6 +586,7 @@ class Income extends Component {
             {/* {this.state.loading ? <Loading type="spinningBubbles" /> : ""} 
             <Loading type="spinningBubbles" />
           </div> */}
+          {/* {console.log("log nujikili -> ", this.state.data)} */}
           <Table
             className="table-income overflow-hidden table-income-expense"
             columns={columns}
@@ -561,6 +607,12 @@ class Income extends Component {
             scroll={{ x: "calc(700px + 40%)" }}
             // scroll={{ x: "calc(700px + 40%)", y: 300 }}
           />
+          <div style={{ display: "none" }}>
+            <IncomePrintSlip
+              ref={(el) => (this.printsingledata = el)}
+              data={this.state.printData}
+            />
+          </div>
         </div>
       </PageWrapper>
     );

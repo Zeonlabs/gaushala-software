@@ -40,7 +40,6 @@ import axios from "axios";
 import { ArraySum } from "../CommonCalculation";
 
 const { Option } = Select;
-
 class IncomeMobels extends Component {
   constructor(props) {
     super(props);
@@ -279,7 +278,8 @@ class IncomeMobels extends Component {
         data: values,
         itemData,
       });
-
+      // printSlip = values;
+      // console.log("IncomeMobels -> handleSubmit -> printSlip", printSlip);
       if (!err) {
         if (this.props.type === "expense") {
           this.expenseData(values, finalTotal, itemData);
@@ -735,7 +735,7 @@ class IncomeMobels extends Component {
                   onAfterPrint={this.printIncomeSlip}
                 />
               </Form.Item>
-              <div style={{ display: "none" }}>
+              <div style={{ display: "block" }}>
                 {type === "income" ? (
                   <IncomePrintSlip
                     ref={(el) => (this.componentRef = el)}

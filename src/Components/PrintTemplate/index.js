@@ -3,10 +3,13 @@ import React from "react";
 import src from "../PrintTemplate/HeaderImage/headerImg.png";
 import "./index.scss";
 import IncomeTable from "./IncomeTable";
+import moment from "moment";
 // import {Table} from 'antd'
 
 class IncomePrintSlip extends React.Component {
   render() {
+    console.log("IncomePrintSlip -> render -> this.props", this.props);
+    const { slip_no, date, name, address } = this.props.data.data;
     return (
       <div>
         <div className="slip-print-income">
@@ -23,15 +26,15 @@ class IncomePrintSlip extends React.Component {
             <div className="column-1">
               <h2 className="font-size-20">pahaoMca naM. : &nbsp;</h2>
               {/* --------------------------Slip Num --------------------------- */}
-              <h2 className="slip-num font-size-20">
-                {this.props.voucher || 0}
-              </h2>
+              <h2 className="slip-num font-size-20">{slip_no || 0}</h2>
             </div>
 
             <div className="column-2">
               <h2 className="font-size-20">taarIKa : &nbsp;</h2>
               {/* --------------------------Slip Date --------------------------- */}
-              <h2 className="date  english-font">{this.props.date}</h2>
+              <h2 className="date  english-font">
+                {moment(date).format("DD-MM-YYYY")}
+              </h2>
             </div>
           </div>
 
@@ -39,41 +42,47 @@ class IncomePrintSlip extends React.Component {
             <div className="column-1 padding-top-0">
               <h2 className="font-size-20">dataa EaI : &nbsp;</h2>
               {/* --------------------------Slip Address --------------------------- */}
-              <h2 className="font-size-20">{this.props.name}</h2>
+              <h2 className="font-size-20">{name}</h2>
             </div>
 
             <div className="column-2 padding-top-0">
               <h2 className="font-size-20">gaama: &nbsp;</h2>
               {/* --------------------------Slip Name --------------------------- */}
-              <h2 className="font-size-20">{this.props.address}</h2>
+              <h2 className="font-size-20">{address}</h2>
             </div>
           </div>
 
           {/* ----------------------------------------------table------------------------------ */}
-          <div className="table padding-row">
-            <IncomeTable data={this.props.table} total={this.props.amount} />
-          </div>
+          {/* <div className="table padding-row">
+            <IncomeTable data={item} total={money ? money.amount : 0} />
+          </div> */}
 
           {/* -----------------------------------------------Content-------------------------------- */}
-          <div className="row padding-row">
+          {/* <div className="row padding-row">
             <h3>
               AaJ raoJ AapaEaI tarF qaI gaaOSaaLaa naa laaBaaqao- danapaoTo ₹
               &nbsp;
-              <span className="amount-in-digit">{this.props.amount} </span>
+              <span className="amount-in-digit">
+                {money ? money.amount : 0}{" "}
+              </span>
               paura{" "}
-              {this.props.cheque_no ? (
-                <span className="if-amount-is-payed-by-chqeue">
-                  caok naMbar &nbsp;
-                  <span className="cheque-num">{this.props.cheque_no}</span>
-                  &nbsp;qaI{" "}
-                </span>
+              {money ? (
+                money.cheque_no ? (
+                  <span className="if-amount-is-payed-by-chqeue">
+                    caok naMbar &nbsp;
+                    <span className="cheque-num">{money.cheque_no}</span>
+                    &nbsp;qaI{" "}
+                  </span>
+                ) : (
+                  ""
+                )
               ) : (
                 ""
               )}
               &nbsp;pa`apta qayaola Co. AapaEaI naa sahkar badla Kauba Kauba
               AaBaar.
             </h3>
-          </div>
+          </div> */}
 
           <div className="row sign-row">
             <div className="column-3">
@@ -95,19 +104,5 @@ class IncomePrintSlip extends React.Component {
     );
   }
 }
-
-// class IncomePrintSlip extends React.Component {
-//   render() {
-//     return (
-//       <div>
-
-//         {/* <ReactToPrint
-//           trigger={() => <a href="#">Print this out!</a>}
-//           content={() => this.componentRef}
-//         /> */}
-//       </div>
-//     );
-//   }
-// }
 
 export default IncomePrintSlip;

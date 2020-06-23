@@ -8,7 +8,7 @@ const Test = (
     sumTotal: 0,
     expenseSumTotal: 0,
     incomeTotal: 0,
-    expenseList: [] || null,
+    expenseList: [],
     expenseTotal: 0,
     trustMembers: [] || null,
     trustTotal: 0,
@@ -16,6 +16,20 @@ const Test = (
     chequeTotal: 0,
     noteList: [] || null,
     totalAnimalCount: 0 || null,
+    printComponentData:
+      {
+        data: {
+          slip_no: 0,
+          name: "",
+          date: "",
+          address: "",
+          cheque_no: "",
+          phone: "",
+          ref_name: "",
+        },
+        itemData: "",
+        finalTotal: 0,
+      } || null,
   },
   Action
 ) => {
@@ -37,6 +51,12 @@ const Test = (
       return {
         ...state,
         sumTotal: Action.payload,
+      };
+
+    case listing.allDataForPrint:
+      return {
+        ...state,
+        printComponentData: Action.payload,
       };
 
     case listing.storeExpenseTotal:

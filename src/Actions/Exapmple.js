@@ -98,6 +98,11 @@ export const expenseStoreSum = (data) => (dispatch) =>
     dispatch({ type: listing.storeExpenseTotal, payload: data });
   });
 
+export const printDataStore = (data) => (dispatch) =>
+  new Promise((resolve, reject) => {
+    dispatch({ type: listing.allDataForPrint, payload: data });
+  });
+
 export const getFilterIncome = (data) => (dispatch) =>
   new Promise((resolve, reject) => {
     // console.log("TCL: data", data);

@@ -24,6 +24,7 @@ export const listing = {
   totalIncome: "TOTAL_INCOME_ST",
   storeTotal: "STORE_TOTAL",
   storeExpenseTotal: "STORE_EXPENSE_TOTAL",
+  allDataForPrint: "PRINT_COMPONENT_DATA",
 };
 
 export const employee = {
