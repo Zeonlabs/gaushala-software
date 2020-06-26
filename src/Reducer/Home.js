@@ -5,10 +5,12 @@ const Test = (
     apicall: false,
     apistatus: false,
     incomeList: {} || null,
+    allFilterIncome: {} || null,
+    allFilterExpense: {} || null,
     sumTotal: 0,
     expenseSumTotal: 0,
     incomeTotal: 0,
-    expenseList: [],
+    expenseList: {} || null,
     expenseTotal: 0,
     trustMembers: [] || null,
     trustTotal: 0,
@@ -45,6 +47,16 @@ const Test = (
       return {
         ...state,
         incomeList: Action.payload,
+      };
+    case listing.allFilterIncome:
+      return {
+        ...state,
+        allFilterIncome: Action.payload,
+      };
+    case listing.allFilterExpense:
+      return {
+        ...state,
+        allFilterExpense: Action.payload,
       };
 
     case listing.storeTotal:

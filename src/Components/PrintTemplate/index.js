@@ -8,10 +8,16 @@ import moment from "moment";
 
 class IncomePrintSlip extends React.Component {
   render() {
-    console.log("IncomePrintSlip -> render -> this.props", this.props);
-    const { slip_no, date, name, address } = this.props.data.data;
+    // localStorage.getItem("value");
+    // const data = localStorage.getItem("value");
+    const { slip_no, date, name, address, item, money } = this.props.data;
+
+    // console.log(
+    //   "IncomePrintSlip -> render -> this.props.data",
+    //   this.props.data
+    // );
     return (
-      <div>
+      <div id={this.props.cId}>
         <div className="slip-print-income">
           <div className="slip-header">
             <img className="img-header" src={src} alt="boohoo"></img>
@@ -53,12 +59,12 @@ class IncomePrintSlip extends React.Component {
           </div>
 
           {/* ----------------------------------------------table------------------------------ */}
-          {/* <div className="table padding-row">
+          <div className="table padding-row">
             <IncomeTable data={item} total={money ? money.amount : 0} />
-          </div> */}
+          </div>
 
           {/* -----------------------------------------------Content-------------------------------- */}
-          {/* <div className="row padding-row">
+          <div className="row padding-row">
             <h3>
               AaJ raoJ AapaEaI tarF qaI gaaOSaaLaa naa laaBaaqao- danapaoTo ₹
               &nbsp;
@@ -82,7 +88,7 @@ class IncomePrintSlip extends React.Component {
               &nbsp;pa`apta qayaola Co. AapaEaI naa sahkar badla Kauba Kauba
               AaBaar.
             </h3>
-          </div> */}
+          </div>
 
           <div className="row sign-row">
             <div className="column-3">

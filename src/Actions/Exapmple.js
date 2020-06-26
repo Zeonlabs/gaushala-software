@@ -112,7 +112,7 @@ export const getFilterIncome = (data) => (dispatch) =>
       data
     )
       .then((res) => {
-        dispatch({ type: listing.incomeListing, payload: res });
+        dispatch({ type: listing.allFilterIncome, payload: res });
         resolve(res);
       })
       .catch((e) => {
@@ -129,7 +129,7 @@ export const getFilterExpense = (data) => (dispatch) =>
       data
     )
       .then((res) => {
-        dispatch({ type: listing.expenseListing, payload: res.docs });
+        dispatch({ type: listing.allFilterExpense, payload: res });
         resolve(res);
       })
       .catch((e) => {

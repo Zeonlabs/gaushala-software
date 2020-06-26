@@ -192,7 +192,7 @@ class Tables extends Component {
         totalAmount: 0,
       });
     }
-    console.log(this.state.totalAmount);
+    // console.log(this.state.totalAmount);
   };
 
   handleDelete = (key) => {
@@ -228,7 +228,7 @@ class Tables extends Component {
     });
     const totalAmount = newData.map((val) => parseInt(val.amount, 10));
     const finalTotal = totalAmount.reduce(this.sumArray);
-    console.log("Tables -> handleSave -> finalTotal", finalTotal);
+    // console.log("Tables -> handleSave -> finalTotal", finalTotal);
     this.props.submit(newData);
     this.setState({
       dataSource: newData,
