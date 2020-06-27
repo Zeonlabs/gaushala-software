@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Routes = void 0;
 const express_1 = require("express");
 const controllers_1 = require("./controllers");
 const pagination_middleware_1 = require("./middlewares/pagination/pagination.middleware");

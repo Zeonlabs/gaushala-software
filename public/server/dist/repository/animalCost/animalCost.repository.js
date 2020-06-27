@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AnimalCostRepository = void 0;
 const schema_1 = require("../../schema");
 class AnimalCostRepository {
     save(data) {

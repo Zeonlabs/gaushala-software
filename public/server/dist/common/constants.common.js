@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.ANIMAL = exports.VAR_DOC_ID = void 0;
 const VAR_DOC_ID = 115;
 exports.VAR_DOC_ID = VAR_DOC_ID;
 const ANIMAL = {

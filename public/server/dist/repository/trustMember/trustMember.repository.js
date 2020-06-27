@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.TrustMemberRepository = void 0;
 const schema_1 = require("../../schema");
 const exceptions_common_1 = require("../../common/exceptions.common");
 class TrustMemberRepository {

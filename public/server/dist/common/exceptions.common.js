@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.InvalidOtpRequest = exports.InvalidOtpException = exports.insufficientSmsBalanceException = exports.RequiredInputNotProvidedException = exports.WrongOtpException = exports.DocsNotProvidedError = exports.ImageUploadFailedException = exports.NoRecordWithIDException = exports.IdNotProvidedException = exports.PinNotFoundException = void 0;
 class PinNotFoundException extends Error {
     constructor() {
         super(...arguments);

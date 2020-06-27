@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.editGivenAnimal = exports.deleteGivenAnimal = exports.saveGivenAnimal = void 0;
 const repository_1 = require("../../repository");
 const utils_common_1 = require("../../common/utils.common");
 const saveGivenAnimal = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

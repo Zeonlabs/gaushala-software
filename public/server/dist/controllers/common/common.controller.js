@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.smsController = exports.getIncomeExpenseAnalytics = exports.generateFilteredReport = void 0;
 const repository_1 = require("../../repository");
 const utils_common_1 = require("../../common/utils.common");
 const sms_common_1 = require("../../common/sms.common");
@@ -22,7 +23,8 @@ exports.generateFilteredReport = (Model) => (req, res) => __awaiter(void 0, void
                 const dateEnd = new Date(dateTo);
                 dateEnd.setHours(23, 59, 59, 0);
                 query['date'] = {
-                    $gte: new Date(dateFrom), $lt: dateEnd
+                    $gte: new Date(dateFrom),
+                    $lt: dateEnd
                 };
             }
             if (type)

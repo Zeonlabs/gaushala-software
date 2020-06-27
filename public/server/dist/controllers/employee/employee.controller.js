@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.editEmployee = exports.deleteEmployee = exports.getEmpDoc = exports.saveEmployee = void 0;
 const repository_1 = require("../../repository");
 const exceptions_common_1 = require("../../common/exceptions.common");
 const saveEmployee = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

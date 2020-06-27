@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.deleteNote = exports.updateNote = exports.addNote = void 0;
 const repository_1 = require("../../repository");
 exports.addNote = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {

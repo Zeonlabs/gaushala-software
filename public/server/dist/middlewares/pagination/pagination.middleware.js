@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.paginationMiddleware = void 0;
 const paginationMiddleware = (Model) => (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { page = 0, limit = 10 } = req.query;

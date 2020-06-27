@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.genOtp = exports.countTotalAnimal = exports.alterAnimalsArray = exports.getStatusCode = exports.reverseNum = void 0;
 exports.reverseNum = (num) => parseFloat(num.toString().split('').reverse().join('')) * Math.sign(num);
 exports.getStatusCode = (code) => (code >= 100 && code < 600) ? code : 500;
 exports.alterAnimalsArray = (animals) => animals.map(ani => ({ type: ani.type, count: -ani.count }));

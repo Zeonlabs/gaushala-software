@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.sendSms = void 0;
 const sms_config_json_1 = require("./sms.config.json");
 const request_1 = __importDefault(require("request"));
 exports.sendSms = (phone, smsContent, smsContentType = 'english') => {

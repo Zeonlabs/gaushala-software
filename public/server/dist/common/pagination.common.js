@@ -9,6 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.getPaginatedRecords = void 0;
 exports.getPaginatedRecords = (query, Model) => __awaiter(void 0, void 0, void 0, function* () {
     const { page = 0, limit = 10 } = query;
     return Model.paginate({}, {
