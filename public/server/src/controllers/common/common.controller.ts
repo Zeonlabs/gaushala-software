@@ -13,11 +13,11 @@ export const generateFilteredReport = (Model: MongoModel<IncomeModel | ExpenseMo
         const genFilter = () => {
             const query = {}
             if(dateFrom) {
-                const dateEnd = new Date(dateTo)
+                const dateEnd = new Date(dateTo as string)
                 dateEnd.setHours(23,59,59,0)
 
                 query['date'] = {
-                    $gte: new Date(dateFrom), $lt: dateEnd
+                    $gte: new Date(dateFrom as string), $lt: dateEnd
                 }
             }
             if(type) query['type'] = type
