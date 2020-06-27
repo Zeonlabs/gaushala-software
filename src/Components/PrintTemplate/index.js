@@ -17,10 +17,11 @@ class IncomePrintSlip extends React.Component {
     //   this.props.data
     // );
     return (
-      <div id={this.props.cId}>
+      <div>
         <div className="slip-print-income">
           <div className="slip-header">
             <img className="img-header" src={src} alt="boohoo"></img>
+            <h1>fsdfsdf</h1>
             <hr className="first-hr"></hr>
           </div>
 

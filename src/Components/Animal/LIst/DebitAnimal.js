@@ -8,7 +8,7 @@ import {
   Table,
   Divider,
   Input,
-  Popconfirm
+  Popconfirm,
 } from "antd";
 import moment from "moment";
 import { connect } from "react-redux";
@@ -16,7 +16,7 @@ import {
   getGivenAnimal,
   getFilterGivenAnimal,
   editGivenAnimal,
-  deleteGivenAnimal
+  deleteGivenAnimal,
 } from "../../../Actions/Animal/GivenAnimal";
 import { totalOfArray } from "../../../js/Helper";
 import DebitAnimals from "../PopupForm/DebitAnimal";
@@ -34,7 +34,7 @@ class DebitAnimal extends Component {
       sequence: 1,
       pagination: {
         page: 1,
-        limit: 20
+        limit: 20,
       },
       editData: "",
       income: false,
@@ -43,7 +43,7 @@ class DebitAnimal extends Component {
       date: {},
       loading: true,
       totalPage: 0,
-      filterPress: false
+      filterPress: false,
     };
     this.columns = [
       {
@@ -54,8 +54,8 @@ class DebitAnimal extends Component {
         className: "",
         render: (text, record) =>
           this.state.data.length >= 1 ? (
-            <div>{this.state.data.findIndex(x => x._id === text) + 1}</div>
-          ) : null
+            <div>{this.state.data.findIndex((x) => x._id === text) + 1}</div>
+          ) : null,
       },
       {
         title: "taarIKa",
@@ -67,7 +67,7 @@ class DebitAnimal extends Component {
           <div className="  english-font-input">
             {moment(text).format("DD-MM-YYYY")}
           </div>
-        )
+        ),
       },
       {
         title: "paSauAao",
@@ -77,31 +77,31 @@ class DebitAnimal extends Component {
             dataIndex: "animal[0].count",
             key: "gay",
             className: "table-font-english",
-            render: text => <p>{text}</p>
+            render: (text) => <p>{text}</p>,
           },
           {
             title: "baLad",
             dataIndex: "animal[1].count",
             key: "balad",
-            className: "table-font-english"
+            className: "table-font-english",
           },
           {
             title: "vaaCrDa",
             dataIndex: "animal[2].count",
             key: "vacharda",
-            className: "table-font-english"
+            className: "table-font-english",
           },
           {
             title: "vaaCrDI",
             dataIndex: "animal[3].count",
             key: "vachardi",
-            className: "table-font-english"
+            className: "table-font-english",
           },
           {
             title: "Anya",
             dataIndex: "animal[4].count",
             key: "anny",
-            className: "table-font-english"
+            className: "table-font-english",
           },
           {
             title: "kula paSauAao",
@@ -109,19 +109,19 @@ class DebitAnimal extends Component {
             key: "total",
             className: "table-font-english",
             render: (text, record) => {
-              const total = text.map(val => parseInt(val.count, 10));
+              const total = text.map((val) => parseInt(val.count, 10));
               const finalTotal = totalOfArray(total);
               return <div>{finalTotal}</div>;
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
       {
         title: "Toga naMbar",
         dataIndex: "tag",
         key: "tag",
         width: 180,
-        className: "table-font-english"
+        className: "table-font-english",
         // render: text => <p>{text}</p>
       },
       {
@@ -130,21 +130,21 @@ class DebitAnimal extends Component {
         key: "name",
         className: "",
         width: 300,
-        render: text => <p>{text}</p>
+        render: (text) => <p>{text}</p>,
       },
       {
         title: "sarnaamau",
         dataIndex: "address",
         key: "address",
         width: 250,
-        className: ""
+        className: "",
       },
       {
         title: "maaobaa[la naM.",
         dataIndex: "phone",
         key: "mono",
         width: 200,
-        className: "table-font-english"
+        className: "table-font-english",
       },
       {
         title: "AoDIT e DIlaIT",
@@ -177,8 +177,8 @@ class DebitAnimal extends Component {
               </Popconfirm>
             </div>
           </>
-        )
-      }
+        ),
+      },
     ];
   }
 
@@ -190,16 +190,16 @@ class DebitAnimal extends Component {
     // } else {
     this.props
       .getGivenAnimal(this.state.pagination)
-      .then(res => {
+      .then((res) => {
         this.setState({
           data: res.docs,
           loading: false,
-          totalPage: res.totalDocs
+          totalPage: res.totalDocs,
         });
       })
-      .catch(e => {
+      .catch((e) => {
         this.setState({
-          loading: false
+          loading: false,
         });
       });
     // }
@@ -207,19 +207,19 @@ class DebitAnimal extends Component {
 
   loadingTrue = () => {
     this.setState({
-      loading: true
+      loading: true,
     });
   };
 
   loadingFalse = () => {
     this.setState({
-      loading: false
+      loading: false,
     });
   };
 
-  handelText = e => {
+  handelText = (e) => {
     this.setState({
-      tagText: e.target.value
+      tagText: e.target.value,
     });
   };
 
@@ -228,13 +228,13 @@ class DebitAnimal extends Component {
     if (dates.length > 1) {
       value = {
         dateFrom: moment(dates[0]).format("YYYY-MM-DD"),
-        dateTo: moment(dates[1]).format("YYYY-MM-DD")
+        dateTo: moment(dates[1]).format("YYYY-MM-DD"),
       };
     } else {
       value = {};
     }
     this.setState({
-      date: value
+      date: value,
     });
   };
   handelback = () => {
@@ -242,17 +242,17 @@ class DebitAnimal extends Component {
   };
 
   handelEdit = (text, record) => {
-    const total = record.animal.map(val => parseInt(val.count, 10));
+    const total = record.animal.map((val) => parseInt(val.count, 10));
     this.setState({
       editData: record,
       income: true,
-      total: totalOfArray(total)
+      total: totalOfArray(total),
     });
   };
 
   handelClosePopUp = () => {
     this.setState({
-      income: !this.state.income
+      income: !this.state.income,
     });
   };
 
@@ -260,27 +260,27 @@ class DebitAnimal extends Component {
     this.loadingTrue();
     this.props
       .editGivenAnimal(id, data)
-      .then(res => {
+      .then((res) => {
         this.handelClosePopUp();
         this.props
           .getGivenAnimal(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              totalPage: res.totalDocs
+              totalPage: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       })
-      .catch(e => this.loadingFalse());
+      .catch((e) => this.loadingFalse());
   };
 
   filterData = () => {
     this.loadingTrue();
     const data = {
       ...this.state.date,
-      tag: this.state.tagText
+      tag: this.state.tagText,
     };
 
     if (localStorage.getItem("reversePin") === "205") {
@@ -297,26 +297,26 @@ class DebitAnimal extends Component {
       ) {
         this.props
           .getGivenAnimal(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
               filterPress: false,
-              totalPage: res.totalDocs
+              totalPage: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       } else {
         this.props
           .getFilterGivenAnimal(data)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res,
-              filterPress: true
+              filterPress: true,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       }
     }
   };
@@ -325,41 +325,41 @@ class DebitAnimal extends Component {
     this.loadingTrue();
     this.props
       .deleteGivenAnimal(record._id)
-      .then(res => {
+      .then((res) => {
         this.props
           .getGivenAnimal(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              totalPage: res.totalDocs
+              totalPage: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       })
-      .catch(e => this.loadingFalse());
+      .catch((e) => this.loadingFalse());
   };
 
-  paginate = page => {
+  paginate = (page) => {
     this.loadingTrue();
     this.setState(
       {
         pagination: {
           page,
-          limit: 20
-        }
+          limit: 20,
+        },
       },
       () =>
         this.props
           .getGivenAnimal(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              totalPage: res.totalDocs
+              totalPage: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse())
+          .catch((e) => this.loadingFalse())
     );
   };
 
@@ -392,8 +392,8 @@ class DebitAnimal extends Component {
                 Today: [moment(), moment()],
                 "This Month": [
                   moment().startOf("month"),
-                  moment().endOf("month")
-                ]
+                  moment().endOf("month"),
+                ],
               }}
               onChange={this.onChange}
             />
@@ -434,9 +434,9 @@ class DebitAnimal extends Component {
                 <ReportPrint
                   //---------------------------------------Change title of report from here----------------------------------------------------
                   name="Aapaola paSauAao nau rPsTr"
-                  ref={el => (this.componentRef = el)}
+                  ref={(el) => (this.componentRef = el)}
                   data={this.state.data || []}
-                  type="Expense"
+                  // type="Expense"
                   column={GivenAnimalColumn}
                 />
               </div>
@@ -463,7 +463,7 @@ class DebitAnimal extends Component {
                     onChange: this.paginate,
                     current: this.state.pagination.page,
                     total: this.state.totalPage,
-                    pageSize: this.state.pagination.limit
+                    pageSize: this.state.pagination.limit,
                   }
             }
             dataSource={this.state.data}
@@ -475,13 +475,13 @@ class DebitAnimal extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  ...state.Animals
+const mapStateToProps = (state) => ({
+  ...state.Animals,
 });
 
 export default connect(mapStateToProps, {
   getGivenAnimal,
   getFilterGivenAnimal,
   editGivenAnimal,
-  deleteGivenAnimal
+  deleteGivenAnimal,
 })(DebitAnimal);

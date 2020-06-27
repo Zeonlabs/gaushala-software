@@ -25,9 +25,13 @@ class ReportPrint extends React.Component {
                 {this.props.name}
               </span>
               &nbsp; :{" "}
-              <span className="total-text-print gujarati-font">
-                TaoTla :{this.props.total}
-              </span>
+              {this.props.type === "Expense" ? (
+                <span className="total-text-print gujarati-font">
+                  TaoTla :{this.props.total}
+                </span>
+              ) : (
+                ""
+              )}
             </h1>
           </div>
 

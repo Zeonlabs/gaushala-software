@@ -285,7 +285,7 @@ class TotalAnimal extends Component {
                     name="kula paSauAao nau rPsTr"
                     ref={(el) => (this.componentRef = el)}
                     data={this.state.data || []}
-                    type="Expense"
+                    // type="Expense"
                     column={TotalReportColumn}
                   />
                 </div>

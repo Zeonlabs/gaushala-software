@@ -32,6 +32,8 @@ export const listing = {
 export const employee = {
   employeesting: "EMPLOYEE_LISTING",
   employeeCount: "EMPYEE_COUNT",
+  userName: "USER_NAME",
+  mobilenumber: "MOBILe_NUMBER",
   // expenseListing: "EXPENSE_LISTING"
 };
 

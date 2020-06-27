@@ -8,14 +8,14 @@ import {
   Col,
   Table,
   Divider,
-  Popconfirm
+  Popconfirm,
 } from "antd";
 import moment from "moment";
 import {
   getCostAnimal,
   getFilterCostAnimal,
   editCostAnimal,
-  deleteCostAnimal
+  deleteCostAnimal,
 } from "../../../Actions/Animal/TotalAnimal";
 import ResidentalAnimals from "../PopupForm/ResidentalAnimal";
 import { connect } from "react-redux";
@@ -32,7 +32,7 @@ class ResidentalAnimal extends Component {
       sequence: 1,
       pagination: {
         page: 1,
-        limit: 20
+        limit: 20,
       },
       editData: "",
       income: false,
@@ -41,7 +41,7 @@ class ResidentalAnimal extends Component {
       date: {},
       loading: true,
       totalPage: 0,
-      filterPress: false
+      filterPress: false,
     };
     this.columns = [
       {
@@ -52,8 +52,8 @@ class ResidentalAnimal extends Component {
         className: "",
         render: (text, record) =>
           this.state.data.length >= 1 ? (
-            <div>{this.state.data.findIndex(x => x._id === text) + 1}</div>
-          ) : null
+            <div>{this.state.data.findIndex((x) => x._id === text) + 1}</div>
+          ) : null,
       },
       {
         title: "taarIKa",
@@ -65,55 +65,55 @@ class ResidentalAnimal extends Component {
           <div className="  english-font-input">
             {moment(text).format("DD-MM-YYYY")}
           </div>
-        )
+        ),
       },
       {
         title: "kula paSauAao",
         dataIndex: "total_animal",
         key: "total",
-        className: "table-font-english"
+        className: "table-font-english",
       },
       {
         title: "Gaasa",
         dataIndex: "item.ghas",
         key: "ghas",
-        className: "table-font-english"
+        className: "table-font-english",
       },
       {
         title: "caarao",
         dataIndex: "item.charo",
         key: "charo",
-        className: "table-font-english"
+        className: "table-font-english",
       },
       {
         title: "daNa",
         dataIndex: "item.dan",
         key: "dana",
-        className: "table-font-english"
+        className: "table-font-english",
       },
       {
         title: "majurI",
         dataIndex: "item.majuri",
         key: "majuri",
-        className: "table-font-english"
+        className: "table-font-english",
       },
       {
         title: "Dao. e dvaa",
         dataIndex: "item.doctor",
         key: "doctor",
-        className: "table-font-english"
+        className: "table-font-english",
       },
       {
         title: "Anya Ka-ca",
         dataIndex: "item.other",
         key: "extracost",
-        className: "table-font-english"
+        className: "table-font-english",
       },
       {
         title: "kula Ka-ca",
         dataIndex: "total",
         key: "totalcost",
-        className: "table-font-english"
+        className: "table-font-english",
       },
       {
         title: "AoDIT e DIlaIT",
@@ -146,8 +146,8 @@ class ResidentalAnimal extends Component {
               </Popconfirm>
             </div>
           </>
-        )
-      }
+        ),
+      },
     ];
   }
 
@@ -159,16 +159,16 @@ class ResidentalAnimal extends Component {
     // } else {
     this.props
       .getCostAnimal(this.state.pagination)
-      .then(res => {
+      .then((res) => {
         this.setState({
           data: res.docs,
           loading: false,
-          totalPage: res.totalDocs
+          totalPage: res.totalDocs,
         });
       })
-      .catch(e => {
+      .catch((e) => {
         this.setState({
-          loading: false
+          loading: false,
         });
       });
     // }
@@ -176,36 +176,36 @@ class ResidentalAnimal extends Component {
 
   loadingTrue = () => {
     this.setState({
-      loading: true
+      loading: true,
     });
   };
 
   loadingFalse = () => {
     this.setState({
-      loading: false
+      loading: false,
     });
   };
 
-  paginate = page => {
+  paginate = (page) => {
     this.loadingTrue();
     this.setState(
       {
         pagination: {
           page,
-          limit: 20
-        }
+          limit: 20,
+        },
       },
       () =>
         this.props
           .getCostAnimal(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              totalPage: res.totalDocs
+              totalPage: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse())
+          .catch((e) => this.loadingFalse())
     );
   };
 
@@ -213,7 +213,7 @@ class ResidentalAnimal extends Component {
     // const total = record.animal.map(val => parseInt(val.count, 10));
     this.setState({
       editData: record,
-      income: true
+      income: true,
       // total: totalOfArray(total)
     });
   };
@@ -222,35 +222,35 @@ class ResidentalAnimal extends Component {
     this.loadingTrue();
     this.props
       .editCostAnimal(id, data)
-      .then(res => {
+      .then((res) => {
         this.handelClosePopUp();
         this.props
           .getCostAnimal(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              totalPage: res.totalDocs
+              totalPage: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       })
-      .catch(e => this.loadingFalse());
+      .catch((e) => this.loadingFalse());
   };
 
   handleDelete = (key, record) => {
     this.loadingTrue();
-    this.props.deleteCostAnimal(record._id).then(res => {
+    this.props.deleteCostAnimal(record._id).then((res) => {
       this.props
         .getCostAnimal(this.state.pagination)
-        .then(res => {
+        .then((res) => {
           this.setState({
             data: res.docs,
-            totalPage: res.totalDocs
+            totalPage: res.totalDocs,
           });
           this.loadingFalse();
         })
-        .catch(e => this.loadingFalse());
+        .catch((e) => this.loadingFalse());
     });
   };
 
@@ -260,7 +260,7 @@ class ResidentalAnimal extends Component {
     if (dates.length > 1) {
       value = {
         dateFrom: moment(dates[0]).format("YYYY-MM-DD"),
-        dateTo: moment(dates[1]).format("YYYY-MM-DD")
+        dateTo: moment(dates[1]).format("YYYY-MM-DD"),
       };
     } else {
       value = {};
@@ -268,32 +268,32 @@ class ResidentalAnimal extends Component {
     if (dates.length <= 1) {
       this.props
         .getCostAnimal(this.state.pagination)
-        .then(res => {
+        .then((res) => {
           this.setState({
             data: res.docs,
             totalPage: res.totalDocs,
-            filterPress: false
+            filterPress: false,
           });
           this.loadingFalse();
         })
-        .catch(e => this.loadingFalse());
+        .catch((e) => this.loadingFalse());
     } else {
       this.props
         .getFilterCostAnimal(value)
-        .then(res => {
+        .then((res) => {
           this.setState({
             data: res,
-            filterPress: true
+            filterPress: true,
           });
           this.loadingFalse();
         })
-        .catch(e => this.loadingFalse());
+        .catch((e) => this.loadingFalse());
     }
   };
 
   handelClosePopUp = () => {
     this.setState({
-      income: !this.state.income
+      income: !this.state.income,
     });
   };
 
@@ -332,8 +332,8 @@ class ResidentalAnimal extends Component {
                     Today: [moment(), moment()],
                     "This Month": [
                       moment().startOf("month"),
-                      moment().endOf("month")
-                    ]
+                      moment().endOf("month"),
+                    ],
                   }}
                   onChange={this.onChange}
                 />
@@ -373,9 +373,9 @@ class ResidentalAnimal extends Component {
                   <ReportPrint
                     //---------------------------------------Change title of report from here----------------------------------------------------
                     name="inaBaava Ka-ca nau rPsTr"
-                    ref={el => (this.componentRef = el)}
+                    ref={(el) => (this.componentRef = el)}
                     data={this.state.data || []}
-                    type="Expense"
+                    // type="Expense"
                     column={CostAnimalColumn}
                   />
                 </div>
@@ -403,7 +403,7 @@ class ResidentalAnimal extends Component {
                     onChange: this.paginate,
                     current: this.state.pagination.page,
                     total: this.state.totalPage,
-                    pageSize: this.state.pagination.limit
+                    pageSize: this.state.pagination.limit,
                   }
             }
             dataSource={this.state.data}
@@ -415,13 +415,13 @@ class ResidentalAnimal extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  ...state.Animals
+const mapStateToProps = (state) => ({
+  ...state.Animals,
 });
 
 export default connect(mapStateToProps, {
   getCostAnimal,
   getFilterCostAnimal,
   editCostAnimal,
-  deleteCostAnimal
+  deleteCostAnimal,
 })(ResidentalAnimal);

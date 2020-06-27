@@ -1,4 +1,4 @@
-import { actionName, listing, animal } from "../js/actions";
+import { actionName, listing, animal, employee } from "../js/actions";
 
 const Test = (
   state = {
@@ -119,6 +119,11 @@ const Test = (
         noteList: Action.payload,
       };
     case animal.totalAnimalCount:
+      return {
+        ...state,
+        totalAnimalCount: Action.payload,
+      };
+    case employee.userName:
       return {
         ...state,
         totalAnimalCount: Action.payload,

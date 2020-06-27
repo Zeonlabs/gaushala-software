@@ -8,7 +8,7 @@ import {
   Col,
   Table,
   Divider,
-  Popconfirm
+  Popconfirm,
   // message
 } from "antd";
 import moment from "moment";
@@ -17,7 +17,7 @@ import {
   getDeadAnimal,
   getFilterDeadAnimal,
   editDeadAnimal,
-  deleteDeadAnimal
+  deleteDeadAnimal,
 } from "../../../Actions/Animal/DeadAnimal";
 import { totalOfArray } from "../../../js/Helper";
 import DeadAnimals from "../PopupForm/DeadAnimal";
@@ -35,14 +35,14 @@ class DeadAnimal extends Component {
       sequence: 1,
       pagination: {
         page: 1,
-        limit: 20
+        limit: 20,
       },
       editData: "",
       income: false,
       total: 0,
       loading: true,
       totalPage: 0,
-      filterPress: false
+      filterPress: false,
     };
     this.columns = [
       {
@@ -53,8 +53,8 @@ class DeadAnimal extends Component {
         className: "",
         render: (text, record) =>
           this.state.data.length >= 1 ? (
-            <div>{this.state.data.findIndex(x => x._id === text) + 1}</div>
-          ) : null
+            <div>{this.state.data.findIndex((x) => x._id === text) + 1}</div>
+          ) : null,
       },
       {
         title: "taarIKa",
@@ -66,7 +66,7 @@ class DeadAnimal extends Component {
           <div className="  english-font-input">
             {moment(text).format("DD-MM-YYYY")}
           </div>
-        )
+        ),
       },
       {
         title: "paSau",
@@ -76,31 +76,31 @@ class DeadAnimal extends Component {
             dataIndex: "animal[0].count",
             key: "gay",
             className: "table-font-english",
-            render: text => <p>{text}</p>
+            render: (text) => <p>{text}</p>,
           },
           {
             title: "baLad",
             dataIndex: "animal[1].count",
             key: "balad",
-            className: "table-font-english"
+            className: "table-font-english",
           },
           {
             title: "vaaCrDa",
             dataIndex: "animal[2].count",
             key: "vacharda",
-            className: "table-font-english"
+            className: "table-font-english",
           },
           {
             title: "vaaCrDI",
             dataIndex: "animal[3].count",
             key: "vachardi",
-            className: "table-font-english"
+            className: "table-font-english",
           },
           {
             title: "Anya",
             dataIndex: "animal[4].count",
             key: "anny",
-            className: "table-font-english"
+            className: "table-font-english",
           },
           {
             title: "kula paSauAao",
@@ -108,12 +108,12 @@ class DeadAnimal extends Component {
             key: "total",
             className: "",
             render: (text, record) => {
-              const total = text.map(val => parseInt(val.count, 10));
+              const total = text.map((val) => parseInt(val.count, 10));
               const finalTotal = totalOfArray(total);
               return <div>{finalTotal}</div>;
-            }
-          }
-        ]
+            },
+          },
+        ],
       },
       {
         title: "naaOMGa",
@@ -121,7 +121,7 @@ class DeadAnimal extends Component {
         key: "namenote",
         width: 300,
         className: "",
-        render: text => <p>{text}</p>
+        render: (text) => <p>{text}</p>,
       },
       {
         title: "AoDIT e DIlaIT",
@@ -154,8 +154,8 @@ class DeadAnimal extends Component {
               </Popconfirm>
             </div>
           </>
-        )
-      }
+        ),
+      },
     ];
   }
 
@@ -167,16 +167,16 @@ class DeadAnimal extends Component {
     // } else {
     this.props
       .getDeadAnimal(this.state.pagination)
-      .then(res => {
+      .then((res) => {
         this.setState({
           data: res.docs,
           loading: false,
-          totalPage: res.totalDocs
+          totalPage: res.totalDocs,
         });
       })
-      .catch(e => {
+      .catch((e) => {
         this.setState({
-          loading: false
+          loading: false,
         });
       });
     // }
@@ -184,40 +184,40 @@ class DeadAnimal extends Component {
 
   loadingTrue = () => {
     this.setState({
-      loading: true
+      loading: true,
     });
   };
 
   loadingFalse = () => {
     this.setState({
-      loading: false
+      loading: false,
     });
   };
 
   handleDelete = (key, record) => {
     this.loadingTrue();
-    this.props.deleteDeadAnimal(record._id).then(res => {
+    this.props.deleteDeadAnimal(record._id).then((res) => {
       this.props
         .getDeadAnimal(this.state.pagination)
-        .then(res => {
+        .then((res) => {
           this.setState({
             data: res.docs,
-            totalPage: res.totalDocs
+            totalPage: res.totalDocs,
           });
           this.loadingFalse();
         })
-        .catch(e => this.loadingFalse());
+        .catch((e) => this.loadingFalse());
     });
     // const dataSource = [...this.state.data];
     // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
   };
 
   handelEdit = (text, record) => {
-    const total = record.animal.map(val => parseInt(val.count, 10));
+    const total = record.animal.map((val) => parseInt(val.count, 10));
     this.setState({
       editData: record,
       income: true,
-      total: totalOfArray(total)
+      total: totalOfArray(total),
     });
   };
 
@@ -230,7 +230,7 @@ class DeadAnimal extends Component {
       if (dates.length > 1) {
         value = {
           dateFrom: moment(dates[0]).format("YYYY-MM-DD"),
-          dateTo: moment(dates[1]).format("YYYY-MM-DD")
+          dateTo: moment(dates[1]).format("YYYY-MM-DD"),
         };
       } else {
         value = {};
@@ -238,26 +238,26 @@ class DeadAnimal extends Component {
       if (dates.length <= 1) {
         this.props
           .getDeadAnimal(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
               filterPress: false,
-              total: res.totalDocs
+              total: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       } else {
         this.props
           .getFilterDeadAnimal(value)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res,
-              filterPress: true
+              filterPress: true,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       }
     }
   };
@@ -268,7 +268,7 @@ class DeadAnimal extends Component {
 
   handelClosePopUp = () => {
     this.setState({
-      income: !this.state.income
+      income: !this.state.income,
     });
   };
 
@@ -276,42 +276,42 @@ class DeadAnimal extends Component {
     this.loadingTrue();
     this.props
       .editDeadAnimal(id, data)
-      .then(res => {
+      .then((res) => {
         this.handelClosePopUp();
         this.props
           .getDeadAnimal(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              totalPage: res.totalDocs
+              totalPage: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       })
-      .catch(e => this.loadingFalse());
+      .catch((e) => this.loadingFalse());
   };
 
-  paginate = page => {
+  paginate = (page) => {
     this.loadingTrue();
     this.setState(
       {
         pagination: {
           page,
-          limit: 20
-        }
+          limit: 20,
+        },
       },
       () =>
         this.props
           .getDeadAnimal(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              totalPage: res.totalDocs
+              totalPage: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse())
+          .catch((e) => this.loadingFalse())
     );
   };
 
@@ -346,8 +346,8 @@ class DeadAnimal extends Component {
                     Today: [moment(), moment()],
                     "This Month": [
                       moment().startOf("month"),
-                      moment().endOf("month")
-                    ]
+                      moment().endOf("month"),
+                    ],
                   }}
                   onChange={this.onChange}
                 />
@@ -387,9 +387,9 @@ class DeadAnimal extends Component {
                   <ReportPrint
                     //---------------------------------------Change title of report from here----------------------------------------------------
                     name="maRtyau paamaola paSauAao nau rPsTr"
-                    ref={el => (this.componentRef = el)}
+                    ref={(el) => (this.componentRef = el)}
                     data={this.state.data || []}
-                    type="Expense"
+                    // type="Expense"
                     column={DeadAnimalColumn}
                   />
                 </div>
@@ -417,7 +417,7 @@ class DeadAnimal extends Component {
                     onChange: this.paginate,
                     current: this.state.pagination.page,
                     total: this.state.totalPage,
-                    pageSize: this.state.pagination.limit
+                    pageSize: this.state.pagination.limit,
                   }
             }
             dataSource={this.state.data}
@@ -429,13 +429,13 @@ class DeadAnimal extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  ...state.Animals
+const mapStateToProps = (state) => ({
+  ...state.Animals,
 });
 
 export default connect(mapStateToProps, {
   getDeadAnimal,
   getFilterDeadAnimal,
   editDeadAnimal,
-  deleteDeadAnimal
+  deleteDeadAnimal,
 })(DeadAnimal);

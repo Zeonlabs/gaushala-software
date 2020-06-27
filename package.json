@@ -1,7 +1,7 @@
 {
   "name": "gaushala-trust-accounting",
   "homepage": "./",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "private": true,
   "scripts": {
     "start": "react-scripts start",

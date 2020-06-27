@@ -8,14 +8,14 @@ import {
   Col,
   Table,
   Divider,
-  Popconfirm
+  Popconfirm,
 } from "antd";
 import moment from "moment";
 import {
   getIncomeAnimal,
   deleteIncomeAnimal,
   editIncomeAnimal,
-  getFilterIncomeAnimal
+  getFilterIncomeAnimal,
 } from "../../../Actions/Animal/IncomeAnimal";
 import CreditAnimals from "../PopupForm/CreditAnimal";
 import { connect } from "react-redux";
@@ -34,12 +34,12 @@ class CreditAnimal extends Component {
       sequence: 1,
       pagination: {
         page: 1,
-        limit: 20
+        limit: 20,
       },
       editData: "",
       income: false,
       total: 0,
-      filterPress: false
+      filterPress: false,
     };
     this.columns = [
       {
@@ -50,8 +50,8 @@ class CreditAnimal extends Component {
         className: "",
         render: (text, record) =>
           this.state.data.length >= 1 ? (
-            <div>{this.state.data.findIndex(x => x._id === text) + 1}</div>
-          ) : null
+            <div>{this.state.data.findIndex((x) => x._id === text) + 1}</div>
+          ) : null,
       },
       {
         title: "taarIKa",
@@ -63,7 +63,7 @@ class CreditAnimal extends Component {
           <div className="  english-font-input">
             {moment(text).format("DD-MM-YYYY")}
           </div>
-        )
+        ),
       },
       {
         title: "paSau",
@@ -73,40 +73,40 @@ class CreditAnimal extends Component {
             dataIndex: "animal[0].count",
             key: "gay",
             className: "table-font-english",
-            render: text => <p>{text}</p>
+            render: (text) => <p>{text}</p>,
           },
           {
             title: "baLad",
             dataIndex: "animal[1].count",
             key: "balad",
-            className: "table-font-english"
+            className: "table-font-english",
           },
           {
             title: "vaaCrDa",
             dataIndex: "animal[2].count",
             key: "vacharda",
-            className: "table-font-english"
+            className: "table-font-english",
           },
           {
             title: "vaaCrDI",
             dataIndex: "animal[3].count",
             key: "vachardi",
-            className: "table-font-english"
+            className: "table-font-english",
           },
           {
             title: "Anya",
             dataIndex: "animal[4].count",
             key: "anny",
-            className: "table-font-english"
+            className: "table-font-english",
           },
           {
             title: "kula",
             dataIndex: "total",
             key: "total",
             width: 120,
-            className: "table-font-english"
-          }
-        ]
+            className: "table-font-english",
+          },
+        ],
       },
       {
         title: "paSau mauknaar nau naama",
@@ -114,21 +114,21 @@ class CreditAnimal extends Component {
         key: "name",
         width: 300,
         className: "",
-        render: text => <p>{text}</p>
+        render: (text) => <p>{text}</p>,
       },
       {
         title: "sarnaamau",
         dataIndex: "address",
         key: "address",
         width: 250,
-        className: ""
+        className: "",
       },
       {
         title: "maaobaa[la naMbar",
         dataIndex: "phone",
         key: "mono",
         width: 200,
-        className: ""
+        className: "",
       },
       {
         title: "AoDIT e DIlaIT",
@@ -162,20 +162,20 @@ class CreditAnimal extends Component {
               </Popconfirm>
             </div>
           </>
-        )
-      }
+        ),
+      },
     ];
   }
 
   loadingTrue = () => {
     this.setState({
-      loading: true
+      loading: true,
     });
   };
 
   loadingFalse = () => {
     this.setState({
-      loading: false
+      loading: false,
     });
   };
 
@@ -185,7 +185,7 @@ class CreditAnimal extends Component {
     if (dates.length > 1) {
       value = {
         dateFrom: moment(dates[0]).format("YYYY-MM-DD"),
-        dateTo: moment(dates[1]).format("YYYY-MM-DD")
+        dateTo: moment(dates[1]).format("YYYY-MM-DD"),
       };
     } else {
       value = {};
@@ -196,26 +196,26 @@ class CreditAnimal extends Component {
       if (dates.length <= 1) {
         this.props
           .getIncomeAnimal(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
               filterPress: false,
-              total: res.totalDocs
+              total: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       } else {
         this.props
           .getFilterIncomeAnimal(value)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res,
-              filterPress: true
+              filterPress: true,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       }
     }
   };
@@ -223,23 +223,23 @@ class CreditAnimal extends Component {
   handelEdit = (text, record) => {
     this.setState({
       editData: record,
-      income: true
+      income: true,
     });
   };
 
   handleDelete = (key, record) => {
     this.loadingTrue();
-    this.props.deleteIncomeAnimal(record._id).then(res => {
+    this.props.deleteIncomeAnimal(record._id).then((res) => {
       this.props
         .getIncomeAnimal(this.state.pagination)
-        .then(res => {
+        .then((res) => {
           this.setState({
             data: res.docs,
-            total: res.totalDocs
+            total: res.totalDocs,
           });
           this.loadingFalse();
         })
-        .catch(e => this.loadingFalse());
+        .catch((e) => this.loadingFalse());
     });
     // const dataSource = [...this.state.data];
     // this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
@@ -249,48 +249,48 @@ class CreditAnimal extends Component {
     this.loadingTrue();
     this.props
       .editIncomeAnimal(id, data)
-      .then(res => {
+      .then((res) => {
         this.handelClosePopUp();
         this.props
           .getIncomeAnimal(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              total: res.totalDocs
+              total: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse());
+          .catch((e) => this.loadingFalse());
       })
-      .catch(r => this.loadingFalse());
+      .catch((r) => this.loadingFalse());
   };
 
-  paginate = page => {
+  paginate = (page) => {
     this.loadingTrue();
     this.setState(
       {
         pagination: {
           page,
-          limit: 20
-        }
+          limit: 20,
+        },
       },
       () =>
         this.props
           .getIncomeAnimal(this.state.pagination)
-          .then(res => {
+          .then((res) => {
             this.setState({
               data: res.docs,
-              total: res.totalDocs
+              total: res.totalDocs,
             });
             this.loadingFalse();
           })
-          .catch(e => this.loadingFalse())
+          .catch((e) => this.loadingFalse())
     );
   };
 
   handelClosePopUp = () => {
     this.setState({
-      income: !this.state.income
+      income: !this.state.income,
     });
   };
 
@@ -302,14 +302,14 @@ class CreditAnimal extends Component {
     // } else {
     this.props
       .getIncomeAnimal(this.state.pagination)
-      .then(res => {
+      .then((res) => {
         this.setState({
           data: res.docs,
           loading: false,
-          total: res.totalDocs
+          total: res.totalDocs,
         });
       })
-      .catch(e => this.loadingFalse());
+      .catch((e) => this.loadingFalse());
     // }
   };
 
@@ -365,8 +365,8 @@ class CreditAnimal extends Component {
                     Today: [moment(), moment()],
                     "This Month": [
                       moment().startOf("month"),
-                      moment().endOf("month")
-                    ]
+                      moment().endOf("month"),
+                    ],
                   }}
                   onChange={this.onChange}
                 />
@@ -406,9 +406,9 @@ class CreditAnimal extends Component {
                   <ReportPrint
                     //---------------------------------------Change title of report from here----------------------------------------------------
                     name="Aavaola paSauAao nau rPsTr"
-                    ref={el => (this.componentRef = el)}
+                    ref={(el) => (this.componentRef = el)}
                     data={this.state.data || []}
-                    type="Expense"
+                    // type="Expense"
                     column={CreaditAnimalColumn}
                   />
                 </div>
@@ -437,7 +437,7 @@ class CreditAnimal extends Component {
                     onChange: this.paginate,
                     current: this.state.pagination.page,
                     total: this.state.total,
-                    pageSize: this.state.pagination.limit
+                    pageSize: this.state.pagination.limit,
                   }
             }
           />
@@ -447,13 +447,13 @@ class CreditAnimal extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  ...state.Animals
+const mapStateToProps = (state) => ({
+  ...state.Animals,
 });
 
 export default connect(mapStateToProps, {
   getIncomeAnimal,
   deleteIncomeAnimal,
   editIncomeAnimal,
-  getFilterIncomeAnimal
+  getFilterIncomeAnimal,
 })(CreditAnimal);
