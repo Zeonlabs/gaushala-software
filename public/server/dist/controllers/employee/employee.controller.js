@@ -9,7 +9,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const path_1 = require("path");
 const repository_1 = require("../../repository");
 const exceptions_common_1 = require("../../common/exceptions.common");
 const saveEmployee = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -29,10 +28,8 @@ exports.saveEmployee = saveEmployee;
 const getEmpDoc = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const employeeId = req.params.id;
-        res.download(path_1.join(__dirname, `../../../../employee-docs/${employeeId}.png`), (err) => {
-            if (err)
-                res.status(404).send({ message: "docs not found" });
-        });
+        const EmployeeRepo = new repository_1.EmployeeRepository();
+        EmployeeRepo.startDownEmpDoc(employeeId, res);
     }
     catch (e) {
         res.status(400).send({ message: e.message });
