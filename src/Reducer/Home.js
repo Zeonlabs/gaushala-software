@@ -5,10 +5,12 @@ const Test = (
     apicall: false,
     apistatus: false,
     incomeList: {} || null,
+    allFilterIncome: {} || null,
+    allFilterExpense: {} || null,
     sumTotal: 0,
     expenseSumTotal: 0,
     incomeTotal: 0,
-    expenseList: [] || null,
+    expenseList: {} || null,
     expenseTotal: 0,
     trustMembers: [] || null,
     trustTotal: 0,
@@ -16,6 +18,20 @@ const Test = (
     chequeTotal: 0,
     noteList: [] || null,
     totalAnimalCount: 0 || null,
+    printComponentData:
+      {
+        data: {
+          slip_no: 0,
+          name: "",
+          date: "",
+          address: "",
+          cheque_no: "",
+          phone: "",
+          ref_name: "",
+        },
+        itemData: "",
+        finalTotal: 0,
+      } || null,
   },
   Action
 ) => {
@@ -32,11 +48,27 @@ const Test = (
         ...state,
         incomeList: Action.payload,
       };
+    case listing.allFilterIncome:
+      return {
+        ...state,
+        allFilterIncome: Action.payload,
+      };
+    case listing.allFilterExpense:
+      return {
+        ...state,
+        allFilterExpense: Action.payload,
+      };
 
     case listing.storeTotal:
       return {
         ...state,
         sumTotal: Action.payload,
+      };
+
+    case listing.allDataForPrint:
+      return {
+        ...state,
+        printComponentData: Action.payload,
       };
 
     case listing.storeExpenseTotal:

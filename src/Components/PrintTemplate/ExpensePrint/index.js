@@ -3,11 +3,26 @@ import React from "react";
 import src from "../../../Components/PrintTemplate/HeaderImage/headerImg.png";
 import "./index.scss";
 import ExpenseTable from "./ExpenseTable";
+import moment from "moment";
 
 class ExpensePrintSlip extends React.Component {
   render() {
+    // console.log(
+    //   "ExpensePrintSlip -> render -> this.props.data",
+    //   this.props.data
+    // );
+    const {
+      slip_no,
+      date,
+      name,
+      address,
+      phone,
+      item,
+      money,
+      ref_name,
+    } = this.props.data;
     return (
-      <div> 
+      <div>
         <div className="slip-print-income">
           <div className="slip-header">
             <img className="img-header" src={src} alt="boohoo"></img>
@@ -28,13 +43,15 @@ class ExpensePrintSlip extends React.Component {
             <div className="column-1">
               <h2 className="font-size-20">vaa]car naM.: &nbsp;</h2>
               {/* --------------------------vauchar num --------------------------- */}
-              <h2 className="slip-num font-size-20">{this.props.voucher}</h2>
+              <h2 className="slip-num font-size-20">{slip_no}</h2>
             </div>
 
             <div className="column-2">
               <h2 className="font-size-20">taarIKa : &nbsp;</h2>
-              {/* -------------------------- Date --------------------------- */}
-              <h2 className="Date  english-font ">{this.props.date}</h2>
+              {/* --------------------------Slip Date --------------------------- */}
+              <h2 className="date  english-font">
+                {moment(date).format("DD-MM-YYYY")}
+              </h2>
             </div>
           </div>
 
@@ -44,13 +61,13 @@ class ExpensePrintSlip extends React.Component {
                 naaNaa laonaar nau naama : &nbsp;
               </h2>
               {/* --------------------------Slip Address --------------------------- */}
-              <h2 className="slip-num font-size-20">{this.props.name}</h2>
+              <h2 className="slip-num font-size-20">{name}</h2>
             </div>
 
             <div className="column-2 padding-top-0">
               <h2 className="font-size-20">gaama: &nbsp;</h2>
               {/* --------------------------Slip Name --------------------------- */}
-              <h2 className="Date font-size-20">{this.props.address}</h2>
+              <h2 className="Date font-size-20">{address}</h2>
             </div>
           </div>
 
@@ -58,14 +75,18 @@ class ExpensePrintSlip extends React.Component {
             <div className="column-1 padding-top-0">
               <h2 className="font-size-20">maaobaa[la naM. : &nbsp;</h2>
               {/* --------------------------Mobile Num --------------------------- */}
-              <h2 className="slip-num font-size-20">{this.props.mobile}</h2>
+              <h2 className="slip-num font-size-20">{phone}</h2>
             </div>
-            {this.props.cheque_no ? (
-              <div className="column-2 padding-top-0">
-                <h2 className="font-size-20">caok naM. : &nbsp;</h2>
-                {/* --------------------------Cheque Num --------------------------- */}
-                <h2 className="Date font-size-20">{this.props.cheque_no}</h2>
-              </div>
+            {money ? (
+              money.cheque_no ? (
+                <div className="column-2 padding-top-0">
+                  <h2 className="font-size-20">caok naM. : &nbsp;</h2>
+                  {/* --------------------------Cheque Num --------------------------- */}
+                  <h2 className="Date font-size-20">{money.cheque_no}</h2>
+                </div>
+              ) : (
+                ""
+              )
             ) : (
               ""
             )}
@@ -75,16 +96,15 @@ class ExpensePrintSlip extends React.Component {
             <div className="column-50 padding-top-0">
               <h2 className="font-size-20">hstak naama : &nbsp;</h2>
               {/* --------------------------Hastak name --------------------------- */}
-              <h2 className="slip-num font-size-20">{this.props.refname}</h2>
+              <h2 className="slip-num font-size-20">{ref_name}</h2>
             </div>
 
-            <div className="column-50 padding-top-0">
-            </div>
+            <div className="column-50 padding-top-0"></div>
           </div>
 
           {/* ----------------------------------------------table------------------------------ */}
           <div className="table padding-row">
-            <ExpenseTable data={this.props.table} total={this.props.amount} />
+            <ExpenseTable data={item} total={money ? money.amount : 0} />
           </div>
 
           <div className="row sign-row-expenses">

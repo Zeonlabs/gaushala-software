@@ -6,6 +6,7 @@ import ReportTable from "./ReportTable";
 
 class ReportPrint extends React.Component {
   render() {
+    // console.log("this dshfihasdjhfhsdahfu ->", this.props);
     return (
       <div>
         <div className="slip-print-report">

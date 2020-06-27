@@ -22,13 +22,15 @@ import {
   addExpense,
   editExpense,
   getFilterIncome,
+  getFilterExpense,
   editIncome,
   storeSum,
+  expenseStoreSum,
 } from "../../../Actions/Exapmple";
 import { sendSms } from "../../../Actions/SetUpUser";
 import NumericInput from "./InputNumber";
 import { connect } from "react-redux";
-import ReactToPrint from "react-to-print";
+// import ReactToPrint from "react-to-print";
 import {
   convertNumberToType,
   convertTypeToNumber,
@@ -38,9 +40,11 @@ import IncomePrintSlip from "../../PrintTemplate";
 import ExpensePrintSlip from "../../PrintTemplate/ExpensePrint";
 import axios from "axios";
 import { ArraySum } from "../CommonCalculation";
+import { printComponent } from "react-print-tool";
 
 const { Option } = Select;
 
+let printSave = false;
 class IncomeMobels extends Component {
   constructor(props) {
     super(props);
@@ -52,7 +56,21 @@ class IncomeMobels extends Component {
       tableStatus: false,
       resetStatus: true,
       printStatus: false,
-      data: {},
+      data: {
+        slip_no: 0,
+        date: "20/07/2020",
+        type: 2,
+        name: "Jaadu",
+        address: "values.address",
+        phone: 1245285275,
+        money: {
+          type: "Cash",
+          amount: 2020,
+        },
+        item: [{ amount: 1233, type: "fdgdfg" }],
+        ref_name: "values.ref_name",
+        note: "values.note",
+      },
       itemData: [],
       typeStatus: "",
     };
@@ -160,18 +178,17 @@ class IncomeMobels extends Component {
             .getFilterIncome()
             .then((res) => {
               this.props.storeSum(ArraySum(res));
-              // this.setState({
-              //   filterTotal: ArraySum(res),
-              // });
             })
             .catch((e) => {
-              // this.setState({
-              //   filterTotal: 0,
-              // });
+              message.error(e);
             });
           this.props.getIncome(pagination).then((res) => {
             this.props.toggleModel();
           });
+          if (printSave) {
+            printComponent(<IncomePrintSlip data={res.income} />);
+            printSave = false;
+          }
         });
       }
       this.props.form.resetFields();
@@ -222,8 +239,21 @@ class IncomeMobels extends Component {
             limit: 13,
           };
           this.props
+            .getFilterExpense()
+            .then((res) => {
+              this.props.expenseStoreSum(ArraySum(res));
+            })
+            .catch((e) => {
+              message.error(e);
+            });
+          this.props
             .getExpense(pagination)
             .then((res) => this.props.toggleModel());
+          // this.setState({ data: res.expense });
+          if (printSave) {
+            printComponent(<ExpensePrintSlip data={res.expense} />);
+            printSave = false;
+          }
         });
       }
       this.props.form.resetFields();
@@ -276,10 +306,11 @@ class IncomeMobels extends Component {
       const finalTotal = totalAmount.reduce(this.sumArray);
       this.setState({
         finalTotal,
-        data: values,
+        // data: values,
         itemData,
       });
-
+      // printSlip = values;
+      // console.log("IncomeMobels -> handleSubmit -> printSlip", printSlip);
       if (!err) {
         if (this.props.type === "expense") {
           this.expenseData(values, finalTotal, itemData);
@@ -323,6 +354,10 @@ class IncomeMobels extends Component {
       printStatus: false,
       typeStatus: "",
     });
+  };
+
+  handelPrintButton = () => {
+    printSave = true;
   };
 
   render() {
@@ -719,23 +754,27 @@ class IncomeMobels extends Component {
                 </Button>
               </Form.Item>
               {/* ----------------------------Save & Print button--------------------------- */}
-              <Form.Item>
-                <ReactToPrint
-                  trigger={() => (
-                    <Button
-                      size="default"
-                      htmlType="submit"
-                      style={{ backgroundColor: "#505D6F", color: "#ffffff" }}
-                      // onClick={this.handelPrintButton}
-                    >
-                      saova e ipa`nT
-                    </Button>
-                  )}
+              {modalType === "edit" ? (
+                ""
+              ) : (
+                <Form.Item>
+                  {/* <ReactToPrint
+                  trigger={() => ( */}
+                  <Button
+                    size="default"
+                    htmlType="submit"
+                    style={{ backgroundColor: "#505D6F", color: "#ffffff" }}
+                    onClick={this.handelPrintButton}
+                  >
+                    saova e ipa`nT
+                  </Button>
+                  {/* )}
                   content={() => this.componentRef}
                   onAfterPrint={this.printIncomeSlip}
-                />
-              </Form.Item>
-              <div style={{ display: "none" }}>
+                /> */}
+                </Form.Item>
+              )}
+              {/* <div style={{ display: "block" }}>
                 {type === "income" ? (
                   <IncomePrintSlip
                     ref={(el) => (this.componentRef = el)}
@@ -748,20 +787,22 @@ class IncomeMobels extends Component {
                     cheque_no={this.state.data.chequeno}
                   />
                 ) : (
-                  <ExpensePrintSlip
-                    ref={(el) => (this.componentRef = el)}
-                    voucher={this.state.data.slip_no}
-                    name={this.state.data.name}
-                    date={moment(this.state.data.date).format("DD-MM-YYYY")}
-                    address={this.state.data.address}
-                    table={this.state.itemData}
-                    amount={this.state.finalTotal}
-                    cheque_no={this.state.data.chequeno}
-                    mobile={this.state.data.phone}
-                    refname={this.state.data.ref_name}
-                  />
+                  <></>
+                  // <ExpensePrintSlip
+                  //   ref={(el) => (this.componentRef = el)}
+                  //   data={this.state.data}
+                  // voucher={this.state.data.slip_no}
+                  // name={this.state.data.name}
+                  // date={moment(this.state.data.date).format("DD-MM-YYYY")}
+                  // address={this.state.data.address}
+                  // table={this.state.itemData}
+                  // amount={this.state.finalTotal}
+                  // cheque_no={this.state.data.chequeno}
+                  // mobile={this.state.data.phone}
+                  // refname={this.state.data.ref_name}
+                  // />
                 )}
-              </div>
+              </div> */}
             </div>
           </Form>
         </Modal>
@@ -782,7 +823,9 @@ export default connect(mapStateToProps, {
   addExpense,
   editIncome,
   editExpense,
+  getFilterExpense,
   getFilterIncome,
+  expenseStoreSum,
   sendSms,
   storeSum,
 })(IncomeMobel);

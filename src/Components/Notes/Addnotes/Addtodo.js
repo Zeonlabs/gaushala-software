@@ -10,17 +10,17 @@ class NormalLoginForm extends Component {
 
   showDrawer = () => {
     this.setState({
-      visible: true
+      visible: true,
     });
   };
 
   onClose = () => {
     this.setState({
-      visible: false
+      visible: false,
     });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -68,14 +68,14 @@ class NormalLoginForm extends Component {
                     rules: [
                       {
                         required: true,
-                        message: "Please Enter Title of notes!"
-                      }
+                        message: "Please Enter Title of notes!",
+                      },
                     ],
                     // initialValue: type && data.title
-                    initialValue: type === "edit" ? data.title : ""
+                    initialValue: type === "edit" ? data.title : "",
                   })(
                     <Input
-                      maxLength={10}
+                      // maxLength={10}
                       // prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                       placeholder="hoDIMga"
                     />
@@ -84,15 +84,15 @@ class NormalLoginForm extends Component {
                 <Form.Item label="naaoMGa">
                   {getFieldDecorator("description", {
                     rules: [
-                      { required: true, message: "Please Add description!" }
+                      { required: true, message: "Please Add description!" },
                     ],
                     // initialValue: type && data.description
-                    initialValue: type === "edit" ? data.description : ""
+                    initialValue: type === "edit" ? data.description : "",
                   })(
                     <TextArea
                       // prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
                       placeholder="naaoMGa AhI ]maorao."
-                      style={{fontSize:'24px',}}
+                      style={{ fontSize: "24px" }}
                       rows={8}
                     />
                   )}

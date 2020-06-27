@@ -98,6 +98,11 @@ export const expenseStoreSum = (data) => (dispatch) =>
     dispatch({ type: listing.storeExpenseTotal, payload: data });
   });
 
+export const printDataStore = (data) => (dispatch) =>
+  new Promise((resolve, reject) => {
+    dispatch({ type: listing.allDataForPrint, payload: data });
+  });
+
 export const getFilterIncome = (data) => (dispatch) =>
   new Promise((resolve, reject) => {
     // console.log("TCL: data", data);
@@ -107,7 +112,7 @@ export const getFilterIncome = (data) => (dispatch) =>
       data
     )
       .then((res) => {
-        dispatch({ type: listing.incomeListing, payload: res });
+        dispatch({ type: listing.allFilterIncome, payload: res });
         resolve(res);
       })
       .catch((e) => {
@@ -124,7 +129,7 @@ export const getFilterExpense = (data) => (dispatch) =>
       data
     )
       .then((res) => {
-        dispatch({ type: listing.expenseListing, payload: res.docs });
+        dispatch({ type: listing.allFilterExpense, payload: res });
         resolve(res);
       })
       .catch((e) => {

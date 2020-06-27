@@ -16,20 +16,11 @@ import moment from "moment";
 import IncomeMobel from "../Common/Forms/IncomeMobel";
 import { convertNumberToType } from "../../js/Helper";
 import ReportPrint from "../PrintTemplate/Report";
-import ReactToPrint from "react-to-print";
 import { IncomeColumn } from "../PrintTemplate/Report/Columns/Income";
 import { ArraySum } from "../Common/CommonCalculation";
-// import Loading from "../Loading/Loading";
-
-// const data = [];
-// for (let i = 0; i < 100; i++) {
-//   data.push({
-//     key: i,
-//     name: `Edrward ${i}`,
-//     age: 32,
-//     address: `London Park no. ${i}`
-//   });
-// }
+import IncomePrintSlip from "../PrintTemplate";
+import { printComponent } from "react-print-tool";
+import ReactToPrint from "react-to-print";
 
 class Income extends Component {
   constructor(props) {
@@ -49,6 +40,20 @@ class Income extends Component {
       total: 0,
       filterTotal: 0,
       filterPress: false,
+      printData: {
+        data: {
+          slip_no: 2120,
+          name: "dsfsd",
+          date: "23-5-2020",
+          address: "dsfsdfafasdf",
+          cheque_no: "234234",
+          phone: "ewrwerwe",
+          ref_name: "dsfdsf",
+        },
+        itemData: "",
+        finalTotal: 444440,
+      },
+      printstatus: true,
     };
     this.columns = [
       {
@@ -56,7 +61,6 @@ class Income extends Component {
         width: "130px",
         dataIndex: "date",
         key: "1",
-        // fixed: "left",
         render: (text, record) => {
           return (
             <div className="icon-group-table english-font-input">
@@ -107,11 +111,6 @@ class Income extends Component {
         key: "6",
         width: 250,
         render: (text, record) => convertNumberToType(text, "income"),
-        // text.type === "cheque" ? (
-        //   <span>{text.cheque_no}</span>
-        // ) : (
-        //   <span>raokD</span>
-        // )
       },
       {
         title: "dana svaIkar",
@@ -164,12 +163,28 @@ class Income extends Component {
                   style={{ color: "rgba(255, 0, 0)" }}
                 />
               </Popconfirm>
+              <Divider type="vertical" />
+              <Divider type="vertical" />
+              <span>
+                <Icon
+                  type="printer"
+                  theme="filled"
+                  onClick={() => this.handelPrint(text, record)}
+                  style={{ color: "#727070cf" }}
+                />
+              </span>
             </div>
           </>
         ),
       },
     ];
   }
+
+  printIncomeSlip = (test, record) => {
+    this.setState({
+      printstatus: false,
+    });
+  };
 
   handelEdit = (text, record) => {
     this.setState({
@@ -192,6 +207,7 @@ class Income extends Component {
         data: this.props.incomeList,
         filterTotal: this.props.sumTotal,
         loading: false,
+        allData: this.props.allFilterIncome,
         total: this.props.incomeTotal.totalDocs,
         pagination: {
           page: this.props.incomeTotal.page,
@@ -220,7 +236,6 @@ class Income extends Component {
       this.props
         .getIncome(pagination)
         .then((res) => {
-          // console.log("Income -> componentDidMount -> res", res);
           this.setState({
             data: res.docs,
             loading: false,
@@ -433,6 +448,11 @@ class Income extends Component {
     });
   };
 
+  handelPrint = async (index, data) => {
+    // console.log("log in a printer", data);
+    await printComponent(<IncomePrintSlip data={data} />);
+  };
+
   render() {
     const columns = this.columns.map((col) => {
       if (!col.editable) {
@@ -462,6 +482,45 @@ class Income extends Component {
             fIlTr
           </Button>
 
+          <div style={{ display: "none" }}></div>
+          <Button
+            size="large"
+            type="primary"
+            onClick={this.handelResetFilter}
+            style={{ marginBottom: 30, marginRight: 10 }}
+          >
+            <Icon type="close" style={{ fontSize: 17 }} />
+            rIsaoT
+          </Button>
+          <h1 style={{ padding: "5px" }}>TaoTla : {this.state.filterTotal}</h1>
+
+          <ReactToPrint
+            trigger={() => (
+              <Button
+                size="large"
+                type="primary"
+                // onClick={this.handelResetFilter}
+                style={{
+                  backgroundColor: "#505D6F",
+                  color: "#ffffff",
+                  float: "right",
+                  position: "absolute",
+                  right: "28px",
+                  marginRight: 10,
+                }}
+                // className="filter-button"
+              >
+                <Icon
+                  type="printer"
+                  theme="filled"
+                  // onClick={this.handelResetFilter}
+                />
+                ipa`nT
+              </Button>
+            )}
+            content={() => this.componentRef}
+          />
+
           <div style={{ display: "none" }}>
             <ReportPrint
               //---------------------------------------Change title of report from here----------------------------------------------------
@@ -477,47 +536,6 @@ class Income extends Component {
               total={this.state.filterTotal}
             />
           </div>
-          <Button
-            size="large"
-            type="primary"
-            onClick={this.handelResetFilter}
-            style={{ marginBottom: 30, marginRight: 10 }}
-            // className="filter-button"
-          >
-            <Icon
-              type="close"
-              // onClick={this.handelResetFilter}
-              style={{ fontSize: 17 }}
-            />
-            rIsaoT
-          </Button>
-          <h1 style={{ padding: "5px" }}>TaoTla : {this.state.filterTotal}</h1>
-
-          <ReactToPrint
-            trigger={() => (
-              <Button
-                size="large"
-                type="primary"
-                // onClick={this.handelResetFilter}
-                style={{
-                  backgroundColor: "#505D6F",
-                  marginRight: 10,
-                  color: "#ffffff",
-                  float: "right",
-                  position: "absolute",
-                  right: "28px",
-                }}
-              >
-                <Icon
-                  type="printer"
-                  theme="filled"
-                  // onClick={this.handelResetFilter}
-                />
-                ipa`nT
-              </Button>
-            )}
-            content={() => this.componentRef}
-          />
         </div>
         <FilterDrawer
           onClose={this.onClose}
@@ -537,10 +555,6 @@ class Income extends Component {
           cash={this.state.editData.money.type}
         />
         <div className="">
-          {/* <div>
-            {/* {this.state.loading ? <Loading type="spinningBubbles" /> : ""} 
-            <Loading type="spinningBubbles" />
-          </div> */}
           <Table
             className="table-income overflow-hidden table-income-expense"
             columns={columns}
@@ -559,7 +573,6 @@ class Income extends Component {
             bordered
             size="middle"
             scroll={{ x: "calc(700px + 40%)" }}
-            // scroll={{ x: "calc(700px + 40%)", y: 300 }}
           />
         </div>
       </PageWrapper>

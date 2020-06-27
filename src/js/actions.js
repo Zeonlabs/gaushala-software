@@ -13,6 +13,8 @@ export const actionName = {
 
 export const listing = {
   incomeListing: "INCOME_LISTING",
+  allFilterIncome: "INCOME_ALL_FILTER",
+  allFilterExpense: "EXPENSE_ALL_FILTER",
   incomeTotal: "INCOME_TOTAL",
   expenseListing: "EXPENSE_LISTING",
   expenseTotal: "EXPENSE_TOTAL",
@@ -24,6 +26,7 @@ export const listing = {
   totalIncome: "TOTAL_INCOME_ST",
   storeTotal: "STORE_TOTAL",
   storeExpenseTotal: "STORE_EXPENSE_TOTAL",
+  allDataForPrint: "PRINT_COMPONENT_DATA",
 };
 
 export const employee = {

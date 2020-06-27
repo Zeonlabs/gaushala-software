@@ -27,16 +27,9 @@ import ReactToPrint from "react-to-print";
 import ReportPrint from "../PrintTemplate/Report";
 import { Expense } from "../PrintTemplate/Report/Columns/Expese";
 import { ArraySum } from "../Common/CommonCalculation";
+import { printComponent } from "react-print-tool";
+import ExpensePrintSlip from "../PrintTemplate/ExpensePrint";
 
-// const data = [];
-// for (let i = 0; i < 100; i++) {
-//   data.push({
-//     key: i,
-//     name: `Edrward ${i}`,
-//     age: 32,
-//     address: `London Park no. ${i}`
-//   });
-// }
 class Income extends Component {
   constructor(props) {
     super(props);
@@ -172,6 +165,16 @@ class Income extends Component {
                   style={{ color: "rgba(255, 0, 0)" }}
                 />
               </Popconfirm>
+              <Divider type="vertical" />
+              <Divider type="vertical" />
+              <span>
+                <Icon
+                  type="printer"
+                  theme="filled"
+                  onClick={() => this.handelPrint(text, record)}
+                  style={{ color: "#727070cf" }}
+                />
+              </span>
             </div>
           </>
         ),
@@ -221,12 +224,17 @@ class Income extends Component {
       page: 1,
       limit: 13,
     };
+    console.log(
+      "Income -> componentDidMount -> this.props.allFilterExpense",
+      this.props.allFilterExpense
+    );
     if (this.props.expenseList.length > 0) {
       this.setState({
         data: this.props.expenseList,
         filterTotal: this.props.expenseSumTotal,
         loading: false,
         total: this.props.expenseTotal.totalDocs,
+        allData: this.props.allFilterExpense,
         pagination: {
           page: this.props.expenseTotal.page,
           limit: this.props.expenseTotal.limit,
@@ -269,6 +277,10 @@ class Income extends Component {
     }
   };
 
+  handelPrint = async (index, data) => {
+    await printComponent(<ExpensePrintSlip data={data} />);
+  };
+
   loadingTrue = () => {
     this.setState({
       loading: true,
@@ -282,11 +294,11 @@ class Income extends Component {
   };
 
   componentDidUpdate = (prevPorps) => {
-    // if (prevPorps.expenseList !== this.props.expenseList) {
-    //   this.setState({
-    //     data: this.props.expenseList,
-    //   });
-    // }
+    if (prevPorps.expenseList !== this.props.expenseList) {
+      this.setState({
+        data: this.props.expenseList,
+      });
+    }
 
     if (prevPorps.expenseSumTotal !== this.props.expenseSumTotal) {
       this.setState({
@@ -348,8 +360,8 @@ class Income extends Component {
           this.props.expenseStoreSum(ArraySum(res));
           this.setState({
             data: res,
-            filterPress: true,
             filterTotal: ArraySum(res),
+            filterPress: true,
           });
         })
         .catch((e) => {
@@ -445,6 +457,7 @@ class Income extends Component {
   // };
 
   render() {
+    // console.log("Income -> render -> columns", this.state.allData);
     const columns = this.columns.map((col) => {
       if (!col.editable) {
         return col;
