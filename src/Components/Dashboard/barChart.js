@@ -6,8 +6,8 @@ export const BarChart = ({ data }) => (
     data={data}
     keys={["income", "expense"]}
     indexBy="type"
-    margin={{ top: 20, right: 10, bottom: 20, left: 110 }}
-    padding={0.45}
+    margin={{ top: 20, right: 10, bottom: 30, left: 110 }}
+    padding={0.2}
     colors={bar => (bar.id === "income" ? "#36B971" : "rgb(255, 77, 79)")}
     axisTop={null}
     axisRight={null}
