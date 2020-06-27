@@ -82,6 +82,7 @@
     "electron-packager": "^14.2.1",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.6",
+    "get-port": "^5.1.1",
     "highcharts": "^8.0.4",
     "indian-number-format": "^1.0.4",
     "is-online": "^8.2.0",

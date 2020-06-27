@@ -6,12 +6,8 @@ const path = require("path");
 const url = require("url");
 const isDev = require("electron-is-dev");
 
-require('update-electron-app')({
-  repo: 'Zeonlabs/gaushala-software.git'
-})
-
 //start server
-require("./server/dist/server.js");
+// require("./server/dist/server.js");
 
 let mainWindow;
 
@@ -19,7 +15,7 @@ function createWindow() {
   mainWindow = new BrowserWindow({
     // width: 1280,
     // height: 720,
-    // webPreferences: { nodeIntegration: true }
+    webPreferences: { nodeIntegration: true }
   });
   mainWindow.setMenuBarVisibility(false)
   mainWindow.maximize()
@@ -32,7 +28,23 @@ function createWindow() {
 }
 
 app.allowRendererProcessReuse = true
-app.on("ready", createWindow);
+
+const gotTheLock = app.requestSingleInstanceLock()
+
+if (!gotTheLock) app.quit()
+else {
+  app.on('second-instance', (event, commandLine, workingDirectory) => {
+    // Someone tried to run a second instance, we should focus our window.
+    if (mainWindow) {
+      if (mainWindow.isMinimized()) mainWindow.restore()
+      mainWindow.focus()
+    }
+  })
+
+  // Create myWindow, load the rest of the app, etc...
+  app.on('ready', createWindow)
+  require("./server/dist/server.js");
+}
 
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {

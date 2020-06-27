@@ -162,7 +162,7 @@ class Login extends Component {
               <div className="row-center">
                 <div className="content-row">
                   <div>
-                    <h1 className="text-center">saItaarama gaaOSaaLaa T/sT</h1>
+                    <h1 className="text-center" style={{fontWeight: 900}} >saItaarama gaaOSaaLaa T/sT</h1>
                     <h1 className="text-center">paIna naMbar ]maorao</h1>
                   </div>
                   <div className="ant-row-center">
@@ -190,7 +190,7 @@ class Login extends Component {
                     </Button>
 
                     <div className="english-font-input footer-login-page">
-                      Official product of zeonlabs © 2018
+                      Product of Zeonlabs © 2020
                     </div>
                   </div>
 
