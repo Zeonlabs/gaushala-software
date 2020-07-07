@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.smsController = exports.getIncomeExpenseAnalytics = exports.generateFilteredReport = void 0;
+exports.getMoneyReport = exports.smsController = exports.getIncomeExpenseAnalytics = exports.generateFilteredReport = void 0;
 const repository_1 = require("../../repository");
 const utils_common_1 = require("../../common/utils.common");
 const sms_common_1 = require("../../common/sms.common");
@@ -138,6 +138,45 @@ exports.smsController = (req, res) => __awaiter(void 0, void 0, void 0, function
         const smsRes = yield sms_common_1.sendSms(phone, msg, 'unicode');
         if (smsRes.responseCode == 3011)
             throw new exceptions_common_1.insufficientSmsBalanceException();
+    }
+    catch (e) {
+        res.status(utils_common_1.getStatusCode(e.code)).send({ message: e.message });
+    }
+});
+exports.getMoneyReport = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        let { year = null, month = null } = req.query;
+        const incomeRepo = new repository_1.IncomeRepository();
+        const expenseRepo = new repository_1.ExpenseRepository();
+        const yearT = parseInt(year) || new Date().getFullYear();
+        // const monthT = parseInt(month as string) || new Date().getMonth() + 1
+        const startDate = new Date(yearT, 0, 1, 24);
+        const endDate = new Date(yearT, 11, 31, 23, 59, 59);
+        const [incomeData, expoenseData] = yield Promise.all([
+            yield incomeRepo.getForMoneyReport(startDate, endDate),
+            yield expenseRepo.getForMoneyReport(startDate, endDate)
+        ]);
+        let monthsData = [], totalIncome = 0, totalExpense = 0;
+        for (let i = 1; i <= 12; i++) {
+            const income = incomeData.find(e => e._id == i) || { amount: 0 };
+            const expense = expoenseData.find(e => e._id == i) || { amount: 0 };
+            monthsData.push({
+                month: i,
+                income: income.amount,
+                expense: expense.amount,
+                capital: income.amount - expense.amount
+            });
+            totalIncome += income.amount;
+            totalExpense += expense.amount;
+        }
+        const reportData = {
+            year: yearT,
+            income: totalIncome,
+            expense: totalExpense,
+            capital: totalIncome - totalExpense,
+            months: monthsData
+        };
+        res.send(reportData);
     }
     catch (e) {
         res.status(utils_common_1.getStatusCode(e.code)).send({ message: e.message });

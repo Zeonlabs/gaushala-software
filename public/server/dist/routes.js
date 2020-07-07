@@ -12,6 +12,7 @@ class Routes {
         app.post('/auth', auth_common_1.auth);
         app.post('/sms/send', controllers_1.smsController);
         app.get('/inex/analytics', controllers_1.getIncomeExpenseAnalytics);
+        app.get('/inex/report', controllers_1.getMoneyReport);
         variablesRouter.post('/setup', controllers_1.initVariables);
         variablesRouter.get('/', controllers_1.getVars);
         variablesRouter.patch('/', controllers_1.updateTrustInfo);
