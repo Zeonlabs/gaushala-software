@@ -4,7 +4,7 @@ import ReactToPrint from "react-to-print";
 import ReportPrint from "../PrintTemplate/Report";
 import { EmployeeColumn } from "../PrintTemplate/Report/Columns/EmployeeColumn";
 const { Option } = Select;
-export const FilterData = props => {
+export const FilterData = (props) => {
   const componentRef = useRef();
   return (
     <div className="employee-filter">
@@ -32,7 +32,7 @@ export const FilterData = props => {
               icon="printer"
               style={{
                 backgroundColor: "#505D6F",
-                color: "#ffffff"
+                color: "#ffffff",
               }}
             >
               ipa`nT
@@ -46,7 +46,7 @@ export const FilterData = props => {
             name="k-macaarI naI yaadI"
             ref={componentRef}
             data={props.data || []}
-            type="Expense"
+            // type="Expense"
             column={EmployeeColumn}
           />
         </div>

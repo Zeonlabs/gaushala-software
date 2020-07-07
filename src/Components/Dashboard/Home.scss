@@ -120,11 +120,10 @@
   border-radius: 10px;
   background-size: 200px;
   width: 90%;
-  padding: 40px 0;
+  padding: 0px 0;
+  margin: 10% 8%;
   // width: 260px;
   // height:260px;
-  margin-top: auto !important;
-  margin-bottom: auto !important;
   span {
     color: #000000 !important;
     font-size: 40px !important;
@@ -135,7 +134,7 @@
   text-align: center;
   font-size: 25px;
   margin-top: auto;
-  margin-bottom:auto;
+  margin-bottom: auto;
 }
 .ant-pagination-item a {
   display: block;
@@ -155,9 +154,8 @@
   font-variant: tabular-nums;
   line-height: 1.5;
   list-style: none;
-  -webkit-font-feature-settings: 'tnum';
-  font-feature-settings: 'tnum', "tnum";
-  
+  -webkit-font-feature-settings: "tnum";
+  font-feature-settings: "tnum", "tnum";
 }
 .ant-pagination.mini .ant-pagination-item {
   min-width: 24px;
@@ -165,23 +163,40 @@
   margin: 0;
   line-height: 34px !important;
 }
-.ant-table-pagination .page-layout, .ant-table-pagination li {
+.ant-table-pagination .page-layout,
+.ant-table-pagination li {
   height: 45px !important;
   line-height: 35px !important;
 }
-.anticon-left,.anticon-right{
+.anticon-left,
+.anticon-right {
   font-size: 22px !important;
-  padding: 4px 0px 0px 0px !important;
+  padding: 11px 11px 0px 0px !important;
 }
-.animal-total-dis{
+.animal-total-dis {
   margin-top: -6px !important;
-  margin-left: 10px!important;
+  margin-left: 10px !important;
   padding: 0px 20px !important;
   border-radius: 3px !important;
-  font-size: 30px!important;
+  font-size: 30px !important;
   box-shadow: 0 0 4px rgb(146, 146, 146);
 }
 
-text{
+text {
   fill: black !important;
+}
+
+.dashboard-table {
+  width: 100%;
+  margin-top: 5%;
+  th,
+  td {
+    border: 1px solid black;
+    border-collapse: collapse;
+    text-align: center;
+  }
+  td {
+    font-weight: 300;
+    font-size: 22px;
+  }
 }

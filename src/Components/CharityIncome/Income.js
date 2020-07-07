@@ -135,7 +135,7 @@ class Income extends Component {
       {
         title: "AoDIT e DIlaIT",
         fixed: "right",
-        width: 200,
+        width: 115,
         dataIndex: "operation",
         render: (text, record) => (
           <>

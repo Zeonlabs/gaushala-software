@@ -7,10 +7,13 @@ import { connect } from "react-redux";
 import AnimalChart from "./AnimalChart";
 // import LoaderAnimation from "../../Static/Widgets/LoaderAnimation";
 // import { arrangeDate } from "./arrangeDate";
-import { BarChart } from "./barChart";
+// import { BarChart } from "./barChart";
 
 import "./Home.scss";
 import { withRouter } from "react-router";
+import { DatePicker, Select } from "antd";
+const { MonthPicker } = DatePicker;
+const { Option } = Select;
 
 class Home extends Component {
   constructor(props) {
@@ -86,6 +89,10 @@ class Home extends Component {
   };
   formatValue = (value) => value.toFixed(0);
 
+  handleSizeChange = () => {};
+
+  handleChange = () => {};
+
   render() {
     return (
       <PageWrapper>
@@ -124,8 +131,11 @@ class Home extends Component {
 
               <div className="padding-row year-stick-chart">
                 <div className="row" style={{ height: 250 }}>
-                  <div className="column-50" style={{ padding: "0px" }}>
-                    <BarChart
+                  <div
+                    className="column-50"
+                    style={{ padding: "0px", display: "initial" }}
+                  >
+                    {/* <BarChart
                       data={[
                         {
                           type: "Aavak",
@@ -136,13 +146,52 @@ class Home extends Component {
                           expense: this.state.totalExpense,
                         },
                       ]}
-                    />
+                    /> */}
+                    <div className="english-font">
+                      <MonthPicker
+                        onChange={this.handleSizeChange}
+                        placeholder="Select month"
+                      />
+                    </div>
+                    <table className="dashboard-table gujarati-font">
+                      <tr>
+                        <th>ivagata</th>
+                        <th>rkma</th>
+                      </tr>
+                      <tr>
+                        <td>kula Aavak</td>
+                        <td>50000</td>
+                      </tr>
+                      <tr>
+                        <td>kula javak</td>
+                        <td>30000</td>
+                      </tr>
+                      <tr>
+                        <td>baolaonsa</td>
+                        <td>20000</td>
+                      </tr>
+                    </table>
                   </div>
 
                   <div
                     className="column-50 blance-content"
-                    style={{ padding: "0px" }}
+                    style={{
+                      padding: "0px",
+                      display: "initial",
+                      marginLeft: "6%",
+                    }}
                   >
+                    <Select
+                      defaultValue="a1"
+                      onChange={this.handleChange}
+                      style={{ width: 200 }}
+                    >
+                      <Option value="jack">Jack</Option>
+                      <Option value="lucy">Lucy</Option>
+                      <Option value="disabled" disabled>
+                        {" "}
+                      </Option>
+                    </Select>
                     <div className="color-yellow">
                       <h3 className="yellow current-balance">baolaonsa</h3>
                       <h1 className="text-center">

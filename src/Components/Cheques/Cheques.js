@@ -311,7 +311,7 @@ export class Cheques extends Component {
               name="Aavak rIpaaoT"
               ref={(el) => (this.componentRef = el)}
               data={this.state.data || []}
-              type="Expense"
+              // type="Expense"
               column={ChequeColumn}
             />
           </div>

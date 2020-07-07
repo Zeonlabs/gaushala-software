@@ -263,7 +263,7 @@ export class TrustMembers extends Component {
                 name="saByaEaI naI yaadI"
                 ref={(el) => (this.componentRef = el)}
                 data={this.state.data || []}
-                type="Expense"
+                // type="Expense"
                 column={TrustyColumns}
               />
             </div>
