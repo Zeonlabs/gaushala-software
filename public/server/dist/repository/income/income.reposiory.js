@@ -67,11 +67,6 @@ class IncomeRepository {
                         _id: "$month",
                         amount: { $sum: "$amount" },
                     }
-                },
-                {
-                    $sort: {
-                        _id: 1
-                    }
                 }
             ]);
             return records;
