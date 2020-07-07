@@ -32,4 +32,30 @@ export class ExpenseRepository{
         }, {_id: 0, date: 1, money: 2, type: 3})
         return records
     }
+
+    async getForMoneyReport(dateFrom: Date, dateTo: Date) {
+        const records = await Expense.aggregate([
+            {
+                $match: { date: { $gte: dateFrom, $lt: dateTo }},
+            },
+            {
+                $project: {
+                    month: { $month: "$date" },
+                    amount: "$money.amount"
+                }
+            },
+            {
+                $group: {
+                    _id: "$month",
+                    amount: { $sum: "$amount" },
+                }
+            },
+            {
+                $sort: {
+                    _id: 1
+                }
+            }
+        ])
+        return records
+    }
 }
