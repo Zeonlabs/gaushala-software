@@ -34,24 +34,46 @@ export class IncomeRepository {
         return records
     }
 
+    // async getForMoneyReport(dateFrom: Date, dateTo: Date) {
+    //     const records = await Income.aggregate([
+    //         {
+    //             $match: { date: { $gte: dateFrom, $lt: dateTo }},
+    //         },
+    //         {
+    //             $project: {
+    //                 month: { $month: "$date" },
+    //                 amount: "$money.amount"
+    //             }
+    //         },
+    //         {
+    //             $group: {
+    //                 _id: "$month",
+    //                 amount: { $sum: "$amount" },
+    //             }
+    //         }
+    //     ])
+    //     return records
+    // }
+
     async getForMoneyReport(dateFrom: Date, dateTo: Date) {
         const records = await Income.aggregate([
             {
-                $match: { date: { $gte: dateFrom, $lt: dateTo }},
+                $match: { date: { $gte: dateFrom, $lt: dateTo } },
             },
             {
                 $project: {
-                    month: { $month: "$date" },
-                    amount: "$money.amount"
+                    amount: "$money.amount",
+                    type: "$type"
                 }
             },
             {
                 $group: {
-                    _id: "$month",
+                    _id: "$type",
                     amount: { $sum: "$amount" },
                 }
             }
         ])
+
         return records
     }
 

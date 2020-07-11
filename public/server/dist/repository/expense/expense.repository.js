@@ -50,6 +50,26 @@ class ExpenseRepository {
             return records;
         });
     }
+    // async getForMoneyReport(dateFrom: Date, dateTo: Date) {
+    //     const records = await Expense.aggregate([
+    //         {
+    //             $match: { date: { $gte: dateFrom, $lt: dateTo }},
+    //         },
+    //         {
+    //             $project: {
+    //                 month: { $month: "$date" },
+    //                 amount: "$money.amount"
+    //             }
+    //         },
+    //         {
+    //             $group: {
+    //                 _id: "$month",
+    //                 amount: { $sum: "$amount" },
+    //             }
+    //         }
+    //     ])
+    //     return records
+    // }
     getForMoneyReport(dateFrom, dateTo) {
         return __awaiter(this, void 0, void 0, function* () {
             const records = yield schema_1.Expense.aggregate([
@@ -58,13 +78,13 @@ class ExpenseRepository {
                 },
                 {
                     $project: {
-                        month: { $month: "$date" },
-                        amount: "$money.amount"
+                        amount: "$money.amount",
+                        type: "$type"
                     }
                 },
                 {
                     $group: {
-                        _id: "$month",
+                        _id: "$type",
                         amount: { $sum: "$amount" },
                     }
                 }

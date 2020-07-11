@@ -142,7 +142,7 @@ export const smsController = async (req: Request, res: Response) => {
     }
 }
 
-export const getMoneyReport = async (req: Request, res: Response) => {
+export const getMoneyReportOLD = async (req: Request, res: Response) => {
     try{
         let {year = null, month = null} = req.query
 
@@ -181,6 +181,57 @@ export const getMoneyReport = async (req: Request, res: Response) => {
             expense: totalExpense,
             capital: totalIncome - totalExpense,
             months: monthsData
+        }
+
+        res.send(reportData)
+    }
+    catch(e){
+        res.status(getStatusCode(e.code)).send({ message: e.message })
+    }
+}
+
+export const getMoneyReport = async (req: Request, res: Response) => {
+    try{
+        let {year = null, month = null} = req.query
+
+        const incomeRepo = new IncomeRepository()
+        const expenseRepo = new ExpenseRepository()
+
+        const yearT = parseInt(year as string) || new Date().getFullYear()
+        // const monthT = parseInt(month as string) || new Date().getMonth() + 1
+        const startDate = new Date(yearT, 0, 1, 24)
+        const endDate = new Date(yearT, 11, 31, 23, 59, 59)
+        
+        const [incomeData, expoenseData] = await Promise.all([
+            await incomeRepo.getForMoneyReport(startDate, endDate),
+            await expenseRepo.getForMoneyReport(startDate, endDate)
+        ])
+
+        let monthsData = [], totalIncome = 0, totalExpense = 0
+        
+        const formattedIncomes = incomeData.map(income => {
+            totalIncome += income.amount
+            return {
+                type: income._id,
+                amount: income.amount
+            }
+        })
+
+        const formattedExpense = expoenseData.map(expense => {
+            totalExpense += expense.amount
+            return {
+                type: expense._id,
+                amount: expense.amount
+            }
+        })
+        
+        const reportData = {
+            year: yearT,
+            totalIncome,
+            totalExpense,
+            balance: totalIncome - totalExpense,
+            incomes: formattedIncomes,
+            expenses: formattedExpense
         }
 
         res.send(reportData)
