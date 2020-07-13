@@ -55,6 +55,28 @@ export class IncomeRepository {
         return records
     }
 
+    async getForMoneyTypeReport(dateFrom: Date, dateTo: Date) {
+        const records = await Income.aggregate([
+            {
+                $match: { date: { $gte: dateFrom, $lt: dateTo } },
+            },
+            {
+                $project: {
+                    amount: "$money.amount",
+                    type: "$type"
+                }
+            },
+            {
+                $group: {
+                    _id: "$type",
+                    amount: { $sum: "$amount" },
+                }
+            }
+        ])
+
+        return records
+    }
+
     async getAll() {
         const allIncome = await Income.find()
         return allIncome

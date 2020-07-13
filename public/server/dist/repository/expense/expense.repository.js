@@ -72,6 +72,28 @@ class ExpenseRepository {
             return records;
         });
     }
+    getForMoneyTypeReport(dateFrom, dateTo) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const records = yield schema_1.Expense.aggregate([
+                {
+                    $match: { date: { $gte: dateFrom, $lt: dateTo } },
+                },
+                {
+                    $project: {
+                        amount: "$money.amount",
+                        type: "$type"
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$type",
+                        amount: { $sum: "$amount" },
+                    }
+                }
+            ]);
+            return records;
+        });
+    }
 }
 exports.ExpenseRepository = ExpenseRepository;
 //# sourceMappingURL=expense.repository.js.map
