@@ -200,3 +200,35 @@ text {
     font-size: 22px;
   }
 }
+
+.current-balance-title {
+  position: relative;
+  button {
+    position: absolute;
+    left: 0;
+    top: 25%;
+    padding: 5px;
+    height: 32px;
+  }
+  .ant-switch {
+    background-color: #316666;
+    &::after {
+      height: 27px;
+      width: 27px;
+      top: 1.5px;
+    }
+  }
+  .ant-switch-checked {
+    background-color: #1890ff !important;
+  }
+}
+
+.ant-calendar-month-panel-tbody {
+  td {
+    font-size: 14px !important;
+  }
+}
+
+.year-picker {
+  height: 34px;
+}

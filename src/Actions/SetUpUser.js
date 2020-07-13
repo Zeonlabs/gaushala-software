@@ -94,95 +94,19 @@ export const valiDateOtp = (data) => (dispatch) =>
       });
   });
 
-// export const getEmployee = id => dispatch =>
-//   new Promise((resolve, reject) => {
-//     // console.log("TCL: data", id);
-//     fetchUrl(
-//       employeeList.employeeListing.method,
-//       employeeList.employeeListing.url,
-//       id
-//     )
-//       .then(res => {
-//         console.log("DeadAnimal -> res ->", res);
-//         dispatch({ type: employee.employeesting, payload: res.docs });
-//         resolve(res);
-//       })
-//       .catch(e => {
-//         reject(e);
-//       });
-//   });
-
-// // export const getEmployee = data => dispatch =>
-// //   new Promise((resolve, reject) => {
-// //     fetchUrl(
-// //       employeeList.employeeListing.method,
-// //       employeeList.employeeListing.url,
-// //       data
-// //     )
-// //       .then(res => {
-// //         dispatch({ type: employee.employeesting, payload: res.docs });
-// //         resolve(res);
-// //       })
-// //       .catch(e => {
-// //         reject(e);
-// //       });
-// //   });
-
-// export const getEmployeeFilter = data => dispatch =>
-//   new Promise((resolve, reject) => {
-//     fetchUrl(
-//       employeeList.employeeListingFilter.method,
-//       employeeList.employeeListingFilter.url,
-//       data
-//     )
-//       .then(res => {
-//         resolve(res);
-//       })
-//       .catch(e => {
-//         reject(e);
-//       });
-//   });
-
-// export const getEmployeeDocs = data => dispatch =>
-//   new Promise((resolve, reject) => {
-//     fetchUrl(
-//       employeeList.employeeGetDocs.method,
-//       `${employeeList.employeeGetDocs.url}/${data}`
-//     )
-//       .then(res => {
-//         resolve(res);
-//       })
-//       .catch(e => {
-//         reject(e);
-//       });
-//   });
-
-// export const editEmployee = (id, data) => dispatch =>
-//   new Promise((resolve, reject) => {
-//     fetchUrl(
-//       employeeList.employeeUpdate.method,
-//       `${employeeList.employeeUpdate.url}/${id}`,
-//       data
-//     )
-//       .then(res => {
-//         resolve(res);
-//       })
-//       .catch(e => {
-//         reject(e);
-//       });
-//   });
-
-// export const deleteEmployee = data => dispatch =>
-//   new Promise((resolve, reject) => {
-//     fetchUrl(
-//       employeeList.employeeDelete.method,
-//       employeeList.employeeDelete.url,
-//       data
-//     )
-//       .then(res => {
-//         resolve(res);
-//       })
-//       .catch(e => {
-//         reject(e);
-//       });
-//   });
+export const getAmountReport = (data) => (dispatch) => {
+  const date = { year: data };
+  return new Promise((resolve, reject) => {
+    fetchUrl(
+      localStorage.getItem("reversePin") === "205" ? "Post" : "get",
+      `/inex/report/`,
+      date
+    )
+      .then((res) => {
+        resolve(res);
+      })
+      .catch((e) => {
+        reject(e);
+      });
+  });
+};

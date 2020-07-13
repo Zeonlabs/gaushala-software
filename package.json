@@ -1,7 +1,7 @@
 {
   "name": "gaushala-trust-accounting",
   "homepage": "./",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "private": true,
   "scripts": {
     "start": "react-scripts start",
@@ -106,6 +106,7 @@
     "react-scripts": "3.4.1",
     "react-table": "^6.10.3",
     "react-to-print": "^2.6.3",
+    "react-year-picker": "^0.3.7",
     "redux": "^4.0.4",
     "redux-actions": "^2.6.5",
     "redux-logger": "^3.0.6",

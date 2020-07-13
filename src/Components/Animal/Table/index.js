@@ -8,7 +8,7 @@ class Index extends Component {
 
     this.state = {
       total: 0,
-      values: ""
+      values: "",
       // gay: 0,
       // balad: 0,
       // vacharda: 0,
@@ -16,32 +16,32 @@ class Index extends Component {
       // anny: 0
     };
   }
-  sumValuses = obj => Object.values(obj).reduce((a, b) => a + b);
+  sumValuses = (obj) => Object.values(obj).reduce((a, b) => a + b);
 
   componentDidMount() {
     if (this.props.tableType) {
       this.setState({
-        total: this.props.total
+        total: this.props.total,
       });
     }
   }
 
-  componentDidUpdate = prevProps => {
+  componentDidUpdate = (prevProps) => {
     if (prevProps.cancel !== this.props.cancel) {
       this.props.form.resetFields();
       if (this.props.tableType) {
         this.setState({
-          total: this.props.total
+          total: this.props.total,
         });
       } else {
         this.setState({
-          total: 0
+          total: 0,
         });
       }
     }
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -49,7 +49,7 @@ class Index extends Component {
         this.props.submit(values);
         this.setState({
           total,
-          values
+          values,
         });
       }
     });
@@ -84,7 +84,7 @@ class Index extends Component {
                           : 0
                         : tableType
                         ? data[0].count
-                        : 0
+                        : 0,
                     })(<InputNumber className="gujarati-font" />)}
                   </Form.Item>
                 </td>
@@ -102,7 +102,7 @@ class Index extends Component {
                           : 0
                         : tableType
                         ? data[1].count
-                        : 0
+                        : 0,
                     })(<InputNumber />)}
                   </Form.Item>
                 </td>
@@ -120,7 +120,7 @@ class Index extends Component {
                           : 0
                         : tableType
                         ? data[2].count
-                        : 0
+                        : 0,
                     })(<InputNumber />)}
                   </Form.Item>
                 </td>
@@ -138,7 +138,7 @@ class Index extends Component {
                           : 0
                         : tableType
                         ? data[3].count
-                        : 0
+                        : 0,
                     })(<InputNumber />)}
                   </Form.Item>
                 </td>
@@ -155,7 +155,7 @@ class Index extends Component {
                           ? tableType
                             ? data.item.doctor || 0
                             : 0
-                          : 0
+                          : 0,
                       })(<InputNumber />)}
                     </Form.Item>
                   </td>
@@ -174,7 +174,7 @@ class Index extends Component {
                           : 0
                         : tableType
                         ? data[4].count
-                        : 0
+                        : 0,
                     })(<InputNumber />)}
                   </Form.Item>
                 </td>

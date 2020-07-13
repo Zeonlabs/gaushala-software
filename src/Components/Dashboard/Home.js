@@ -3,17 +3,22 @@ import _ from "lodash";
 import PageWrapper from "../Common/PageWrapper/PageWrapper";
 import LineChart from "./LineChart";
 import { getLinearChart, getAnimalChart } from "../../Actions/ChartActions";
+import { getAmountReport } from "../../Actions/SetUpUser";
 import { connect } from "react-redux";
 import AnimalChart from "./AnimalChart";
+import YearPicker from "react-year-picker";
 // import LoaderAnimation from "../../Static/Widgets/LoaderAnimation";
 // import { arrangeDate } from "./arrangeDate";
 // import { BarChart } from "./barChart";
-
 import "./Home.scss";
 import { withRouter } from "react-router";
-import { DatePicker, Select } from "antd";
+import { DatePicker, Switch, Icon } from "antd";
+import { printComponent } from "react-print-tool";
+import DashboardPrint from "../PrintTemplate/DashboardPrint";
+import { convertNumberToMonth } from "../../js/Helper";
+import YearReportPrint from "../PrintTemplate/YearReport";
 const { MonthPicker } = DatePicker;
-const { Option } = Select;
+// const { Option } = Select;
 
 class Home extends Component {
   constructor(props) {
@@ -27,6 +32,10 @@ class Home extends Component {
       totalIncome: 0,
       totalExpense: 0,
       animal_total: 0,
+      switch: "yes",
+      balance: { income: 0, expense: 0, capital: 0 },
+      month: { income: 0, expense: 0, capital: 0 },
+      monthName: "",
     };
   }
 
@@ -65,6 +74,18 @@ class Home extends Component {
     }
   };
 
+  handelSwitchChange = (checke) => {
+    if (checke) {
+      this.setState({
+        switch: "yes",
+      });
+    } else {
+      this.setState({
+        switch: "no",
+      });
+    }
+  };
+
   componentDidUpdate = (prevProps) => {
     if (prevProps.totalAnimalCount !== this.props.totalAnimalCount) {
       this.setState({
@@ -89,9 +110,76 @@ class Home extends Component {
   };
   formatValue = (value) => value.toFixed(0);
 
-  handleSizeChange = () => {};
+  handleSizeChange = (date, dateString) => {
+    console.log("Home -> handleSizeChange -> dateString", dateString);
+    if (dateString === "") {
+      this.setState({
+        balance: { income: 0, expense: 0, capital: 0 },
+        month: { income: 0, expense: 0, capital: 0 },
+      });
+    } else {
+      const years = dateString.split("-");
+      console.log("Home -> handleSizeChange -> years", years);
 
-  handleChange = () => {};
+      // console.log("Home -> handleSizeChange -> years", years);
+      this.props.getAmountReport(years[0]).then((res) => {
+        this.setState({
+          balance: res,
+          monthName: { month: convertNumberToMonth(years[1]), year: years[0] },
+        });
+        const monthData = res.months.find(
+          (value) => parseInt(years[1], 10) === value.month
+        );
+        console.log("Home -> handleSizeChange -> monthData", monthData);
+        this.setState({
+          month: monthData,
+        });
+      });
+    }
+  };
+
+  handleChange = (date) => {
+    // console.log("Home -> handleSizeChange -> dateString", date);
+    if (date === "") {
+      this.setState({
+        balance: { income: 0, expense: 0, capital: 0 },
+        month: { income: 0, expense: 0, capital: 0 },
+      });
+    } else {
+      this.props.getAmountReport(date).then((res) => {
+        this.setState({
+          balance: res,
+          monthName: { year: date },
+        });
+      });
+    }
+  };
+
+  handelPrintReport = async () => {
+    if (this.state.switch === "yes") {
+      await printComponent(
+        <DashboardPrint
+          switch={this.state.switch}
+          month={this.state.month}
+          balance={this.state.balance}
+          monthName={this.state.monthName}
+        />
+      );
+    } else {
+      await printComponent(
+        <YearReportPrint
+          switch={this.state.switch}
+          month={this.state.month}
+          balance={this.state.balance}
+          monthName={this.state.monthName}
+        />
+      );
+    }
+  };
+
+  handelCancel = (e) => {
+    console.log("Home -> handelCancel -> e", e);
+  };
 
   render() {
     return (
@@ -126,7 +214,15 @@ class Home extends Component {
             </div>
             <div className="balance-div">
               <div className="padding-row-15">
-                <h1 className=" text-align">krMT baolaonsa kolkulaoSana</h1>
+                <h1 className="current-balance-title text-align">
+                  <Switch
+                    checkedChildren="mahInaao"
+                    unCheckedChildren="vaYa-"
+                    defaultChecked
+                    onChange={this.handelSwitchChange}
+                  />
+                  krMT baolaonsa kolkulaoSana
+                </h1>
               </div>
 
               <div className="padding-row year-stick-chart">
@@ -147,12 +243,34 @@ class Home extends Component {
                         },
                       ]}
                     /> */}
-                    <div className="english-font">
-                      <MonthPicker
-                        onChange={this.handleSizeChange}
-                        placeholder="Select month"
-                      />
+                    {/* {this.state.switch ? ( */}
+                    <div className="month-picker-input">
+                      {this.state.switch === "yes" ? (
+                        <MonthPicker
+                          onChange={this.handleSizeChange}
+                          placeholder="Select month"
+                          className="english-font-input"
+                        />
+                      ) : (
+                        <YearPicker
+                          onChange={this.handleChange}
+                          onCancel={this.handelCancel}
+                        />
+                      )}
                     </div>
+                    {/* // ) : (
+                    //   <Select
+                    //     defaultValue="a1"
+                    //     onChange={this.handleChange}
+                    //     style={{ width: 200 }}
+                    //   >
+                    //     <Option value="jack">Jack</Option>
+                    //     <Option value="lucy">Lucy</Option>
+                    //     <Option value="disabled" disabled>
+                    //       {" "}
+                    //     </Option>
+                    //   </Select>
+                    // )} */}
                     <table className="dashboard-table gujarati-font">
                       <tr>
                         <th>ivagata</th>
@@ -160,15 +278,27 @@ class Home extends Component {
                       </tr>
                       <tr>
                         <td>kula Aavak</td>
-                        <td>50000</td>
+                        <td>
+                          {this.state.switch === "yes"
+                            ? this.state.month.income
+                            : this.state.balance.income}
+                        </td>
                       </tr>
                       <tr>
                         <td>kula javak</td>
-                        <td>30000</td>
+                        <td>
+                          {this.state.switch === "yes"
+                            ? this.state.month.expense
+                            : this.state.balance.expense}
+                        </td>
                       </tr>
                       <tr>
                         <td>baolaonsa</td>
-                        <td>20000</td>
+                        <td>
+                          {this.state.switch === "yes"
+                            ? this.state.month.capital
+                            : this.state.balance.capital}
+                        </td>
                       </tr>
                     </table>
                   </div>
@@ -181,17 +311,7 @@ class Home extends Component {
                       marginLeft: "6%",
                     }}
                   >
-                    <Select
-                      defaultValue="a1"
-                      onChange={this.handleChange}
-                      style={{ width: 200 }}
-                    >
-                      <Option value="jack">Jack</Option>
-                      <Option value="lucy">Lucy</Option>
-                      <Option value="disabled" disabled>
-                        {" "}
-                      </Option>
-                    </Select>
+                    <Icon type="printer" onClick={this.handelPrintReport} />
                     <div className="color-yellow">
                       <h3 className="yellow current-balance">baolaonsa</h3>
                       <h1 className="text-center">
@@ -222,5 +342,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-  connect(mapStateToProps, { getAnimalChart, getLinearChart })(Home)
+  connect(mapStateToProps, { getAnimalChart, getLinearChart, getAmountReport })(
+    Home
+  )
 );
