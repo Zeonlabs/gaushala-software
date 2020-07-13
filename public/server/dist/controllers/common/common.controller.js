@@ -153,8 +153,8 @@ exports.getMoneyReportOLD = (req, res) => __awaiter(void 0, void 0, void 0, func
         const startDate = new Date(yearT, 0, 1, 24);
         const endDate = new Date(yearT, 11, 31, 23, 59, 59);
         const [incomeData, expoenseData] = yield Promise.all([
-            yield incomeRepo.getForMoneyReport(startDate, endDate),
-            yield expenseRepo.getForMoneyReport(startDate, endDate)
+            yield incomeRepo.getForMoneyTypeReport(startDate, endDate),
+            yield expenseRepo.getForMoneyTypeReport(startDate, endDate)
         ]);
         let monthsData = [], totalIncome = 0, totalExpense = 0;
         for (let i = 1; i <= 12; i++) {
@@ -188,37 +188,89 @@ exports.getMoneyReport = (req, res) => __awaiter(void 0, void 0, void 0, functio
         const incomeRepo = new repository_1.IncomeRepository();
         const expenseRepo = new repository_1.ExpenseRepository();
         const yearT = parseInt(year) || new Date().getFullYear();
-        // const monthT = parseInt(month as string) || new Date().getMonth() + 1
-        const startDate = new Date(yearT, 0, 1, 24);
-        const endDate = new Date(yearT, 11, 31, 23, 59, 59);
-        const [incomeData, expoenseData] = yield Promise.all([
-            yield incomeRepo.getForMoneyReport(startDate, endDate),
-            yield expenseRepo.getForMoneyReport(startDate, endDate)
-        ]);
-        let monthsData = [], totalIncome = 0, totalExpense = 0;
-        const formattedIncomes = incomeData.map(income => {
-            totalIncome += income.amount;
-            return {
-                type: income._id,
-                amount: income.amount
+        if (month) {
+            // const startDate = new Date(yearT, 0, 1, 24)
+            // const endDate = new Date(yearT, 11, 31, 23, 59, 59)
+            const startDate = new Date(yearT, parseInt(month) - 1, 1);
+            const endDate = new Date(yearT, parseInt(month), 0);
+            console.log({
+                startDate, endDate
+            });
+            const [incomeData, expoenseData] = yield Promise.all([
+                yield incomeRepo.getForMoneyTypeReport(startDate, endDate),
+                yield expenseRepo.getForMoneyTypeReport(startDate, endDate)
+            ]);
+            let totalIncome = 0, totalExpense = 0;
+            const formattedIncomes = incomeData.map(income => {
+                totalIncome += income.amount;
+                return {
+                    type: income._id,
+                    amount: income.amount
+                };
+            });
+            const formattedExpense = expoenseData.map(expense => {
+                totalExpense += expense.amount;
+                return {
+                    type: expense._id,
+                    amount: expense.amount
+                };
+            });
+            const reportData = {
+                year: yearT,
+                totalIncome,
+                totalExpense,
+                balance: totalIncome - totalExpense,
+                incomes: formattedIncomes,
+                expenses: formattedExpense
             };
-        });
-        const formattedExpense = expoenseData.map(expense => {
-            totalExpense += expense.amount;
-            return {
-                type: expense._id,
-                amount: expense.amount
+            res.send(reportData);
+        }
+        else {
+            const startDate = new Date(yearT, 3, 1);
+            const endDate = new Date(yearT + 1, 3, 0);
+            console.log({
+                startDate, endDate
+            });
+            const [incomeData, expenseData] = yield Promise.all([
+                yield incomeRepo.getForMoneyReport(startDate, endDate),
+                yield expenseRepo.getForMoneyReport(startDate, endDate)
+            ]);
+            let monthsData = [], totalIncome = 0, totalExpense = 0;
+            for (let i = 4; i <= 12; i++) {
+                const income = incomeData.find(e => e._id == i) || { amount: 0 };
+                const expense = expenseData.find(e => e._id == i) || { amount: 0 };
+                monthsData.push({
+                    month: i,
+                    year: yearT,
+                    income: income.amount,
+                    expense: expense.amount,
+                    capital: income.amount - expense.amount
+                });
+                totalIncome += income.amount;
+                totalExpense += expense.amount;
+            }
+            for (let i = 1; i <= 3; i++) {
+                const income = incomeData.find(e => e._id == i) || { amount: 0 };
+                const expense = expenseData.find(e => e._id == i) || { amount: 0 };
+                monthsData.push({
+                    month: i,
+                    year: yearT + 1,
+                    income: income.amount,
+                    expense: expense.amount,
+                    capital: income.amount - expense.amount
+                });
+                totalIncome += income.amount;
+                totalExpense += expense.amount;
+            }
+            const reportData = {
+                year: `${yearT}-${yearT + 1}`,
+                income: totalIncome,
+                expense: totalExpense,
+                capital: totalIncome - totalExpense,
+                months: monthsData
             };
-        });
-        const reportData = {
-            year: yearT,
-            totalIncome,
-            totalExpense,
-            balance: totalIncome - totalExpense,
-            incomes: formattedIncomes,
-            expenses: formattedExpense
-        };
-        res.send(reportData);
+            res.send(reportData);
+        }
     }
     catch (e) {
         res.status(utils_common_1.getStatusCode(e.code)).send({ message: e.message });

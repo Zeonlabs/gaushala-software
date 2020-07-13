@@ -50,27 +50,29 @@ class IncomeRepository {
             return records;
         });
     }
-    // async getForMoneyReport(dateFrom: Date, dateTo: Date) {
-    //     const records = await Income.aggregate([
-    //         {
-    //             $match: { date: { $gte: dateFrom, $lt: dateTo }},
-    //         },
-    //         {
-    //             $project: {
-    //                 month: { $month: "$date" },
-    //                 amount: "$money.amount"
-    //             }
-    //         },
-    //         {
-    //             $group: {
-    //                 _id: "$month",
-    //                 amount: { $sum: "$amount" },
-    //             }
-    //         }
-    //     ])
-    //     return records
-    // }
     getForMoneyReport(dateFrom, dateTo) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const records = yield schema_1.Income.aggregate([
+                {
+                    $match: { date: { $gte: dateFrom, $lt: dateTo } },
+                },
+                {
+                    $project: {
+                        month: { $month: "$date" },
+                        amount: "$money.amount"
+                    }
+                },
+                {
+                    $group: {
+                        _id: "$month",
+                        amount: { $sum: "$amount" },
+                    }
+                }
+            ]);
+            return records;
+        });
+    }
+    getForMoneyTypeReport(dateFrom, dateTo) {
         return __awaiter(this, void 0, void 0, function* () {
             const records = yield schema_1.Income.aggregate([
                 {
