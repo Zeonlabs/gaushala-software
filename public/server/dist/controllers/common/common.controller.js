@@ -49,7 +49,6 @@ exports.generateFilteredReport = (Model) => (req, res) => __awaiter(void 0, void
         res.json(records);
     }
     catch (e) {
-        console.log(e);
         res.status(400).send({ message: e.message });
     }
 });
@@ -187,50 +186,59 @@ exports.getMoneyReport = (req, res) => __awaiter(void 0, void 0, void 0, functio
         let { year = null, month = null } = req.query;
         const incomeRepo = new repository_1.IncomeRepository();
         const expenseRepo = new repository_1.ExpenseRepository();
-        const yearT = parseInt(year) || new Date().getFullYear();
+        const yearT = parseInt(year) || new Date().getUTCFullYear();
         if (month) {
             // const startDate = new Date(yearT, 0, 1, 24)
             // const endDate = new Date(yearT, 11, 31, 23, 59, 59)
-            const startDate = new Date(yearT, parseInt(month) - 1, 1);
-            const endDate = new Date(yearT, parseInt(month), 0);
-            console.log({
-                startDate, endDate
-            });
+            const startDate = new Date(Date.UTC(yearT, parseInt(month) - 1, 1));
+            const endDate = new Date(Date.UTC(yearT, parseInt(month), 0));
             const [incomeData, expoenseData] = yield Promise.all([
                 yield incomeRepo.getForMoneyTypeReport(startDate, endDate),
                 yield expenseRepo.getForMoneyTypeReport(startDate, endDate)
             ]);
             let totalIncome = 0, totalExpense = 0;
-            const formattedIncomes = incomeData.map(income => {
+            // const formattedIncomes = incomeData.map(income => {
+            //     totalIncome += income.amount
+            //     return {
+            //         type: income._id,
+            //         amount: income.amount
+            //     }
+            // })
+            // const formattedExpense = expoenseData.map(expense => {
+            //     totalExpense += expense.amount
+            //     return {
+            //         type: expense._id,
+            //         amount: expense.amount
+            //     }
+            // })
+            let formattedData = [];
+            for (let i = 0; i < 10; i++) {
+                const income = incomeData[i] || { _id: 0, amount: 0 };
+                const expense = expoenseData[i] || { _id: 0, amount: 0 };
                 totalIncome += income.amount;
-                return {
-                    type: income._id,
-                    amount: income.amount
-                };
-            });
-            const formattedExpense = expoenseData.map(expense => {
                 totalExpense += expense.amount;
-                return {
-                    type: expense._id,
-                    amount: expense.amount
-                };
-            });
+                formattedData.push({
+                    incomeType: income._id,
+                    incomeAmount: income.amount,
+                    expenseType: expense._id,
+                    expenseAmount: expense.amount
+                });
+            }
             const reportData = {
                 year: yearT,
+                month: parseInt(month),
                 totalIncome,
                 totalExpense,
                 balance: totalIncome - totalExpense,
-                incomes: formattedIncomes,
-                expenses: formattedExpense
+                // incomes: formattedIncomes,
+                // expenses: formattedExpense,
+                data: formattedData
             };
             res.send(reportData);
         }
         else {
-            const startDate = new Date(yearT, 3, 1);
-            const endDate = new Date(yearT + 1, 3, 0);
-            console.log({
-                startDate, endDate
-            });
+            const startDate = new Date(Date.UTC(yearT, 3, 1));
+            const endDate = new Date(Date.UTC(yearT + 1, 3, 0, 23));
             const [incomeData, expenseData] = yield Promise.all([
                 yield incomeRepo.getForMoneyReport(startDate, endDate),
                 yield expenseRepo.getForMoneyReport(startDate, endDate)

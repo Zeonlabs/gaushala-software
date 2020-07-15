@@ -36,7 +36,6 @@ export const generateFilteredReport = (Model: MongoModel<IncomeModel | ExpenseMo
         res.json(records)
     }
     catch (e) {
-        console.log(e)
         res.status(400).send({ message: e.message })
     }
 }
@@ -197,17 +196,13 @@ export const getMoneyReport = async (req: Request, res: Response) => {
         const incomeRepo = new IncomeRepository()
         const expenseRepo = new ExpenseRepository()
 
-        const yearT = parseInt(year as string) || new Date().getFullYear()
+        const yearT = parseInt(year as string) || new Date().getUTCFullYear()
 
         if (month) {
             // const startDate = new Date(yearT, 0, 1, 24)
             // const endDate = new Date(yearT, 11, 31, 23, 59, 59)
-            const startDate = new Date(yearT, parseInt(month as string) - 1, 1)
-            const endDate = new Date(yearT, parseInt(month as string), 0)
-
-            console.log({
-                startDate, endDate
-            })
+            const startDate = new Date(Date.UTC(yearT, parseInt(month as string) - 1, 1))
+            const endDate = new Date(Date.UTC(yearT, parseInt(month as string), 0))
 
             const [incomeData, expoenseData] = await Promise.all([
                 await incomeRepo.getForMoneyTypeReport(startDate, endDate),
@@ -216,41 +211,55 @@ export const getMoneyReport = async (req: Request, res: Response) => {
 
             let totalIncome = 0, totalExpense = 0
 
-            const formattedIncomes = incomeData.map(income => {
-                totalIncome += income.amount
-                return {
-                    type: income._id,
-                    amount: income.amount
-                }
-            })
+            // const formattedIncomes = incomeData.map(income => {
+            //     totalIncome += income.amount
+            //     return {
+            //         type: income._id,
+            //         amount: income.amount
+            //     }
+            // })
 
-            const formattedExpense = expoenseData.map(expense => {
+            // const formattedExpense = expoenseData.map(expense => {
+            //     totalExpense += expense.amount
+            //     return {
+            //         type: expense._id,
+            //         amount: expense.amount
+            //     }
+            // })
+
+            let formattedData = []
+            for(let i = 0; i < 10; i++){
+                const income = incomeData[i] || {_id: 0, amount: 0}
+                const expense = expoenseData[i] || {_id: 0, amount: 0}
+
+                totalIncome += income.amount
                 totalExpense += expense.amount
-                return {
-                    type: expense._id,
-                    amount: expense.amount
-                }
-            })
+
+                formattedData.push({
+                    incomeType: income._id,
+                    incomeAmount: income.amount,
+                    expenseType: expense._id,
+                    expenseAmount: expense.amount
+                })
+            }
 
             const reportData = {
                 year: yearT,
+                month: parseInt(month as string),
                 totalIncome,
                 totalExpense,
                 balance: totalIncome - totalExpense,
-                incomes: formattedIncomes,
-                expenses: formattedExpense
+                // incomes: formattedIncomes,
+                // expenses: formattedExpense,
+                data: formattedData
             }
 
             res.send(reportData)
         }
         else {
 
-            const startDate = new Date(yearT, 3, 1)
-            const endDate = new Date(yearT + 1, 3, 0)
-
-            console.log({
-                startDate, endDate
-            })
+            const startDate = new Date(Date.UTC(yearT, 3, 1))
+            const endDate = new Date(Date.UTC(yearT + 1, 3, 0, 23))
 
             const [incomeData, expenseData] = await Promise.all([
                 await incomeRepo.getForMoneyReport(startDate, endDate),
