@@ -188,10 +188,8 @@ exports.getMoneyReport = (req, res) => __awaiter(void 0, void 0, void 0, functio
         const expenseRepo = new repository_1.ExpenseRepository();
         const yearT = parseInt(year) || new Date().getUTCFullYear();
         if (month) {
-            // const startDate = new Date(yearT, 0, 1, 24)
-            // const endDate = new Date(yearT, 11, 31, 23, 59, 59)
             const startDate = new Date(Date.UTC(yearT, parseInt(month) - 1, 1));
-            const endDate = new Date(Date.UTC(yearT, parseInt(month), 0));
+            const endDate = new Date(Date.UTC(yearT, parseInt(month), 0, 23));
             const [incomeData, expoenseData] = yield Promise.all([
                 yield incomeRepo.getForMoneyTypeReport(startDate, endDate),
                 yield expenseRepo.getForMoneyTypeReport(startDate, endDate)
@@ -212,9 +210,9 @@ exports.getMoneyReport = (req, res) => __awaiter(void 0, void 0, void 0, functio
             //     }
             // })
             let formattedData = [];
-            for (let i = 0; i < 10; i++) {
-                const income = incomeData[i] || { _id: 0, amount: 0 };
-                const expense = expoenseData[i] || { _id: 0, amount: 0 };
+            for (let i = 1; i <= 10; i++) {
+                const income = incomeData.find(e => e._id == i) || { _id: i < 7 ? i : 0, amount: 0 };
+                const expense = expoenseData.find(e => e._id == i) || { _id: i, amount: 0 };
                 totalIncome += income.amount;
                 totalExpense += expense.amount;
                 formattedData.push({
