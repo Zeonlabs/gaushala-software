@@ -95,12 +95,11 @@ export const valiDateOtp = (data) => (dispatch) =>
   });
 
 export const getAmountReport = (data) => (dispatch) => {
-  const date = { year: data };
   return new Promise((resolve, reject) => {
     fetchUrl(
       localStorage.getItem("reversePin") === "205" ? "Post" : "get",
-      `/inex/report/`,
-      date
+      `/inex/report`,
+      data
     )
       .then((res) => {
         resolve(res);

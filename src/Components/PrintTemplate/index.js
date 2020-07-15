@@ -21,7 +21,7 @@ class IncomePrintSlip extends React.Component {
         <div className="slip-print-income">
           <div className="slip-header">
             <img className="img-header" src={src} alt="boohoo"></img>
-            <h1>fsdfsdf</h1>
+            {/* <h1>fsdfsdf</h1> */}
             <hr className="first-hr"></hr>
           </div>
 

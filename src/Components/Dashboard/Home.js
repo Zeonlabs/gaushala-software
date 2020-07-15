@@ -111,7 +111,6 @@ class Home extends Component {
   formatValue = (value) => value.toFixed(0);
 
   handleSizeChange = (date, dateString) => {
-    console.log("Home -> handleSizeChange -> dateString", dateString);
     if (dateString === "") {
       this.setState({
         balance: { income: 0, expense: 0, capital: 0 },
@@ -119,20 +118,21 @@ class Home extends Component {
       });
     } else {
       const years = dateString.split("-");
+      const month =
+        parseInt(years[1]) > 9 ? years[1] : years[1].replace("0", "");
+      console.log("Home -> handleSizeChange -> month", month);
       console.log("Home -> handleSizeChange -> years", years);
+      const data = {
+        year: years[0],
+        month: month,
+      };
 
       // console.log("Home -> handleSizeChange -> years", years);
-      this.props.getAmountReport(years[0]).then((res) => {
+      this.props.getAmountReport(data).then((res) => {
+        console.log("Home -> handleSizeChange -> res", res);
         this.setState({
           balance: res,
           monthName: { month: convertNumberToMonth(years[1]), year: years[0] },
-        });
-        const monthData = res.months.find(
-          (value) => parseInt(years[1], 10) === value.month
-        );
-        console.log("Home -> handleSizeChange -> monthData", monthData);
-        this.setState({
-          month: monthData,
         });
       });
     }
@@ -160,7 +160,7 @@ class Home extends Component {
       await printComponent(
         <DashboardPrint
           switch={this.state.switch}
-          month={this.state.month}
+          // month={this.state.month}
           balance={this.state.balance}
           monthName={this.state.monthName}
         />
