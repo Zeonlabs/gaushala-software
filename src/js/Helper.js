@@ -112,6 +112,37 @@ export const convertNumberToMonth = (id) => {
       break;
   }
 };
+export const convertStringToMonth = (id) => {
+  console.log("convertStringToMonth -> id", id);
+  switch (id) {
+    case 1:
+      return "janyauAarI";
+    case 2:
+      return "foba`uAarI";
+    case 3:
+      return "maaca-";
+    case 4:
+      return "Aoipa`la";
+    case 5:
+      return "mao";
+    case 6:
+      return "juna";
+    case 7:
+      return "julaa[";
+    case 8:
+      return "AaogasT";
+    case 9:
+      return "sapTombar";
+    case 10:
+      return "AaokTaobar";
+    case 11:
+      return "navaombar";
+    case 12:
+      return "iDsaombar";
+    default:
+      break;
+  }
+};
 
 export const convertTypeToNumber = (id, type) => {
   if (type === "income") {

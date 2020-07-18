@@ -10,6 +10,7 @@ import YearPicker from "react-year-picker";
 // import LoaderAnimation from "../../Static/Widgets/LoaderAnimation";
 // import { arrangeDate } from "./arrangeDate";
 // import { BarChart } from "./barChart";
+import src from "../PrintTemplate/HeaderImage/headerImg.png";
 import "./Home.scss";
 import { withRouter } from "react-router";
 import { DatePicker, Switch, Icon } from "antd";
@@ -33,7 +34,15 @@ class Home extends Component {
       totalExpense: 0,
       animal_total: 0,
       switch: "yes",
-      balance: { income: 0, expense: 0, capital: 0 },
+      balance: {
+        income: 0,
+        expense: 0,
+        capital: 0,
+        totalIncome: 0,
+        totalExpense: 0,
+        balance: 0,
+      },
+      dateSelectStatus: false,
       month: { income: 0, expense: 0, capital: 0 },
       monthName: "",
     };
@@ -78,10 +87,12 @@ class Home extends Component {
     if (checke) {
       this.setState({
         switch: "yes",
+        dateSelectStatus: false,
       });
     } else {
       this.setState({
         switch: "no",
+        dateSelectStatus: false,
       });
     }
   };
@@ -113,15 +124,26 @@ class Home extends Component {
   handleSizeChange = (date, dateString) => {
     if (dateString === "") {
       this.setState({
-        balance: { income: 0, expense: 0, capital: 0 },
+        balance: {
+          income: 0,
+          expense: 0,
+          capital: 0,
+          totalIncome: 0,
+          totalExpense: 0,
+          balance: 0,
+        },
+        dateSelectStatus: false,
         month: { income: 0, expense: 0, capital: 0 },
       });
     } else {
+      this.setState({
+        dateSelectStatus: true,
+      });
       const years = dateString.split("-");
       const month =
         parseInt(years[1]) > 9 ? years[1] : years[1].replace("0", "");
-      console.log("Home -> handleSizeChange -> month", month);
-      console.log("Home -> handleSizeChange -> years", years);
+      // console.log("Home -> handleSizeChange -> month", month);
+      // console.log("Home -> handleSizeChange -> years", years);
       const data = {
         year: years[0],
         month: month,
@@ -129,7 +151,7 @@ class Home extends Component {
 
       // console.log("Home -> handleSizeChange -> years", years);
       this.props.getAmountReport(data).then((res) => {
-        console.log("Home -> handleSizeChange -> res", res);
+        // console.log("Home -> handleSizeChange -> res", res);
         this.setState({
           balance: res,
           monthName: { month: convertNumberToMonth(years[1]), year: years[0] },
@@ -142,11 +164,23 @@ class Home extends Component {
     // console.log("Home -> handleSizeChange -> dateString", date);
     if (date === "") {
       this.setState({
-        balance: { income: 0, expense: 0, capital: 0 },
+        balance: {
+          income: 0,
+          expense: 0,
+          capital: 0,
+          totalIncome: 0,
+          totalExpense: 0,
+          balance: 0,
+        },
         month: { income: 0, expense: 0, capital: 0 },
+        dateSelectStatus: false,
       });
     } else {
-      this.props.getAmountReport(date).then((res) => {
+      this.setState({
+        dateSelectStatus: true,
+      });
+      const data = { year: date };
+      this.props.getAmountReport(data).then((res) => {
         this.setState({
           balance: res,
           monthName: { year: date },
@@ -156,29 +190,33 @@ class Home extends Component {
   };
 
   handelPrintReport = async () => {
-    if (this.state.switch === "yes") {
-      await printComponent(
-        <DashboardPrint
-          switch={this.state.switch}
-          // month={this.state.month}
-          balance={this.state.balance}
-          monthName={this.state.monthName}
-        />
-      );
+    if (this.state.dateSelectStatus === true) {
+      if (this.state.switch === "yes") {
+        await printComponent(
+          <DashboardPrint
+            switch={this.state.switch}
+            // month={this.state.month}
+            balance={this.state.balance}
+            monthName={this.state.monthName}
+          />
+        );
+      } else {
+        await printComponent(
+          <YearReportPrint
+            switch={this.state.switch}
+            month={this.state.month}
+            balance={this.state.balance}
+            monthName={this.state.monthName}
+          />
+        );
+      }
     } else {
-      await printComponent(
-        <YearReportPrint
-          switch={this.state.switch}
-          month={this.state.month}
-          balance={this.state.balance}
-          monthName={this.state.monthName}
-        />
-      );
+      alert("select month or year");
     }
   };
 
   handelCancel = (e) => {
-    console.log("Home -> handelCancel -> e", e);
+    // console.log("Home -> handelCancel -> e", e);
   };
 
   render() {
@@ -194,7 +232,7 @@ class Home extends Component {
               expense: this.state.expenceData,
             }}
           />
-
+          <img style={{ display: "none" }} src={src} alt="dashboard" />
           <div className="btml-grph">
             <div className="piechrt-div">
               <div className="row">
@@ -280,7 +318,7 @@ class Home extends Component {
                         <td>kula Aavak</td>
                         <td>
                           {this.state.switch === "yes"
-                            ? this.state.month.income
+                            ? this.state.balance.totalIncome
                             : this.state.balance.income}
                         </td>
                       </tr>
@@ -288,7 +326,7 @@ class Home extends Component {
                         <td>kula javak</td>
                         <td>
                           {this.state.switch === "yes"
-                            ? this.state.month.expense
+                            ? this.state.balance.totalExpense
                             : this.state.balance.expense}
                         </td>
                       </tr>
@@ -296,7 +334,7 @@ class Home extends Component {
                         <td>baolaonsa</td>
                         <td>
                           {this.state.switch === "yes"
-                            ? this.state.month.capital
+                            ? this.state.balance.balance
                             : this.state.balance.capital}
                         </td>
                       </tr>
@@ -309,9 +347,14 @@ class Home extends Component {
                       padding: "0px",
                       display: "initial",
                       marginLeft: "6%",
+                      textAlign: "center",
                     }}
                   >
-                    <Icon type="printer" onClick={this.handelPrintReport} />
+                    <Icon
+                      type="printer"
+                      style={{ fontSize: "32px" }}
+                      onClick={this.handelPrintReport}
+                    />
                     <div className="color-yellow">
                       <h3 className="yellow current-balance">baolaonsa</h3>
                       <h1 className="text-center">

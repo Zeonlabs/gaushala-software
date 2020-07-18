@@ -224,10 +224,10 @@ class Income extends Component {
       page: 1,
       limit: 13,
     };
-    console.log(
-      "Income -> componentDidMount -> this.props.allFilterExpense",
-      this.props.allFilterExpense
-    );
+    // console.log(
+    //   "Income -> componentDidMount -> this.props.allFilterExpense",
+    //   this.props.allFilterExpense
+    // );
     if (this.props.expenseList.length > 0) {
       this.setState({
         data: this.props.expenseList,

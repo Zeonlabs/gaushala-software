@@ -286,11 +286,11 @@ class DebitAnimal extends Component {
     if (localStorage.getItem("reversePin") === "205") {
       this.loadingFalse();
     } else {
-      console.log(
-        "DebitAnimal -> filterData -> data",
-        this.state.date,
-        this.state.tagText
-      );
+      // console.log(
+      //   "DebitAnimal -> filterData -> data",
+      //   this.state.date,
+      //   this.state.tagText
+      // );
       if (
         Object.keys(this.state.date).length === 0 &&
         this.state.tagText === ""
