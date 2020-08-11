@@ -21,6 +21,12 @@ import YearReportPrint from "../PrintTemplate/YearReport";
 const { MonthPicker } = DatePicker;
 // const { Option } = Select;
 
+const convert_positive = (a) => {
+  if (a < 0) {
+    a = a * -1;
+  }
+  return a;
+};
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -333,9 +339,45 @@ class Home extends Component {
                       <tr>
                         <td>baolaonsa</td>
                         <td>
-                          {this.state.switch === "yes"
-                            ? this.state.balance.balance
-                            : this.state.balance.capital}
+                          {this.state.switch === "yes" ? (
+                            this.state.balance.balance >= 0 ? (
+                              this.state.balance.balance
+                            ) : (
+                              <div
+                                style={{
+                                  display: "flex",
+                                  justifyContent: "center",
+                                  alignItems: "center",
+                                }}
+                              >
+                                <span
+                                  className="english-font"
+                                  style={{ marginBottom: "5px" }}
+                                >
+                                  -
+                                </span>
+                                {convert_positive(this.state.balance.balance)}
+                              </div>
+                            )
+                          ) : this.state.balance.capital >= 0 ? (
+                            this.state.balance.capital
+                          ) : (
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              <span
+                                className="english-font"
+                                style={{ marginBottom: "5px" }}
+                              >
+                                -
+                              </span>
+                              {convert_positive(this.state.balance.capital)}
+                            </div>
+                          )}
                         </td>
                       </tr>
                     </table>
