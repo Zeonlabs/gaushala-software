@@ -16,7 +16,9 @@ exports.EmployeeRepository = void 0;
 const fs_1 = __importDefault(require("fs"));
 const schema_1 = require("../../schema");
 const exceptions_common_1 = require("../../common/exceptions.common");
-const docsFolder = `${__dirname}/employee-docs`;
+const electron_1 = require("electron");
+// const docsFolder = `${__dirname}/employee-docs`
+const docsFolder = `${electron_1.app.getPath('userData')}/employee-docs`;
 class EmployeeRepository {
     constructor() {
         this.startDownEmpDoc = (employeeId, res) => {

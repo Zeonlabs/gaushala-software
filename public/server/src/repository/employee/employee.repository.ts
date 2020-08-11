@@ -4,7 +4,10 @@ import {Response} from 'express'
 import {Employee, EmployeeModel} from '../../schema'
 import {ImageUploadFailedException, NoRecordWithIDException} from '../../common/exceptions.common'
 
-const docsFolder = `${__dirname}/employee-docs`
+import {app} from 'electron'
+
+// const docsFolder = `${__dirname}/employee-docs`
+const docsFolder = `${app.getPath('userData')}/employee-docs`
 
 export class EmployeeRepository{
     async save(data: EmployeeModel, doc: Options){
