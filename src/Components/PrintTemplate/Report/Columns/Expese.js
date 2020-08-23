@@ -8,23 +8,19 @@ export const Expense = [
     title: "taarIKa",
     dataIndex: "date",
     key: "3",
-    width: 100,
+    // width: 100,
     className: "date-print english-font-input-table",
     render: (text, record) => {
-      return (
-        <div className="">
-          {moment(text).format("YYYY-MM-DD")}
-        </div>
-      );
+      return <div className="">{moment(text).format("YYYY-MM-DD")}</div>;
     },
   },
   {
     // Vauchr No
     title: "vaa]car naM.",
-    width: 130,
+    // width: 130,
     dataIndex: "slip_no",
     key: "name",
-    className: "gujarati-font-input-table"
+    className: "gujarati-font-input-table",
   },
 
   {
@@ -32,28 +28,28 @@ export const Expense = [
     title: "naama",
     dataIndex: "name",
     key: "5",
-    className: "add-name-field-print gujarati-font-input-table"
+    className: "add-name-field-print gujarati-font-input-table",
   },
   {
     title: "sarnaamau",
     dataIndex: "address",
     key: "address",
-    className: "add-name-field-print gujarati-font-input-table"
+    className: "add-name-field-print gujarati-font-input-table",
   },
   {
     // Amount
     title: "rkma",
     dataIndex: "money.amount",
     key: "2",
-    className: "gujarati-font-input-table"
+    className: "gujarati-font-input-table",
   },
   {
     // Mobile.
     title: "maaobaa[la naMbar",
     dataIndex: "phone",
     key: "4",
-    width: 180,
-    className: "gujarati-font-input-table"
+    // width: 180,
+    className: "gujarati-font-input-table",
   },
   {
     // Expenses Type
@@ -61,7 +57,7 @@ export const Expense = [
     dataIndex: "type",
     key: "1",
     className: "gujarati-font-input-table",
-    render: (text, record) => convertNumberToType(text, "expense")
+    render: (text, record) => convertNumberToType(text, "expense"),
   },
   {
     title: "dana svaIkar",
@@ -69,7 +65,7 @@ export const Expense = [
     key: "7",
     className: "gujarati-font-input-table",
     render: (text, record) =>
-      text.type === "cheque" ? <p>{text.cheque_no}</p> : <p>raokD</p>
+      text.type === "cheque" ? <p>{text.cheque_no}</p> : <p>raokD</p>,
   },
   // {
   //   // Expense in
@@ -83,8 +79,15 @@ export const Expense = [
     title: "hstak naama",
     dataIndex: "ref_name",
     key: "8",
-    className: "gujarati-font-input-table"
-  }
+    className: "gujarati-font-input-table",
+  },
+  {
+    // Hastak Name
+    title: "vaIgata",
+    dataIndex: "note",
+    key: "9",
+    className: "gujarati-font-input-table",
+  },
   // {
   //   // Hastak Name
   //   title: "Trusty Sign",

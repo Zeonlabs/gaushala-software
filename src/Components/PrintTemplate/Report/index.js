@@ -96,24 +96,30 @@ class ReportPrint extends React.Component {
               column={this.props.column}
             />
           </div>
-          <h2 className="aavak-report-title gujarati-font">
-            {this.props.name === "Aavak rIpaaoT"
-              ? "Aavak pa`kar naao rIpaaoT"
-              : "javak pa`kar naao rIpaaoT"}
-          </h2>
-          <div className="report-table padding-row">
-            {this.props.name === "Aavak rIpaaoT" ? (
-              <ReportTable data={this.state.typeData} column={TypeCost} />
-            ) : (
-              <ReportTable
-                data={this.state.typeData}
-                column={ExpenseTypeCost}
-              />
-            )}
-          </div>
-          <span className="total-text-print gujarati-font">
-            TaoTla :{this.props.total}
-          </span>
+          {this.props.details ? (
+            <>
+              <h2 className="aavak-report-title gujarati-font">
+                {this.props.name === "Aavak rIpaaoT"
+                  ? "Aavak pa`kar naao rIpaaoT"
+                  : "javak pa`kar naao rIpaaoT"}
+              </h2>
+              <div className="report-table padding-row">
+                {this.props.name === "Aavak rIpaaoT" ? (
+                  <ReportTable data={this.state.typeData} column={TypeCost} />
+                ) : (
+                  <ReportTable
+                    data={this.state.typeData}
+                    column={ExpenseTypeCost}
+                  />
+                )}
+              </div>
+              <span className="total-text-print gujarati-font">
+                TaoTla :{this.props.total}
+              </span>
+            </>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     );

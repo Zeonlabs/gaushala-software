@@ -46,29 +46,22 @@ const YearReportPrint = (props) => {
           <table className="dashboard-table gujarati-font">
             <tr>
               <th>mahInaa</th>
-              <th colSpan="2">ivagata</th>
+              <th>Aavak</th>
+              <th>Javak</th>
+              <th>baolaonsa</th>
             </tr>
             {data.map((value) => (
               <>
-                <tr>
-                  <td rowspan="4">
+                <tr style={{ textAlign: "center" }}>
+                  <td>
                     {convertStringToMonth(value.month)} : {value.year}
                   </td>
-                </tr>
-                <tr>
-                  <td height="45.5px">Aavak </td>{" "}
                   <td height="45.5px" className="year-report-td">
                     {value.income}
                   </td>
-                </tr>
-                <tr>
-                  <td height="45.5px">Javak </td>
                   <td height="45.5px" className="year-report-td">
                     {value.expense}
                   </td>
-                </tr>
-                <tr>
-                  <td height="45.5px">baolaonsa </td>
                   <td height="45.5px" className="year-report-td">
                     {value.capital >= 0 ? (
                       value.capital
@@ -87,49 +80,34 @@ const YearReportPrint = (props) => {
                 </tr>
               </>
             ))}
+            <tr>
+              <td>kula</td>
+              <td>{props.balance.income}</td>
+              <td>{props.balance.expense}</td>
+              <td>
+                {props.balance.capital >= 0 ? (
+                  props.balance.capital
+                ) : (
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <span
+                      className="english-font"
+                      style={{ marginBottom: "5px" }}
+                    >
+                      -
+                    </span>
+                    {convert_positive(props.balance.capital)}
+                  </div>
+                )}
+              </td>
+            </tr>
           </table>
         </div>
-        <table
-          style={{ marginTop: "2%" }}
-          className="dashboard-table gujarati-font"
-        >
-          <tr>
-            <th>ivagata</th>
-            <th>rkma</th>
-          </tr>
-          <tr>
-            <td>kula Aavak</td>
-            <td>{props.balance.income}</td>
-          </tr>
-          <tr>
-            <td>kula javak</td>
-            <td>{props.balance.expense}</td>
-          </tr>
-          <tr>
-            <td>baolaonsa</td>
-            <td>
-              {props.balance.capital >= 0 ? (
-                props.balance.capital
-              ) : (
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                >
-                  <span
-                    className="english-font"
-                    style={{ marginBottom: "5px" }}
-                  >
-                    -
-                  </span>
-                  {convert_positive(props.balance.capital)}
-                </div>
-              )}
-            </td>
-          </tr>
-        </table>
       </div>
     </>
   );

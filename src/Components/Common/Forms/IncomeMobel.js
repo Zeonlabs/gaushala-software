@@ -73,9 +73,12 @@ class IncomeMobels extends Component {
       },
       itemData: [],
       typeStatus: "",
+      fillamount: "",
     };
   }
-
+  componentWillUnmount = () => {
+    console.log("IncomeMobels -> componentWillUnmount -> componentWillUnmount");
+  };
   componentDidUpdate = (prevProps) => {
     if (prevProps !== this.props) {
       if (this.props.modalType) {
@@ -312,10 +315,14 @@ class IncomeMobels extends Component {
       // printSlip = values;
       // console.log("IncomeMobels -> handleSubmit -> printSlip", printSlip);
       if (!err) {
-        if (this.props.type === "expense") {
-          this.expenseData(values, finalTotal, itemData);
+        if (this.state.fillamount === "unfield") {
+          message.error("fill table or delete row");
         } else {
-          this.incomeData(values, finalTotal, itemData);
+          if (this.props.type === "expense") {
+            this.expenseData(values, finalTotal, itemData);
+          } else {
+            this.incomeData(values, finalTotal, itemData);
+          }
         }
       }
     });
@@ -326,6 +333,13 @@ class IncomeMobels extends Component {
       tableData: data,
       tableStatus: true,
       // resetStatus: false
+    });
+  };
+
+  unfillAmount = (status) => {
+    // console.log("IncomeMobels -> unfillAmount -> status", status);
+    this.setState({
+      fillamount: status === "unfield" ? "unfield" : "field",
     });
   };
 
@@ -345,15 +359,23 @@ class IncomeMobels extends Component {
 
   onSearch = (val) => {};
   handleReset = () => {
-    this.props.form.resetFields();
-    this.props.toggleModel();
-    this.setState({
-      tableData: "",
-      resetStatus: !this.state.resetStatus,
-      type: "cash",
-      printStatus: false,
-      typeStatus: "",
-    });
+    if (
+      this.state.fillamount === "unfield" &&
+      this.props.modalType === "edit"
+    ) {
+      message.error("fill table or delete row");
+    } else {
+      this.props.form.resetFields();
+      this.props.toggleModel(this.state.fillamount);
+      this.setState({
+        tableData: "",
+        resetStatus: !this.state.resetStatus,
+        type: "cash",
+        printStatus: false,
+        typeStatus: "",
+      });
+    }
+    // unmountComponentAtNode(document.getElementById("modal-table-unmount"));
   };
 
   handelPrintButton = () => {
@@ -675,6 +697,7 @@ class IncomeMobels extends Component {
                 data={modalType === "edit" ? data.item : ""}
                 type={modalType === "edit"}
                 modalType={editClick}
+                unfillAmount={this.unfillAmount}
               />
             </Row>
 

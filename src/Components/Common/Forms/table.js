@@ -11,6 +11,8 @@ const EditableRow = ({ form, index, ...props }) => (
   </EditableContext.Provider>
 );
 
+let unfill = false;
+
 const EditableFormRow = Form.create()(EditableRow);
 
 class EditableCell extends Component {
@@ -29,18 +31,31 @@ class EditableCell extends Component {
 
   save = (e) => {
     const { record, handleSave } = this.props;
+
     this.form.validateFields((error, values) => {
       if (error && error[e.currentTarget.id]) {
+        console.log("save -> this.props", this.props);
+        this.props.unfill("unfield");
         return;
       }
       this.toggleEdit();
+      this.props.unfill("field");
       handleSave({ ...record, ...values });
+      return unfill === false;
     });
   };
 
   renderCell = (form) => {
     this.form = form;
     const { children, dataIndex, title } = this.props;
+    // console.log(
+    //   "renderCell -> children, dataIndex, title",
+    //   children,
+    //   "dataIndex",
+    //   dataIndex,
+    //   "title",
+    //   title
+    // );
     const { editing } = this.state;
     return editing ? (
       <Form.Item style={{ margin: 0 }}>
@@ -52,6 +67,9 @@ class EditableCell extends Component {
             },
           ],
           initialValue: this.props.inputType === "number" ? "" : "",
+          // ? title === "rkma"
+          //   ? children[2]
+          //   : ""
         })(
           <Input
             ref={(node) => (this.input = node)}
@@ -85,6 +103,7 @@ class EditableCell extends Component {
       children,
       ...restProps
     } = this.props;
+    // console.log("render -> this.props", this.props);
     return (
       <td {...restProps}>
         {editable ? (
@@ -144,7 +163,7 @@ class Tables extends Component {
         {
           _id: "0",
           type: "",
-          amount: "0",
+          amount: 0,
         },
       ],
       count: 1,
@@ -155,7 +174,7 @@ class Tables extends Component {
 
   componentDidMount = () => {
     // const { money } = this.props.data;
-    // console.log("Tables -> componentDidMount -> this.props", this.props);
+    // console.log("Tables -> componentDidMount -> this.props", this.props.dataws);
 
     if (this.props.type) {
       this.setState({
@@ -166,11 +185,21 @@ class Tables extends Component {
   };
   componentDidUpdate = (prevProps) => {
     if (prevProps.modalType !== this.props.modalType) {
+      // console.log(
+      //   "Tables -> componentDidUpdate -> this.props",
+      //   this.props.dataws
+      // );
       if (this.props.type) {
-        this.setState({
-          dataSource: this.props.data,
-          totalAmount: this.props.total.amount,
-        });
+        this.setState(
+          {
+            dataSource: this.props.data,
+            totalAmount: this.props.total.amount,
+          },
+          () => {
+            const newData = [...this.props.data];
+            this.props.submit(newData);
+          }
+        );
       }
     }
     if (prevProps.data !== this.props.data) {
@@ -185,7 +214,7 @@ class Tables extends Component {
           {
             _id: "0",
             type: "",
-            amount: "0",
+            amount: 0,
           },
         ],
         count: 1,
@@ -195,11 +224,26 @@ class Tables extends Component {
     // console.log(this.state.totalAmount);
   };
 
+  sumArray = (total, num) => {
+    return total + num;
+  };
+
   handleDelete = (key) => {
     const dataSource = [...this.state.dataSource];
-    this.setState({
-      dataSource: dataSource.filter((item) => item._id !== key),
-    });
+    this.setState(
+      {
+        dataSource: dataSource.filter((item) => item._id !== key),
+      },
+      () => {
+        const totalAmount = this.state.dataSource.map((val) =>
+          parseInt(val.amount, 10)
+        );
+        const finalTotal = totalAmount.reduce(this.sumArray);
+        this.setState({
+          totalAmount: finalTotal,
+        });
+      }
+    );
   };
 
   handleAdd = () => {
@@ -214,12 +258,14 @@ class Tables extends Component {
       count: count + 1,
     });
   };
-  sumArray = (total, num) => {
-    return total + num;
-  };
 
   handleSave = (row) => {
     const newData = [...this.state.dataSource];
+    // console.log(
+    //   "Tables -> handleSave -> newData",
+    //   newData,
+    //   this.state.dataSource
+    // );
     const index = newData.findIndex((item) => row._id === item._id);
     const item = newData[index];
     newData.splice(index, 1, {
@@ -271,6 +317,7 @@ class Tables extends Component {
           return {
             record,
             inputType: checkInput(col.dataIndex),
+            unfill: this.props.unfillAmount,
             editable: col.editable,
             dataIndex: col.dataIndex,
             title: col.title,

@@ -539,6 +539,7 @@ class Income extends Component {
                   ? this.state.allData
                   : this.state.data || []
               }
+              details
               type="Expense"
               column={Expense}
               total={this.state.filterTotal}

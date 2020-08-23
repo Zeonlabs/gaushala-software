@@ -20,7 +20,7 @@ export const TypeCost = [
 
 export const ExpenseTypeCost = [
   {
-    title: "Aavak naao pa`kar",
+    title: "Javak naao pa`kar",
     dataIndex: "Id",
     key: "Id",
     width: "50%",

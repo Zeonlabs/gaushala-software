@@ -16,8 +16,9 @@ import { withRouter } from "react-router";
 import { DatePicker, Switch, Icon } from "antd";
 import { printComponent } from "react-print-tool";
 import DashboardPrint from "../PrintTemplate/DashboardPrint";
-import { convertNumberToMonth } from "../../js/Helper";
+import { convertNumberToMonth, convertStringToMonth } from "../../js/Helper";
 import YearReportPrint from "../PrintTemplate/YearReport";
+import moment from "moment";
 const { MonthPicker } = DatePicker;
 // const { Option } = Select;
 
@@ -87,6 +88,23 @@ class Home extends Component {
         });
       });
     }
+    var d = new Date();
+    console.log(
+      "Home -> componentDidMount -> d.getMonth()",
+      d.getMonth(),
+      d.getUTCFullYear()
+    );
+    const data = {
+      year: d.getUTCFullYear(),
+      month: d.getMonth() + 1,
+    };
+    this.props.getAmountReport(data).then((res) => {
+      // console.log("Home -> handleSizeChange -> res", res);
+      this.setState({
+        balance: res,
+        monthName: { month: convertStringToMonth(data.month), year: data.year },
+      });
+    });
   };
 
   handelSwitchChange = (checke) => {
@@ -155,7 +173,7 @@ class Home extends Component {
         month: month,
       };
 
-      // console.log("Home -> handleSizeChange -> years", years);
+      console.log("Home -> handleSizeChange -> years", data);
       this.props.getAmountReport(data).then((res) => {
         // console.log("Home -> handleSizeChange -> res", res);
         this.setState({
@@ -294,6 +312,10 @@ class Home extends Component {
                           onChange={this.handleSizeChange}
                           placeholder="Select month"
                           className="english-font-input"
+                          defaultValue={moment(
+                            moment().format("YYYY-MM"),
+                            "YYYY-MM"
+                          )}
                         />
                       ) : (
                         <YearPicker
@@ -401,7 +423,27 @@ class Home extends Component {
                       <h3 className="yellow current-balance">baolaonsa</h3>
                       <h1 className="text-center">
                         ₹&nbsp;
-                        <span>{this.state.capital}</span>
+                        <span>
+                          {this.state.capital >= 0 ? (
+                            this.state.capital
+                          ) : (
+                            <div
+                              style={{
+                                display: "flex",
+                                justifyContent: "center",
+                                alignItems: "center",
+                              }}
+                            >
+                              <span
+                                className="english-font"
+                                style={{ marginBottom: "5px" }}
+                              >
+                                -
+                              </span>
+                              {convert_positive(this.state.capital)}
+                            </div>
+                          )}
+                        </span>
                         {/* <AnimatedNumber
                           className="text-center"
                           value={this.state.capital}

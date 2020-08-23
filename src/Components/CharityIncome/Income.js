@@ -21,6 +21,7 @@ import { ArraySum } from "../Common/CommonCalculation";
 import IncomePrintSlip from "../PrintTemplate";
 import { printComponent } from "react-print-tool";
 import ReactToPrint from "react-to-print";
+import { unmountComponentAtNode } from "react-dom";
 
 class Income extends Component {
   constructor(props) {
@@ -376,7 +377,7 @@ class Income extends Component {
     }
   };
 
-  handelClosePopUp = () => {
+  handelClosePopUp = (amount) => {
     // console.log(" -> handelClosePopUp -> data", data);
     this.setState({
       income: !this.state.income,
@@ -532,6 +533,7 @@ class Income extends Component {
                   : this.state.data || []
               }
               type="Expense"
+              details
               column={IncomeColumn}
               total={this.state.filterTotal}
             />
